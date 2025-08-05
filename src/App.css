@@ -1,0 +1,20 @@
+#root {
+  margin: 0;
+  padding: 0rem;
+  font-family: "Poppins, sans-serif";
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Moves up by 10 pixels */
+  }
+  100% {
+    transform: translateY(0); /* Returns to original position */
+  }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite !important;}

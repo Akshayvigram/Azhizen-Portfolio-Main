@@ -1,0 +1,88 @@
+[
+    {
+      "title": "Software Developer Intern",
+      "category": "Development",
+      "level": "Freshers",
+      "type": "Onsite",
+      "shift": "Day",
+      "responsibilities": [
+        "Design and develop scalable software applications using modern development frameworks like React,Angular,Node etc.,.",
+        "Write clean, efficient, and well-documented code.",
+        "Collaborate with team members to define, design, and ship new features.",
+        "Participate in code reviews and provide constructive feedback.",
+        "Troubleshoot, debug, and upgrade existing software.",
+        "Stay up-to-date with emerging technologies and apply them into operations and activities."
+      ],
+      "requirements": [
+        "Proficiency in programming languages such as JavaScript, Python, or Java.",
+        "Understanding of software development life cycle (SDLC).",
+        "Knowledge of version control systems like Git.",
+        "Strong problem-solving and analytical skills.",
+        "Ability to work collaboratively in a team environment."
+      ]
+    },
+    {
+      "title": "UI/UX Designer Intern",
+      "category": "Design",
+      "level": "Freshers",
+      "type": "Onsite",
+      "shift": "Day",
+      "responsibilities": [
+        "Design intuitive, user-centered interfaces for digital products.",
+        "Create wireframes, mockups, and prototypes using tools like Figma or Adobe XD.",
+        "Collaborate with product managers and developers to define user flows.",
+        "Conduct usability testing and iterate designs based on feedback.",
+        "Maintain a consistent visual design across products."
+      ],
+      "requirements": [
+        "Familiarity with Figma, Sketch, or Adobe XD.",
+        "Basic understanding of UX research and usability principles.",
+        "Good visual design skills and attention to detail.",
+        "Ability to take feedback constructively.",
+        "Portfolio showcasing UI/UX projects is a plus."
+      ]
+    },
+    {
+      "title": "QA Intern",
+      "category": "Testing",
+      "level": "Freshers",
+      "type": "Onsite",
+      "shift": "Day",
+      "responsibilities": [
+        "Execute test cases (manual or automated) and analyze results.",
+        "Collaborate with developers and product managers to understand requirements.",
+        "Identify, record, document thoroughly, and track bugs.",
+        "Perform regression testing after bug resolution.",
+        "Help troubleshoot issues and review test procedures."
+      ],
+      "requirements": [
+        "Familiarity with software testing concepts.",
+        "Knowledge of testing tools like Selenium or JMeter is a plus.",
+        "Detail-oriented and analytical thinker.",
+        "Strong verbal and written communication skills.",
+        "Ability to work in a team environment."
+      ]
+    },
+    {
+      "title": "Photography & Videography Intern",
+      "category": "Media",
+      "level": "Freshers",
+      "type": "Onsite",
+      "shift": "Day",
+      "responsibilities": [
+        "Capture high-quality photos and videos for marketing and documentation.",
+        "Edit photos and videos using tools like Adobe Premiere Pro or Photoshop.",
+        "Collaborate with the content and marketing team to meet creative goals.",
+        "Organize and maintain digital asset libraries.",
+        "Assist in setting up lighting, equipment, and scenes."
+      ],
+      "requirements": [
+        "Basic knowledge of DSLR cameras and video equipment.",
+        "Familiarity with editing software like Adobe Premiere or Final Cut.",
+        "Creative eye and attention to detail.",
+        "Portfolio of previous photography/videography work.",
+        "Ability to work under deadlines and manage multiple tasks."
+      ]
+    }
+  ]
+  

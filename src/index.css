@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Utility overrides (use with caution – Tailwind already provides these) */
+.bg-white {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.text-gray-700 {
+  color: #4a5568;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+h1, h2, h3 {
+  color: #000000;
+}
+
+input, textarea, select {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #000000;
+}
+
+button {
+  color: #ffffff;
+  background-color: #1f2937;
+}
+
+/* Swiper styles */
+.swiper-slide {
+  transition: all 0.3s ease;
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+  filter: blur(2px);
+  opacity: 0.7;
+}
+
+.swiper-slide-active {
+  filter: none;
+  opacity: 1;
+}
+
+/* Consolidated media query for iPad-specific styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ipad-half-circle {
+    height: 200px !important;
+    border-top-left-radius: 200px !important;
+    border-bottom-left-radius: 200px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    top: 50px !important;
+  }
+
+  .ipad-tight-spacing {
+    margin-top: -40px !important;
+  }
+}

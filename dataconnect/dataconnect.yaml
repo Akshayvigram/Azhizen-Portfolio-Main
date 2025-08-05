@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "azhizen-solutions"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "azhizen-solutions-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
