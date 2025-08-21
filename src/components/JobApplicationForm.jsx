@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from './firebase';
-import { getDatabase, ref, set } from 'firebase/database'; // Import RTDB modules
+import { getDatabase, ref, set, push } from 'firebase/database';
 
 const JobApplicationForm = () => {
   const location = useLocation();
@@ -15,6 +15,7 @@ const JobApplicationForm = () => {
   const [resumeBase64, setResumeBase64] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleAddExperience = () => {
     setExperience([...experience, { company: '', role: '', years: '' }]);
@@ -52,6 +53,7 @@ const JobApplicationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
 
     const formFields = {
@@ -74,19 +76,19 @@ const JobApplicationForm = () => {
       !formFields.residence ||
       !formFields.phone
     ) {
-      setError('Please fill in all required fields.');
+      setError('Please complete all required fields to proceed.');
       setLoading(false);
       return;
     }
 
     if (formFields.email !== formFields.confirmEmail) {
-      setError('Emails do not match.');
+      setError('The email addresses provided do not match.');
       setLoading(false);
       return;
     }
 
     if (!resumeBase64) {
-      setError('Please upload your resume.');
+      setError('Please upload a resume to complete your application.');
       setLoading(false);
       return;
     }
@@ -104,17 +106,17 @@ const JobApplicationForm = () => {
 
       // Firebase Realtime Database document creation
       const dbRef = getDatabase();
-      const applicationRef = ref(dbRef, 'jobApplications/' + Timestamp.now().seconds);
+      const applicationRef = push(ref(dbRef, 'jobApplications')); // auto-generates a unique key
       await set(applicationRef, {
         jobTitle: job.title,
         ...formFields,
         experience,
         education,
         resume: resumeBase64,
-        appliedAt: Timestamp.now().seconds,
+        appliedAt: Date.now(), // use Date.now() for RTDB
       });
 
-      alert('Application submitted successfully!');
+      setSuccess('Your application has been successfully submitted!');
       setExperience([]);
       setEducation([]);
       setResumeFile(null);
@@ -122,17 +124,53 @@ const JobApplicationForm = () => {
       document.querySelectorAll('input, textarea').forEach((input) => (input.value = ''));
     } catch (error) {
       console.error('Submission failed:', error);
-      setError('Failed to submit application. Please try again.');
+      setError('Failed to submit application. Please try again later.');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Auto-dismiss popup after 5 seconds
+  useEffect(() => {
+    if (success || error) {
+      const timer = setTimeout(() => {
+        setSuccess('');
+        setError('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [success, error]);
+
+  const closePopup = () => {
+    setSuccess('');
+    setError('');
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-2 sm:px-4 mt-35">
       <div className="w-full max-w-5xl bg-white p-4 sm:p-6 lg:p-12">
         <h1 className="text-xl sm:text-2xl md:text-4xl font-medium text-black mb-6">{job.title}</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+
+        {/* Popup for Success/Error Messages */}
+        {(success || error) && (
+<div className="fixed top-4 inset-x-0 flex justify-center z-50 px-4">
+  <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 flex items-start gap-2 max-w-sm w-full sm:w-auto">
+    <span
+      className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+        success ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+      } text-sm`}
+    >
+      {success ? '✔' : '✘'}
+    </span>
+    <div>
+      <h3 className="text-sm font-semibold text-gray-900">
+        {success ? 'Success' : 'Submission Error'}
+      </h3>
+      <p className="text-sm text-gray-600 mt-1">{success || error}</p>
+    </div>
+  </div>
+</div>
+        )}
 
         {/* Personal Info */}
         <div className="mb-10">
