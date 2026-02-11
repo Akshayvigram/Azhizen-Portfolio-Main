@@ -119,7 +119,8 @@ const JobApplicationForm = () => {
         appliedAt: Date.now(), // use Date.now() for RTDB
       });
 
-      await fetch("http://localhost:5000/api/notify-slack", {
+      // await fetch("http://localhost:5000/api/notify-slack", {
+      await fetch("https://portfolioazhizen-backend.onrender.com/api/notify-slack", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
