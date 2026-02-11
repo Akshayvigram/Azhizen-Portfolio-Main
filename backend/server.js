@@ -25,20 +25,29 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://azhizen-portfolio-main.vercel.app",
-  "https://www.azhizen.com/",
-  "azhizen.com"
+  "https://www.azhizen.com",
+  "https://azhizen.com"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    console.log("Incoming origin:", origin); // 🔥 debug log
+
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS: " + origin));
     }
   },
   methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
 }));
+
+// ✅ VERY IMPORTANT — handle preflight
+app.options("*", cors());
+
 
 // Parse JSON
 app.use(express.json());
