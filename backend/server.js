@@ -25,7 +25,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://azhizen-portfolio-main.vercel.app",
-  "https://www.azhizen.com/"
+  "https://www.azhizen.com/",
+  "azhizen.com"
 ];
 
 app.use(cors({
@@ -36,7 +37,7 @@ app.use(cors({
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
 }));
 
 // Parse JSON
