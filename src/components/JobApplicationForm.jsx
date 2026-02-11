@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from './firebase';
 import { getDatabase, ref, set, push } from 'firebase/database';
+import { ArrowLeft } from "lucide-react";
+
 
 const JobApplicationForm = () => {
   const location = useLocation();
@@ -16,6 +18,7 @@ const JobApplicationForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleAddExperience = () => {
     setExperience([...experience, { company: '', role: '', years: '' }]);
@@ -116,6 +119,20 @@ const JobApplicationForm = () => {
         appliedAt: Date.now(), // use Date.now() for RTDB
       });
 
+      await fetch("http://localhost:5000/api/notify-slack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jobTitle: job.title,
+          firstName: formFields.firstName,
+          lastName: formFields.lastName,
+          email: formFields.email,
+          phone: formFields.phone,
+          experienceCount: experience.length
+        })
+      });
+
+
       setSuccess('Your application has been successfully submitted!');
       setExperience([]);
       setEducation([]);
@@ -149,27 +166,32 @@ const JobApplicationForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-2 sm:px-4 mt-35">
       <div className="w-full max-w-5xl bg-white p-4 sm:p-6 lg:p-12">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium hover:bg-gray-100 hover:shadow-md transition-all duration-200"
+        >
+          ← Back
+        </button>
         <h1 className="text-xl sm:text-2xl md:text-4xl font-medium text-black mb-6">{job.title}</h1>
 
         {/* Popup for Success/Error Messages */}
         {(success || error) && (
-<div className="fixed top-4 inset-x-0 flex justify-center z-50 px-4">
-  <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 flex items-start gap-2 max-w-sm w-full sm:w-auto">
-    <span
-      className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
-        success ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-      } text-sm`}
-    >
-      {success ? '✔' : '✘'}
-    </span>
-    <div>
-      <h3 className="text-sm font-semibold text-gray-900">
-        {success ? 'Success' : 'Submission Error'}
-      </h3>
-      <p className="text-sm text-gray-600 mt-1">{success || error}</p>
-    </div>
-  </div>
-</div>
+          <div className="fixed top-4 inset-x-0 flex justify-center z-50 px-4">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 flex items-start gap-2 max-w-sm w-full sm:w-auto">
+              <span
+                className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${success ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                  } text-sm`}
+              >
+                {success ? '✔' : '✘'}
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900">
+                  {success ? 'Success' : 'Submission Error'}
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">{success || error}</p>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Personal Info */}

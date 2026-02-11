@@ -5,6 +5,7 @@
       "level": "Freshers",
       "type": "Onsite",
       "shift": "Day",
+      "images" :[],
       "responsibilities": [
         "Design and develop scalable software applications using modern development frameworks like React,Angular,Node etc.,.",
         "Write clean, efficient, and well-documented code.",
@@ -27,6 +28,7 @@
       "level": "Freshers",
       "type": "Onsite",
       "shift": "Day",
+      "images":[],
       "responsibilities": [
         "Design intuitive, user-centered interfaces for digital products.",
         "Create wireframes, mockups, and prototypes using tools like Figma or Adobe XD.",
