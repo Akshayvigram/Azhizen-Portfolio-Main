@@ -45,8 +45,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type"]
 }));
 
-// ✅ VERY IMPORTANT — handle preflight
-app.options("*", cors());
+
 
 
 // Parse JSON
