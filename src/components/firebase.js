@@ -8,7 +8,7 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBfSOzUQPmXfjDqxnSRvO1JlZW8cbFEc8k",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "azhizen-solutions-portfolio.firebaseapp.com",
   databaseURL: "https://azhizen-solutions-portfolio-default-rtdb.firebaseio.com/",
   projectId: "azhizen-solutions-portfolio",
