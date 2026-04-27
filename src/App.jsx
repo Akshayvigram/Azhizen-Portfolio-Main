@@ -1,26 +1,30 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import { Routes,Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Main from "./Main/Main";
 import ContactForm from "./components/ContactForm";
 import FooterSection from "./components/FooterSection";
 import Careers from "./components/Careers";
-import Aboutus from "./components/Aboutus";
 import JobApplicationForm from "./components/JobApplicationForm";
 
 const App = () => {
+  const location = useLocation();
+  const isContactPage = location.pathname === "/contact-us";
+
   return (
     <div className="font-sans">
-      <Navbar />
-     
+      {/* Contact page has its own embedded navbar in the hero */}
+      {!isContactPage && <Navbar />}
+
       <Routes>
-        <Route path="/" element={<Main/>}/>
-        <Route path="/contact-us" element={<ContactForm/>}/>
-        <Route path="/about-us" element={<Aboutus/>}/>
-        <Route path="/carrer" element={<Careers/>}/>
+        <Route path="/" element={<Main />} />
+        <Route path="/contact-us" element={<ContactForm />} />
+        <Route path="/carrer" element={<Careers />} />
         <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
       </Routes>
-     <FooterSection/>
+
+      {/* Contact page renders its own footer */}
+      {!isContactPage && <FooterSection />}
     </div>
   );
 };

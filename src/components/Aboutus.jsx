@@ -1,152 +1,276 @@
 import React from "react";
-import ceo from '../assets/ceo.webp';
-import ourstory from '../assets/ourstory.webp';
-import Aboutus1 from '../assets/Aboutus1.webp';
 
+/* ─── Icons ──────────────────────────────────────────────── */
+const AwardIcon = () => (
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="36" height="36" rx="8" fill="#EFF6FF" />
+    <path d="M18 8L20.5 14.5H27L22 18.5L24 25L18 21L12 25L14 18.5L9 14.5H15.5L18 8Z"
+      stroke="#1877F2" strokeWidth="1.8" strokeLinejoin="round" fill="none" />
+    <rect x="14" y="25" width="8" height="2" rx="1" fill="#1877F2" />
+    <rect x="16" y="27" width="4" height="2" rx="1" fill="#1877F2" />
+  </svg>
+);
 
+const CertifiedIcon = () => (
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="36" height="36" rx="8" fill="#EFF6FF" />
+    <circle cx="18" cy="17" r="8" stroke="#1877F2" strokeWidth="1.8" fill="none" />
+    <path d="M14 17L17 20L22 14" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M13 23L11 27M23 23L25 27" stroke="#1877F2" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+/* ─── About Us Page ───────────────────────────────────────── */
 const Aboutus = () => {
   return (
-    <div className="bg-white w-full overflow-y-auto overflow-x-hidden">
-      {/* Debug Section */}
-      <div className="md:hidden bg-red-200 p-4 text-center">
-        <p className="text-gray-800 font-bold">Mobile View (Debug)</p>
-      </div>
-      <div className="hidden md:block bg-blue-200 p-4 text-center">
-        <p className="text-gray-800 font-bold">Desktop View (Debug)</p>
-      </div>
+    <div className="bg-white w-full overflow-x-hidden">
 
-      {/* Desktop Views */}
-      <div className="hidden md:block">
-        {/* First Page */}
-        <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 lg:py-16 2xl:py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12 2xl:px-16 w-full max-w-7xl 2xl:max-w-[1920px]">
-            <div className="flex flex-row justify-between items-center gap-8 2xl:gap-12 w-full mx-auto">
-              <div className="md:w-1/2">
-                <p className="text-[#111212] font-bold text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl uppercase tracking-widest mb-3 2xl:mb-4">
-                  Pioneer | Produce | Propel
-                </p>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-gray-900 mb-4 2xl:mb-6">
-                  About <span className="text-[#00B4D9]">Azhizen</span>
-                </h1>
-                <p className="text-gray-600 text-sm sm:text-base lg:text-lg 2xl:text-xl leading-relaxed max-w-md lg:max-w-lg 2xl:max-w-xl">
-                  Welcome to Azhizen, where innovation meets excellence! Founded with a vision to revolutionize biomedical and engineering solutions, we are dedicated to R&D, manufacturing, and cutting-edge product development. Our expertise spans across biomedical devices, medical technology, animal husbandry machines, AI/ML, edutech, and green tech. Whether it’s crafting advanced healthcare solutions, developing automation systems, or offering high-quality visual and design services, we are committed to transforming ideas into reality.
-                </p>
-              </div>
-              <div className="md:w-1/2 flex justify-end">
-                <img
-                  src={Aboutus1}
-                  alt="About Azhizen"
-                  className="rounded-lg w-full max-w-sm lg:max-w-md 2xl:max-w-lg h-auto object-cover"
-                />
-              </div>
+      <section
+        style={{
+          position: "relative",
+          padding: "80px 0 100px",
+          overflow: "hidden",
+          background: "#fff",
+        }}
+      >
+        {/* Circuit — top right */}
+        <img
+          src="/image 650.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "260px",
+            opacity: 0.9,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        />
+
+        {/* Circuit — bottom left (flipped) */}
+        <img
+          src="/image 650.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "220px",
+            opacity: 0.9,
+            transform: "rotate(180deg)",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        />
+
+        <div
+          style={{
+            maxWidth: "1180px",
+            margin: "0 auto",
+            padding: "0 40px",
+            display: "flex",
+            alignItems: "center",
+            gap: "72px",
+            position: "relative",
+            zIndex: 1,
+            width: "100%",
+          }}
+        >
+          {/* ── LEFT: Photo + Satisfaction Card ── */}
+          <div
+            style={{
+              flexShrink: 0,
+              position: "relative",
+              width: "430px",
+            }}
+          >
+            {/* Team Photo */}
+            <img
+              src="/image 649.png"
+              alt="Azhizen Team"
+              style={{
+                width: "100%",
+                height: "350px",
+                objectFit: "cover",
+                borderRadius: "16px",
+                display: "block",
+              }}
+            />
+
+            {/* 100% Satisfaction card — overlapping bottom-right */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-28px",
+                right: "-28px",
+                width: "165px",
+                height: "165px",
+                borderRadius: "16px",
+                overflow: "hidden",
+                boxShadow: "0 8px 24px rgba(24,119,242,0.35)",
+              }}
+            >
+              <img
+                src="/Group 407.png"
+                alt="100% Overall client satisfaction"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </div>
           </div>
-        </div>
 
-        {/* Second Page */}
-        <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 lg:py-16 2xl:py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12 2xl:px-16 w-full max-w-7xl 2xl:max-w-[1920px]">
-            <div className="flex flex-row justify-between items-center gap-8 2xl:gap-12 w-full mx-auto">
-              <div className="md:w-1/2 flex justify-start">
-                <div className="relative w-full max-w-sm lg:max-w-md 2xl:max-w-lg">
-                  <img
-                    src={ceo}
-                    alt="CEO Bharath R"
-                    className="w-full rounded-[20px] h-80 lg:h-96 2xl:h-[480px] object-cover"
+          {/* ── RIGHT: Content ── */}
+          <div style={{ flex: 1 }}>
+            {/* "About us" badge */}
+            <span
+              style={{
+                display: "inline-block",
+                background: "#1877F2",
+                color: "#fff",
+                fontSize: "13px",
+                fontWeight: "600",
+                padding: "4px 14px",
+                borderRadius: "4px",
+                marginBottom: "18px",
+                letterSpacing: "0.02em",
+              }}
+            >
+              About us
+            </span>
+
+            {/* Heading */}
+            <h1
+              style={{
+                fontSize: "36px",
+                fontWeight: "700",
+                color: "#111827",
+                lineHeight: "1.25",
+                marginBottom: "16px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Scaling{" "}
+              <span style={{ color: "#1877F2" }}>Engineering Teams</span>
+              <br />
+              for Growing IT Companies
+            </h1>
+
+            {/* Subtext */}
+            <p
+              style={{
+                color: "#4B5563",
+                fontSize: "15px",
+                lineHeight: "1.75",
+                marginBottom: "22px",
+                maxWidth: "480px",
+              }}
+            >
+              Helping IT Companies Scale faster with expert engineering talent
+              and flexible development support.
+            </p>
+
+            {/* Bullet points */}
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: "0 0 32px 0",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+              }}
+            >
+              {[
+                "24/7 Call Service Support",
+                "Expert Team Members",
+                "faster project Completion",
+              ].map((item) => (
+                <li
+                  key={item}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    color: "#374151",
+                    fontSize: "15px",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: "7px",
+                      height: "7px",
+                      borderRadius: "50%",
+                      backgroundColor: "#1877F2",
+                      flexShrink: 0,
+                    }}
                   />
-                  <div className="absolute top-16 lg:top-20 2xl:top-24 left-28 lg:left-32 2xl:left-40 bg-white shadow-md rounded-[10px] p-3 2xl:p-4 w-36 2xl:w-44 flex flex-col justify-center ml-60 2xl:ml-80">
-                    <p className="text-sm 2xl:text-base text-center font-semibold text-gray-900">Mr. Bharath R</p>
-                    <p className="text-sm 2xl:text-base text-center font-medium text-[#00B4D9]">CEO - Azhizen</p>
-                  </div>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            {/* Feature Cards row */}
+            <div style={{ display: "flex", gap: "36px", flexWrap: "wrap" }}>
+              {/* Award Ceremony */}
+              <div style={{ display: "flex", gap: "12px", maxWidth: "230px" }}>
+                <div style={{ flexShrink: 0, marginTop: "2px" }}>
+                  <AwardIcon />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontWeight: "700",
+                      color: "#111827",
+                      fontSize: "15px",
+                      marginBottom: "5px",
+                      margin: "0 0 5px 0",
+                    }}
+                  >
+                    Award Ceremony
+                  </p>
+                  <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+                    Proud recepient of industry for innovation and excellence in
+                    It Service
+                  </p>
                 </div>
               </div>
-              <div className="md:w-1/2">
-                <p className="text-[#00B4D9] text-lg 2xl:text-xl uppercase tracking-widest font-bold mb-3 2xl:mb-4">OUR MISSION</p>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-gray-900 mb-4 2xl:mb-6">
-                  Solutions that stick with you <span className="text-[#00B4D9]">always</span>
-                </h1>
-                <p className="text-gray-600 text-sm sm:text-base lg:text-lg 2xl:text-xl leading-relaxed mb-6 2xl:mb-8 max-w-md lg:max-w-lg 2xl:max-w-xl">
-                  At Azhizen, we transform bold ideas into groundbreaking realities with creativity, integrity, and a passion for quality. We exceed expectations, delivering innovative biomedical, engineering, and tech solutions that shape a smarter, sustainable future—one project at a time.
-                </p>
-                <button className="text-white px-5 2xl:px-6 py-2.5 2xl:py-3 rounded-[68px] font-semibold text-base 2xl:text-lg bg-[linear-gradient(141deg,#0078B4_3.61%,#00B4D9_95.89%)] hover:opacity-90">
-                  Join Our Team
-                </button>
+
+              {/* Certified Company */}
+              <div style={{ display: "flex", gap: "12px", maxWidth: "230px" }}>
+                <div style={{ flexShrink: 0, marginTop: "2px" }}>
+                  <CertifiedIcon />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontWeight: "700",
+                      color: "#111827",
+                      fontSize: "15px",
+                      margin: "0 0 5px 0",
+                    }}
+                  >
+                    Certified Company
+                  </p>
+                  <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+                    Trusted and Certified for delivering quality IT Solutions.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Third Page */}
-        <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 lg:py-16 2xl:py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12 2xl:px-16 w-full max-w-7xl 2xl:max-w-[1920px]">
-            <div className="flex flex-row justify-between items-center gap-8 2xl:gap-12 w-full mx-auto">
-              <div className="md:w-1/2">
-                <p className="text-[#00B4D9] text-lg 2xl:text-xl uppercase tracking-widest font-bold mb-3 2xl:mb-4">OUR STORY</p>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-gray-900 mb-4 2xl:mb-6">Roots that grow with you</h1>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-[#00B4D9] mb-4 2xl:mb-6">forever</h1>
-                <p className="text-gray-600 text-sm sm:text-base lg:text-lg 2xl:text-xl leading-relaxed max-w-md lg:max-w-lg 2xl:max-w-xl">
-                  It began with a simple idea in 2025: Bharathkumar Ramachandiran saw a need for innovation and automation and decided to act. From a home office, we’ve grown into a company that’s helped 50 clients across the state. Our journey’s fueled by passion, grit, and a promise to stand by you—every step of the way.
-                </p>
-              </div>
-              <div className="md:w-1/2 flex justify-end">
-                <img
-                  src={ourstory}
-                  alt="Azhizen Team"
-                  className="rounded-[20px] w-full max-w-sm lg:max-w-md 2xl:max-w-lg h-80 lg:h-96 2xl:h-[480px] object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Responsive styles */}
+        <style>{`
+          @media (max-width: 900px) {
+            .about-inner { flex-direction: column !important; gap: 60px !important; }
+            .about-photo  { width: 100% !important; }
+          }
+        `}</style>
+      </section>
 
-      {/* Mobile View */}
-      <div className="md:hidden px-4 space-y-6 pt-20 pb-8 sm:pt-24 sm:pb-12">
-        {/* About */}
-        <div className="text-center">
-          <p className="text-[#00B4D9] font-bold text-lg sm:text-xl uppercase tracking-widest mb-2 sm:mb-3">
-            Pioneer | Produce | Propel
-          </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">About Our Company</h1>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#00B4D9] mb-2 sm:mb-3">Azhizen</h2>
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-            Welcome to Azhizen, where innovation meets excellence! Founded with a vision to revolutionize biomedical and engineering solutions, we are dedicated to R&D, manufacturing, and cutting-edge product development. Our expertise spans across biomedical devices, medical technology, animal husbandry machines, AI/ML, edutech, and green tech. Whether it’s crafting advanced healthcare solutions, developing automation systems, or offering high-quality visual and design services, we are committed to transforming ideas into reality.
-          </p>
-          <img src={Aboutus1} alt="About Azhizen" className="rounded-lg max-w-[250px] sm:max-w-[300px] mx-auto mt-3 sm:mt-4 object-cover" />
-        </div>
-
-        {/* Mission */}
-        <div className="text-center">
-          <p className="text-[#00B4D9] text-lg sm:text-xl uppercase tracking-widest font-bold mb-2 sm:mb-3">OUR MISSION</p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-            Solutions that stick with you <span className="text-[#00B4D9]">always</span>
-          </h1>
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
-            At Azhizen, we transform bold ideas into groundbreaking realities with creativity, integrity, and a passion for quality. We exceed expectations, delivering innovative biomedical, engineering, and tech solutions that shape a smarter, sustainable future—one project at a time.
-          </p>
-          <button className="text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-[68px] font-semibold text-sm sm:text-base mb-4 sm:mb-6 bg-[linear-gradient(141deg,#0078B4_3.61%,#00B4D9_95.89%)] hover:opacity-90">
-            Join Our Team
-          </button>
-          <div className="relative w-[250px] sm:w-[300px] mx-auto h-56 sm:h-64">
-            <img src={ceo} alt="CEO Bharath R" className="w-full h-full rounded-[6px] object-cover" />
-            <div className="absolute top-16 sm:top-20 left-32 sm:left-40 bg-white shadow-md rounded-[10px] p-2 sm:p-3 w-24 sm:w-28 flex flex-col justify-center ml-20 sm:ml-24">
-              <p className="text-xs sm:text-sm font-semibold text-gray-900">Mr. Bharath R</p>
-              <p className="text-xs sm:text-sm font-medium text-[#00B4D9]">CEO - Azhizen</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Story */}
-        <div className="text-center">
-          <p className="text-[#00B4D9] text-lg sm:text-xl uppercase tracking-widest font-bold mb-2 sm:mb-3">OUR STORY</p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Roots that grow with you</h1>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#00B4D9] mb-2 sm:mb-3">forever</h1>
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-            It began with a simple idea in 2025: Bharathkumar Ramachandiran saw a need for innovation and automation and decided to act. From a home office, we’ve grown into a company that’s helped 50 clients across the state. Our journey’s fueled by passion, grit, and a promise to stand by you—every step of the way.
-          </p>
-          <img src={ourstory} alt="Azhizen Team" className="rounded-[20px] max-w-[250px] sm:max-w-[300px] mx-auto mt-3 sm:mt-4 object-cover" />
-        </div>
-      </div>
     </div>
   );
 };
