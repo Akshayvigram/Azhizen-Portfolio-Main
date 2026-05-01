@@ -51,7 +51,7 @@ function ContactNavbar() {
           maxWidth: '1280px',
           margin: '0 auto',
           width: '100%',
-          left: '50%',
+          //left: '50%',
           transform: 'translateX(-50%)',
         }}
         className="cn-desktop-bar"
