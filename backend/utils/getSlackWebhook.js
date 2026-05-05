@@ -14,6 +14,7 @@ async function getSlackWebhook() {
   });
 
   const response = await client.send(command);
+  // const response = "https://hooks.slack.com/services/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"
 
   // Secret stored as key-value JSON
   const secret = JSON.parse(response.SecretString);

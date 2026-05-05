@@ -26,7 +26,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://azhizen-portfolio-main.vercel.app",
   "https://www.azhizen.com",
-  "https://azhizen.com"
+  "https://azhizen.com",
+  "http://localhost:5000"
 ];
 
 app.use(cors({

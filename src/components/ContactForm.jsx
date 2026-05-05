@@ -4,6 +4,7 @@ import { db, realtimeDb } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, push, set } from 'firebase/database';
 import FooterSection from './FooterSection';
+import Navbar from './Navbar';
 
 const NAV_LINKS = [
   { name: 'Home',     path: '/' },
@@ -280,7 +281,8 @@ function ContactForm() {
           />
 
           {/* ── NAVBAR sits over the photo ── */}
-          <ContactNavbar />
+          {/* <ContactNavbar /> */}
+          <Navbar />
 
           {/* White diagonal cut at bottom */}
           <div

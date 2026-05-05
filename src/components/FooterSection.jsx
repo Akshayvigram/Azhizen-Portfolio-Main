@@ -29,7 +29,7 @@ const FooterSection = () => {
               <img src="/ri_whatsapp-line.png" alt="WhatsApp" className="w-[20px] h-[20px] object-contain" />
             </a>
             <a href="#" className="hover:opacity-80 transition-opacity">
-              <img src="/yt.jpg" alt="YouTube" className="w-[20px] h-[20px] object-contain" />
+              <img src="/yt.png" alt="YouTube" className="w-[20px] h-[20px] object-contain" />
             </a>
           </div>
         </div>
@@ -63,11 +63,11 @@ const FooterSection = () => {
           <ul className="space-y-5 text-[15px] font-medium text-[#F3F0E0]">
             <li className="flex items-start gap-4">
               <img src="/Vector (1).png" alt="Call" className="w-[18px] h-[18px] mt-0.5 object-contain" />
-              <span>91+9998887776</span>
+              <span>+91 9750603988</span>
             </li>
             <li className="flex items-start gap-4">
               <img src="/material-symbols-light_mail-outline-rounded.png" alt="Mail" className="w-5 h-5 object-contain" />
-              <span>Azhizensolutions@Gmail.Com</span>
+              <span>azhizensolutions@gmail.com</span>
             </li>
             <li className="flex items-start gap-4">
               <img src="/bytesize_location.png" alt="Location" className="w-5 h-5 mt-1 object-contain" />

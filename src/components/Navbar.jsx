@@ -4,8 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 const NAV_LINKS = [
   { name: "Home",     path: "/" },
   { name: "Service",  path: "/", scrollTo: "services" },
-  { name: "Course",   path: "/course" },
-  { name: "About us", path: "/", scrollTo: "about-us" },
+  // { name: "Course",   path: "/course" },
+  { name: "About us", path: "/about"},
   { name: "Contact",  path: "/contact-us" },
   { name: "Career",   path: "/carrer" },
 ];

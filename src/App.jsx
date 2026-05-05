@@ -6,6 +6,7 @@ import ContactForm from "./components/ContactForm";
 import FooterSection from "./components/FooterSection";
 import Careers from "./components/Careers";
 import JobApplicationForm from "./components/JobApplicationForm";
+import AboutUsPage from "./components/AboutUsPage";
 
 const App = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact-us" element={<ContactForm />} />
         <Route path="/carrer" element={<Careers />} />
         <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
