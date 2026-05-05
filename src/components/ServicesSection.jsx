@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SERVICES = [
   {
@@ -25,6 +26,7 @@ const SERVICES = [
 ];
 
 const ServicesSection = () => {
+  const navigate = useNavigate();
   return (
     <section
       id="services"
@@ -53,10 +55,9 @@ const ServicesSection = () => {
             fontWeight: "400",
           }}
         >
-          these are the core service that we provide to you
+          These are the core service that we provide to you
         </p>
       </div>
-
       {/* ── Cards ── */}
       <div
         style={{
@@ -161,12 +162,46 @@ const ServicesSection = () => {
                 onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.15)")}
                 onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
               >
-                View Course
+                Explore
               </button>
             </div>
           </div>
         ))}
       </div>
+      {/* ── Bottom Redirect Button ── */}
+<div
+  style={{
+    textAlign: "center",
+    marginTop: "40px",
+  }}
+>
+ <button
+  onClick={() => navigate("/services")}   // ✅ THIS IS THE REDIRECTION
+  style={{
+    padding: "14px 32px",
+    background: "#1877F2",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "8px",
+    fontSize: "16px",
+    fontWeight: "600",
+    cursor: "pointer",
+    letterSpacing: "0.02em",
+    transition: "all 0.25s ease",
+    boxShadow: "0 6px 18px rgba(24,119,242,0.3)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = "translateY(-2px)";
+    e.currentTarget.style.boxShadow = "0 10px 28px rgba(24,119,242,0.4)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = "translateY(0)";
+    e.currentTarget.style.boxShadow = "0 6px 18px rgba(24,119,242,0.3)";
+  }}
+>
+  Explore All →
+</button>
+</div>
 
       {/* Responsive */}
       <style>{`

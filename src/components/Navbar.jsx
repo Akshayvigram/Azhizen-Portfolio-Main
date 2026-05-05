@@ -19,7 +19,7 @@ const Navbar = () => {
 
   /* close mobile menu on route change */
   useEffect(() => {
-    setIsOpen(false);
+    setIsOpen(false);  
   }, [location]);
 
   /* subtle box-shadow on scroll */
