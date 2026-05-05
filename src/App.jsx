@@ -7,6 +7,7 @@ import FooterSection from "./components/FooterSection";
 import Careers from "./components/Careers";
 import JobApplicationForm from "./components/JobApplicationForm";
 import AboutUsPage from "./components/AboutUsPage";
+import ServicePage from "./components/Servicepage";
 
 const App = () => {
   const location = useLocation();
@@ -23,11 +24,13 @@ const App = () => {
         <Route path="/contact-us" element={<ContactForm />} />
         <Route path="/carrer" element={<Careers />} />
         <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
+        <Route path="/services" element={<ServicePage />} />
       </Routes>
 
       {/* Contact page renders its own footer */}
       {!isContactPage && <FooterSection />}
     </div>
+
   );
 };
 
