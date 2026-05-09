@@ -7,7 +7,7 @@ import FooterSection from "./components/FooterSection";
 import Careers from "./components/Careers";
 import JobApplicationForm from "./components/JobApplicationForm";
 import AboutUsPage from "./components/AboutUsPage";
-import ServicePage from "./components/Temp"
+import ServicePage from "./components/ServicePage"
 
 const App = () => {
   const location = useLocation();
