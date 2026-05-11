@@ -6,8 +6,9 @@ const NAV_LINKS = [
   { name: "Service",  path: "/", scrollTo: "services" },
   // { name: "Course",   path: "/course" },
   { name: "About us", path: "/about"},
-  { name: "Contact",  path: "/contact-us" },
   { name: "Career",   path: "/carrer" },
+  { name: "Contact",  path: "/contact-us" },
+
 ];
 
 const Navbar = () => {
@@ -19,7 +20,7 @@ const Navbar = () => {
 
   /* close mobile menu on route change */
   useEffect(() => {
-    setIsOpen(false);  
+    setIsOpen(false);
   }, [location]);
 
   /* subtle box-shadow on scroll */
@@ -142,7 +143,7 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* ── Switch to Diary Tech Button ── */}
+        {/* ── Switch to Diary Tech Button ──
         <a
           href="https://diarytech.in"
           target="_blank"
@@ -175,7 +176,7 @@ const Navbar = () => {
         >
           Switch to Diary Tech
           <span style={{ fontSize: "16px", lineHeight: 1, fontWeight: "700" }}>⇄</span>
-        </a>
+        </a> */}
 
         {/* ── Mobile Hamburger ── */}
         <button

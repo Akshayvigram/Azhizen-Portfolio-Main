@@ -27,140 +27,149 @@ const SERVICES = [
 
 const ServicesSection = () => {
   const navigate = useNavigate();
+
   return (
     <section
       id="services"
-      style={{
-        background: "#0B1120",
-        padding: "72px 32px 80px",
-      }}
+      className="
+        min-h-screen
+        px-8
+        pt-[72px]
+        pb-[80px]
+        bg-gradient-to-b
+        from-[#1976D2]
+        via-[#8BB8F2]
+        to-[#F4F8FF]
+        font-[Poppins]
+      "
     >
       {/* ── Heading ── */}
-      <div style={{ textAlign: "center", marginBottom: "52px" }}>
+      <div className="text-center mb-[52px]">
         <h2
-          style={{
-            color: "#ffffff",
-            fontSize: "38px",
-            fontWeight: "700",
-            fontFamily: "Poppins, sans-serif",
-            marginBottom: "12px",
-          }}
+          className="
+            text-[#0F172A]
+            text-[38px]
+            font-bold
+            mb-3
+            font-[Poppins]
+          "
         >
           Our Service
         </h2>
+
         <p
-          style={{
-            color: "#94A3B8",
-            fontSize: "15px",
-            fontWeight: "400",
-          }}
+          className="
+            text-[#4B5D79]
+            text-[15px]
+            font-medium
+            font-[Poppins]
+          "
         >
           These are the core service that we provide to you
         </p>
       </div>
+
       {/* ── Cards ── */}
       <div
-        style={{
-          display: "flex",
-          gap: "28px",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          maxWidth: "1180px",
-          margin: "0 auto",
-        }}
+        className="
+          flex
+          gap-7
+          justify-center
+          flex-wrap
+          max-w-[1180px]
+          mx-auto
+        "
       >
         {SERVICES.map(({ id, image, title, description }) => (
           <div
             key={id}
-            style={{
-              background: "#131C2E",
-              borderRadius: "16px",
-              overflow: "hidden",
-              width: "320px",
-              flexShrink: 0,
-              display: "flex",
-              flexDirection: "column",
-              transition: "transform 0.25s, box-shadow 0.25s",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-              cursor: "default",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-6px)";
-              e.currentTarget.style.boxShadow = "0 12px 36px rgba(24,119,242,0.25)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.4)";
-            }}
+            className="
+              bg-[#EEF4FF]
+              rounded-[22px]
+              overflow-hidden
+              w-[320px]
+              shrink-0
+              flex
+              flex-col
+              border
+              border-[#D7E6FF]
+              transition-all
+              duration-300
+              shadow-[0_10px_30px_rgba(59,130,246,0.10)]
+              cursor-default
+              hover:-translate-y-[6px]
+              hover:shadow-[0_16px_40px_rgba(37,99,235,0.18)]
+            "
           >
             {/* Image */}
-            <div style={{ width: "100%", height: "240px", overflow: "hidden" }}>
+            <div className="w-full h-[240px] overflow-hidden rounded-t-[22px]">
               <img
                 src={image}
                 alt={title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
+                className="
+                  w-full
+                  h-full
+                  object-cover
+                  block
+                "
               />
             </div>
 
             {/* Content */}
             <div
-              style={{
-                padding: "24px 20px 28px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                flex: 1,
-              }}
+              className="
+                p-[24px_20px_28px]
+                flex
+                flex-col
+                gap-[10px]
+                flex-1
+              "
             >
               <h3
-                style={{
-                  color: "#ffffff",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  margin: 0,
-                  fontFamily: "Poppins, sans-serif",
-                }}
+                className="
+                  text-[#183B78]
+                  text-[14px]
+                  font-bold
+                  tracking-[0.06em]
+                  uppercase
+                  m-0
+                  font-[Poppins]
+                "
               >
                 {title}
               </h3>
+
               <p
-                style={{
-                  color: "#94A3B8",
-                  fontSize: "13px",
-                  lineHeight: "1.65",
-                  margin: 0,
-                  flex: 1,
-                  textAlign: "center",
-                }}
+                className="
+                  text-[#5B6B88]
+                  text-[13px]
+                  leading-[1.65]
+                  m-0
+                  flex-1
+                  text-center
+                  font-[Poppins]
+                "
               >
                 {description}
               </p>
 
-              {/* View Course button */}
+              {/* Explore Button */}
               <button
-                style={{
-                  marginTop: "14px",
-                  width: "100%",
-                  padding: "11px 0",
-                  background: "#1877F2",
-                  color: "#ffffff",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  letterSpacing: "0.01em",
-                  transition: "filter 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.15)")}
-                onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
+                className="
+                  mt-[14px]
+                  w-full
+                  py-[12px]
+                  bg-[#2563EB]
+                  text-white
+                  rounded-[10px]
+                  text-[15px]
+                  font-semibold
+                  tracking-[0.01em]
+                  transition-all
+                  duration-300
+                  hover:bg-[#1D4ED8]
+                  font-[Poppins]
+                "
               >
                 Explore
               </button>
@@ -168,54 +177,32 @@ const ServicesSection = () => {
           </div>
         ))}
       </div>
-      {/* ── Bottom Redirect Button ── */}
-<div
-  style={{
-    textAlign: "center",
-    marginTop: "40px",
-  }}
->
- <button
-  onClick={() => navigate("/services")}   // ✅ THIS IS THE REDIRECTION
-  style={{
-    padding: "14px 32px",
-    background: "#1877F2",
-    color: "#ffffff",
-    border: "none",
-    borderRadius: "8px",
-    fontSize: "16px",
-    fontWeight: "600",
-    cursor: "pointer",
-    letterSpacing: "0.02em",
-    transition: "all 0.25s ease",
-    boxShadow: "0 6px 18px rgba(24,119,242,0.3)",
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.transform = "translateY(-2px)";
-    e.currentTarget.style.boxShadow = "0 10px 28px rgba(24,119,242,0.4)";
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.transform = "translateY(0)";
-    e.currentTarget.style.boxShadow = "0 6px 18px rgba(24,119,242,0.3)";
-  }}
->
-  Explore All →
-</button>
-</div>
 
-      {/* Responsive */}
-      <style>{`
-        @media (max-width: 768px) {
-          #services > div:last-child {
-            flex-direction: column;
-            align-items: center;
-          }
-          #services > div:last-child > div {
-            width: 100% !important;
-            max-width: 360px;
-          }
-        }
-      `}</style>
+      {/* ── Bottom Redirect Button ── */}
+      <div className="text-center mt-10">
+        <button
+          onClick={() => navigate("/services")}
+          className="
+            px-8
+            py-[14px]
+            bg-[#2563EB]
+            text-white
+            border-none
+            rounded-[10px]
+            text-[16px]
+            font-semibold
+            tracking-[0.02em]
+            transition-all
+            duration-300
+            shadow-[0_6px_18px_rgba(37,99,235,0.20)]
+            hover:-translate-y-[2px]
+            hover:shadow-[0_14px_34px_rgba(37,99,235,0.28)]
+            font-[Poppins]
+          "
+        >
+          Explore All →
+        </button>
+      </div>
     </section>
   );
 };

@@ -8,11 +8,15 @@ import Careers from "./components/Careers";
 import JobApplicationForm from "./components/JobApplicationForm";
 import AboutUsPage from "./components/AboutUsPage";
 import ServicePage from "./components/ServicePage"
+import { useEffect } from "react";
 
 const App = () => {
   const location = useLocation();
   const isContactPage = location.pathname === "/contact-us";
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   return (
     <div className="font-sans">
       {/* Contact page has its own embedded navbar in the hero */}
@@ -22,7 +26,7 @@ const App = () => {
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact-us" element={<ContactForm />} />
-        <Route path="/carrer" element={<Careers />} />
+        <Route path="/career" element={<Careers />} />
         <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
         <Route path="/services" element={<ServicePage />} />
       </Routes>
