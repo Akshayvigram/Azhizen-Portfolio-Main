@@ -76,7 +76,7 @@ const FooterSection = () => {
 
 <li>
   <Link
-    to="/carrer"
+    to="/career"
     className="hover:text-white transition-colors"
   >
     Career

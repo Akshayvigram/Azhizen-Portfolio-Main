@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { name: "Service",  path: "/", scrollTo: "services" },
   // { name: "Course",   path: "/course" },
   { name: "About us", path: "/about"},
-  { name: "Career",   path: "/carrer" },
+  { name: "Career",   path: "/career" },
   { name: "Contact",  path: "/contact-us" },
 
 ];
