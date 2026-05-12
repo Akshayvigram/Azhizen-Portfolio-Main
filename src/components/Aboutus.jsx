@@ -4,8 +4,13 @@ import React from "react";
 const AwardIcon = () => (
   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="36" height="36" rx="8" fill="#EFF6FF" />
-    <path d="M18 8L20.5 14.5H27L22 18.5L24 25L18 21L12 25L14 18.5L9 14.5H15.5L18 8Z"
-      stroke="#1877F2" strokeWidth="1.8" strokeLinejoin="round" fill="none" />
+    <path
+      d="M18 8L20.5 14.5H27L22 18.5L24 25L18 21L12 25L14 18.5L9 14.5H15.5L18 8Z"
+      stroke="#1877F2"
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+      fill="none"
+    />
     <rect x="14" y="25" width="8" height="2" rx="1" fill="#1877F2" />
     <rect x="16" y="27" width="4" height="2" rx="1" fill="#1877F2" />
   </svg>
@@ -15,157 +20,183 @@ const CertifiedIcon = () => (
   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="36" height="36" rx="8" fill="#EFF6FF" />
     <circle cx="18" cy="17" r="8" stroke="#1877F2" strokeWidth="1.8" fill="none" />
-    <path d="M14 17L17 20L22 14" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M13 23L11 27M23 23L25 27" stroke="#1877F2" strokeWidth="1.8" strokeLinecap="round" />
+    <path
+      d="M14 17L17 20L22 14"
+      stroke="#1877F2"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13 23L11 27M23 23L25 27"
+      stroke="#1877F2"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
 /* ─── About Us Page ───────────────────────────────────────── */
 const Aboutus = () => {
   return (
-    <div className="bg-white w-full overflow-x-hidden">
+    <div className="bg-white w-full overflow-x-hidden font-[Poppins]">
 
-      <section
-        style={{
-          position: "relative",
-          padding: "80px 0 100px",
-          overflow: "hidden",
-          background: "#fff",
-        }}
-      >
+      <section className="relative overflow-hidden bg-white py-[80px] md:py-[100px]">
+
         {/* Circuit — top right */}
         <img
           src="/image 650.png"
           alt=""
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "260px",
-            opacity: 0.9,
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
+          className="
+            absolute
+            top-0
+            right-0
+            w-[140px]
+            md:w-[260px]
+            opacity-90
+            pointer-events-none
+            select-none
+          "
         />
 
-        {/* Circuit — bottom left (flipped) */}
+        {/* Circuit — bottom left */}
         <img
           src="/image 650.png"
           alt=""
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "220px",
-            opacity: 0.9,
-            transform: "rotate(180deg)",
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
+          className="
+            absolute
+            bottom-0
+            left-0
+            w-[120px]
+            md:w-[220px]
+            opacity-90
+            rotate-180
+            pointer-events-none
+            select-none
+          "
         />
 
         <div
-          style={{
-            maxWidth: "1180px",
-            margin: "0 auto",
-            padding: "0 40px",
-            display: "flex",
-            alignItems: "center",
-            gap: "72px",
-            position: "relative",
-            zIndex: 1,
-            width: "100%",
-          }}
+          className="
+            relative
+            z-[1]
+            max-w-[1180px]
+            mx-auto
+            px-5
+            md:px-10
+            flex
+            flex-col
+            lg:flex-row
+            items-center
+            gap-[70px]
+          "
         >
-          {/* ── LEFT: Photo + Satisfaction Card ── */}
+
+          {/* ── LEFT: Image Section ── */}
           <div
-            style={{
-              flexShrink: 0,
-              position: "relative",
-              width: "430px",
-            }}
+            className="
+              relative
+              w-full
+              max-w-[430px]
+              shrink-0
+            "
           >
-            {/* Team Photo */}
+
+            {/* Main image */}
             <img
               src="/image 649.png"
               alt="Azhizen Team"
-              style={{
-                width: "100%",
-                height: "350px",
-                objectFit: "cover",
-                borderRadius: "16px",
-                display: "block",
-              }}
+              className="
+                w-full
+                h-[260px]
+                sm:h-[320px]
+                md:h-[350px]
+                object-cover
+                rounded-[16px]
+                block
+              "
             />
 
-            {/* 100% Satisfaction card — overlapping bottom-right */}
+            {/* Satisfaction card */}
             <div
-              style={{
-                position: "absolute",
-                bottom: "-28px",
-                right: "-28px",
-                width: "165px",
-                height: "165px",
-                borderRadius: "16px",
-                overflow: "hidden",
-                boxShadow: "0 8px 24px rgba(24,119,242,0.35)",
-              }}
+              className="
+                absolute
+                bottom-[-20px]
+                right-[-10px]
+                sm:right-[-20px]
+                md:right-[-28px]
+                w-[110px]
+                h-[110px]
+                sm:w-[135px]
+                sm:h-[135px]
+                md:w-[165px]
+                md:h-[165px]
+                rounded-[16px]
+                overflow-hidden
+                shadow-[0_8px_24px_rgba(24,119,242,0.35)]
+              "
             >
               <img
                 src="/Group 407.png"
                 alt="100% Overall client satisfaction"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
 
           {/* ── RIGHT: Content ── */}
-          <div style={{ flex: 1 }}>
-            {/* "About us" badge */}
+          <div className="flex-1 w-full">
+
+            {/* Badge */}
             <span
-              style={{
-                display: "inline-block",
-                background: "#1877F2",
-                color: "#fff",
-                fontSize: "13px",
-                fontWeight: "600",
-                padding: "4px 14px",
-                borderRadius: "4px",
-                marginBottom: "18px",
-                letterSpacing: "0.02em",
-              }}
+              className="
+                inline-block
+                bg-[#1877F2]
+                text-white
+                text-[13px]
+                font-semibold
+                px-[14px]
+                py-[4px]
+                rounded-[4px]
+                mb-[18px]
+                tracking-[0.02em]
+              "
             >
               About us
             </span>
 
             {/* Heading */}
             <h1
-              style={{
-                fontSize: "36px",
-                fontWeight: "700",
-                color: "#111827",
-                lineHeight: "1.25",
-                marginBottom: "16px",
-                fontFamily: "Poppins, sans-serif",
-              }}
+              className="
+                text-[30px]
+                sm:text-[34px]
+                md:text-[36px]
+                font-bold
+                text-[#111827]
+                leading-[1.25]
+                mb-4
+              "
             >
               Scaling{" "}
-              <span style={{ color: "#1877F2" }}>Engineering Teams</span>
+              <span className="text-[#1877F2]">
+                Engineering Teams
+              </span>
               <br />
               for Growing IT Companies
             </h1>
 
             {/* Subtext */}
             <p
-              style={{
-                color: "#4B5563",
-                fontSize: "15px",
-                lineHeight: "1.75",
-                marginBottom: "22px",
-                maxWidth: "480px",
-              }}
+              className="
+                text-[#4B5563]
+                text-[15px]
+                leading-[1.75]
+                mb-[22px]
+                max-w-[100%]
+                md:max-w-[480px]
+              "
             >
               Helping IT Companies Scale faster with expert engineering talent
               and flexible development support.
@@ -173,14 +204,14 @@ const Aboutus = () => {
 
             {/* Bullet points */}
             <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: "0 0 32px 0",
-                display: "flex",
-                flexDirection: "column",
-                gap: "12px",
-              }}
+              className="
+                list-none
+                p-0
+                mb-8
+                flex
+                flex-col
+                gap-3
+              "
             >
               {[
                 "24/7 Call Service Support",
@@ -189,48 +220,71 @@ const Aboutus = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    color: "#374151",
-                    fontSize: "15px",
-                  }}
+                  className="
+                    flex
+                    items-center
+                    gap-[10px]
+                    text-[#374151]
+                    text-[15px]
+                  "
                 >
                   <span
-                    style={{
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      backgroundColor: "#1877F2",
-                      flexShrink: 0,
-                    }}
+                    className="
+                      w-[7px]
+                      h-[7px]
+                      rounded-full
+                      bg-[#1877F2]
+                      shrink-0
+                    "
                   />
                   {item}
                 </li>
               ))}
             </ul>
 
-            {/* Feature Cards row */}
-            <div style={{ display: "flex", gap: "36px", flexWrap: "wrap" }}>
+            {/* Feature cards */}
+            <div
+              className="
+                flex
+                flex-col
+                sm:flex-row
+                flex-wrap
+                gap-6
+              "
+            >
+
               {/* Award Ceremony */}
-              <div style={{ display: "flex", gap: "12px", maxWidth: "230px" }}>
-                <div style={{ flexShrink: 0, marginTop: "2px" }}>
+              <div
+                className="
+                  flex
+                  gap-3
+                  w-full
+                  sm:max-w-[230px]
+                "
+              >
+                <div className="shrink-0 mt-[2px]">
                   <AwardIcon />
                 </div>
+
                 <div>
                   <p
-                    style={{
-                      fontWeight: "700",
-                      color: "#111827",
-                      fontSize: "15px",
-                      marginBottom: "5px",
-                      margin: "0 0 5px 0",
-                    }}
+                    className="
+                      font-bold
+                      text-[#111827]
+                      text-[15px]
+                      mb-[5px]
+                    "
                   >
                     Award Ceremony
                   </p>
-                  <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+
+                  <p
+                    className="
+                      text-[#6B7280]
+                      text-[13px]
+                      leading-[1.6]
+                    "
+                  >
                     Proud recepient of industry for innovation and excellence in
                     It Service
                   </p>
@@ -238,46 +292,52 @@ const Aboutus = () => {
               </div>
 
               {/* Certified Company */}
-              <div style={{ display: "flex", gap: "12px", maxWidth: "230px" }}>
-                <div style={{ flexShrink: 0, marginTop: "2px" }}>
+              <div
+                className="
+                  flex
+                  gap-3
+                  w-full
+                  sm:max-w-[230px]
+                "
+              >
+                <div className="shrink-0 mt-[2px]">
                   <CertifiedIcon />
                 </div>
+
                 <div>
                   <p
-                    style={{
-                      fontWeight: "700",
-                      color: "#111827",
-                      fontSize: "15px",
-                      margin: "0 0 5px 0",
-                    }}
+                    className="
+                      font-bold
+                      text-[#111827]
+                      text-[15px]
+                      mb-[5px]
+                    "
                   >
                     Certified Company
                   </p>
-                  <p style={{ color: "#6B7280", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+
+                  <p
+                    className="
+                      text-[#6B7280]
+                      text-[13px]
+                      leading-[1.6]
+                    "
+                  >
                     Trusted and Certified for delivering quality IT Solutions.
                   </p>
                 </div>
               </div>
+
             </div>
           </div>
+
         </div>
-
-        {/* Responsive styles */}
-        <style>{`
-          @media (max-width: 900px) {
-            .about-inner { flex-direction: column !important; gap: 60px !important; }
-            .about-photo  { width: 100% !important; }
-          }
-        `}</style>
       </section>
-
     </div>
   );
 };
 
 export default Aboutus;
-
-
 
 
 

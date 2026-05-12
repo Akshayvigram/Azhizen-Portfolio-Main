@@ -73,7 +73,7 @@ const AboutUsPage = () => {
                         At Azhizen, we transform bold ideas into groundbreaking realities with creativity, integrity, and a passion for quality. We exceed expectations, delivering innovative biomedical, engineering, and tech solutions that shape a smarter, sustainable future—one project at a time.
                     </p>
                     <Link
-                        to="/carrer"
+                        to="/career"
                         className="inline-block text-white font-semibold py-3 px-8 rounded-full transition-all hover:brightness-110"
                         style={{ background: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)" }}
                     >
