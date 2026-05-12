@@ -16,7 +16,16 @@ const TICKER_LOGOS = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS
 const Stars = ({ count = 5 }) => (
   <div style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
     {Array.from({ length: count }).map((_, i) => (
-      <span key={i} style={{ color: "#FF8A00", fontSize: "28px", lineHeight: 1 }}>★</span>
+      <span
+        key={i}
+        style={{
+          color: "#FF8A00",
+          fontSize: "28px",
+          lineHeight: 1,
+        }}
+      >
+        ★
+      </span>
     ))}
   </div>
 );
@@ -26,11 +35,17 @@ const ClientsSection = () => {
 
   return (
     <section style={{ background: "#fff", padding: "72px 0 0" }}>
-      {/* ── Heading (Optional, keeping for layout consistency) ── */}
-      <div style={{ textAlign: "center", marginBottom: "40px", padding: "0 20px" }}>
+      {/* ── Heading ── */}
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "40px",
+          padding: "0 20px",
+        }}
+      >
         <h2
           style={{
-            fontSize: "40px",
+            fontSize: "clamp(28px, 6vw, 40px)",
             fontWeight: "800",
             color: "#111827",
             fontFamily: "Poppins, sans-serif",
@@ -39,7 +54,14 @@ const ClientsSection = () => {
         >
           What Our Clients Say
         </h2>
-        <p style={{ color: "#6B7280", fontSize: "15px" }}>
+
+        <p
+          style={{
+            color: "#6B7280",
+            fontSize: "15px",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        >
           The Feedback And Reviews That Are Said By The Clients And Customer
         </p>
       </div>
@@ -49,7 +71,7 @@ const ClientsSection = () => {
         style={{
           maxWidth: "960px",
           margin: "0 auto",
-          padding: "0 24px",
+          padding: "0 20px",
         }}
       >
         <div
@@ -61,7 +83,7 @@ const ClientsSection = () => {
             background: "#E8F0FE",
           }}
         >
-          {/* background.png as the card background */}
+          {/* Background */}
           <img
             src="/background.png"
             alt=""
@@ -82,20 +104,19 @@ const ClientsSection = () => {
               position: "relative",
               zIndex: 1,
               display: "flex",
+              flexWrap: "wrap",
               alignItems: "center",
-              gap: "40px",
-              minHeight: "340px",
-              padding: "0",
+              gap: "32px",
+              padding: "24px",
             }}
           >
             {/* Left photo */}
             <div
               style={{
-                flexShrink: 0,
-                width: "320px",
-                height: "100%",
-                alignSelf: "stretch",
-                padding: "20px 0 20px 20px",
+                flex: "1 1 320px",
+                minWidth: "260px",
+                maxWidth: "360px",
+                margin: "0 auto",
               }}
             >
               <img
@@ -106,33 +127,41 @@ const ClientsSection = () => {
                   height: "100%",
                   objectFit: "cover",
                   display: "block",
+                  borderRadius: "6px",
                   boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
                 }}
               />
             </div>
 
             {/* Right content */}
-            <div style={{ padding: "40px 40px 40px 0", flex: 1 }}>
+            <div
+              style={{
+                flex: "1 1 320px",
+                minWidth: "260px",
+              }}
+            >
               <Stars count={5} />
+
               <p
                 style={{
                   color: "#1877F2",
                   fontWeight: "700",
-                  fontSize: "32px",
+                  fontSize: "clamp(26px, 5vw, 32px)",
                   marginBottom: "16px",
                   fontFamily: "Poppins, sans-serif",
                 }}
               >
                 Gladson
               </p>
+
               <p
                 style={{
                   color: "#111827",
-                  fontSize: "20px",
-                  lineHeight: "1.6",
-                  marginBottom: "32px",
+                  fontSize: "clamp(15px, 3vw, 20px)",
+                  lineHeight: "1.7",
+                  marginBottom: "28px",
                   fontStyle: "normal",
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Poppins, sans-serif",
                   fontWeight: "500",
                 }}
               >
@@ -140,8 +169,9 @@ const ClientsSection = () => {
                 Is Outstanding. From Planning To Execution, Everything Was
                 Handled Seamlessly.”
               </p>
+
               <button
-                onClick={() => navigate("/about-us")}
+                onClick={() => navigate("/about")}
                 style={{
                   background: "#F97316",
                   color: "#fff",
@@ -153,9 +183,14 @@ const ClientsSection = () => {
                   cursor: "pointer",
                   transition: "background 0.2s",
                   letterSpacing: "0.02em",
+                  fontFamily: "Poppins, sans-serif",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#EA580C")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "#F97316")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#EA580C")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "#F97316")
+                }
               >
                 Learn About Us
               </button>
@@ -164,7 +199,7 @@ const ClientsSection = () => {
         </div>
       </div>
 
-      {/* ── Marquee Logos Bottom Display ── */}
+      {/* ── Marquee Logos ── */}
       <div
         style={{
           marginTop: "52px",
@@ -181,7 +216,7 @@ const ClientsSection = () => {
             alignItems: "center",
             width: "max-content",
             gap: "80px",
-            paddingRight: "80px", // Helps with seamless looping gap
+            paddingRight: "80px",
             animation: "ticker-scroll 35s linear infinite",
           }}
         >
@@ -191,7 +226,7 @@ const ClientsSection = () => {
               src={src}
               alt={alt}
               style={{
-                height: customHeight || "44px", // Default 44px, but permits specific overrides
+                height: customHeight || "44px",
                 width: "auto",
                 objectFit: "contain",
                 opacity: 0.9,
@@ -204,14 +239,24 @@ const ClientsSection = () => {
       <style>{`
         @keyframes ticker-scroll {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); } 
+          100% { transform: translateX(-50%); }
         }
-        .logo-ticker:hover { animation-play-state: paused; }
+
+        .logo-ticker:hover {
+          animation-play-state: paused;
+        }
+
+        @media (max-width: 768px) {
+
+          .logo-ticker {
+            gap: 40px !important;
+            padding-right: 40px !important;
+          }
+
+        }
       `}</style>
     </section>
   );
 };
 
 export default ClientsSection;
-
-
