@@ -363,11 +363,19 @@ export default function ServicePage() {
 
       {/* HERO */}
       <div>
-        <img
-          src="/Frame 1183.png"
+      <img
+          src="/image1.png"
           alt="hero"
-          className="w-full h-auto object-contain"
-        />
+          className="
+          w-full
+          h-[220px]
+          sm:h-[300px]
+          md:h-[420px]
+          lg:h-[520px]
+          object-cover
+          block
+          "
+          />
       </div>
 
       {/* SECTION */}
@@ -425,24 +433,27 @@ export default function ServicePage() {
 
              <div className="flex justify-start">
   <button
-    className="
-              mt-3
-              px-6 py-3
-              !bg-[#D6DEE6]
-              !text-[#2C78C5]
-              border border-[#2C78C5]
-              rounded-lg
-              text-[16px]
-              font-medium
-              flex items-center gap-3
-              leading-none
-              transition-all duration-200
-              hover:bg-[#dbe6f2]
-              opacity-100
-              "
-  >
-    Read more →
-  </button>
+  className="
+    mt-3
+    px-8
+    py-[14px]
+    bg-gradient-to-r
+    from-[#2F80ED]
+    to-[#1366D6]
+    text-white
+    rounded-full
+    text-[16px]
+    font-medium
+    leading-none
+    transition-all
+    duration-200
+    shadow-[0_6px_18px_rgba(24,119,242,0.35)]
+    hover:scale-[1.02]
+    hover:shadow-[0_8px_22px_rgba(24,119,242,0.45)]
+  "
+>
+  Read more→
+</button>
               </div>
 
             </div>
