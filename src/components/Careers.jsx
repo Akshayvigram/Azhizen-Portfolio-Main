@@ -244,17 +244,34 @@ const Careers = () => {
               </div>
 
               {/* Right */}
-              <div className="flex flex-col gap-4">
-                {filtered.map((job) => (
-                  <JobCard key={job.id} job={job} onClick={() => openJob(job)} />
-                ))}
-                {filtered.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
-                    No roles match your search.
-                  </div>
-                )}
-              </div>
-            </div>
+              <div
+  className="
+    flex
+    flex-col
+    gap-4
+    h-[520px]
+    overflow-y-auto
+    pr-2
+     [scrollbar-width:none]
+    [-ms-overflow-style:none]
+    [&::-webkit-scrollbar]:hidden
+  "
+>
+  {filtered.map((job) => (
+    <JobCard
+      key={job.id}
+      job={job}
+      onClick={() => openJob(job)}
+    />
+  ))}
+
+  {filtered.length === 0 && (
+    <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
+      No roles match your search.
+    </div>
+  )}
+</div>
+</div>
 
             {/* Mobile skyline */}
             <div className="mt-10 lg:hidden">
