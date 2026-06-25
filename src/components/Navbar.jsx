@@ -4,19 +4,32 @@ import { useNavigate, useLocation } from "react-router-dom";
 const NAV_LINKS = [
   { name: "Home",     path: "/" },
   { name: "Service",  path: "/", scrollTo: "services" },
-  // { name: "Course",   path: "/course" },
+  { name: "Course",   path: "/course" },
   { name: "About us", path: "/about"},
   { name: "Career",   path: "/career" },
   { name: "Contact",  path: "/contact-us" },
-
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen]       = useState(false);
   const [scrolled, setScrolled]   = useState(false);
+  const [servicesHovered, setServicesHovered] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastAnchor, setToastAnchor] = useState("");
   const navigate  = useNavigate();
   const location  = useLocation();
   const currentPath = location.pathname;
+
+  const triggerToast = (serviceName, anchor) => {
+    setToastMessage(`${serviceName} is Coming Soon!`);
+    setToastAnchor(anchor);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3500);
+  };
 
   /* close mobile menu on route change */
   useEffect(() => {
@@ -98,6 +111,270 @@ const Navbar = () => {
         >
           {NAV_LINKS.map(({ name, path, scrollTo }) => {
             const active = !scrollTo && currentPath === path;
+            if (name === "Service") {
+              return (
+                <div
+                  key={name}
+                  onMouseEnter={() => setServicesHovered(true)}
+                  onMouseLeave={() => setServicesHovered(false)}
+                  style={{ position: "relative", display: "inline-block" }}
+                >
+                  <button
+                    onClick={() => handleNavClick({ path, scrollTo })}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px 0",
+                      fontSize: "15px",
+                      fontWeight: active ? "700" : "400",
+                      color: servicesHovered || active ? "#1877F2" : "#374151",
+                      letterSpacing: "0.01em",
+                      transition: "color 0.2s",
+                      position: "relative",
+                      fontFamily: "inherit",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    {name}
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{
+                        transform: servicesHovered ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.2s ease",
+                      }}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {servicesHovered && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        backgroundColor: "#ffffff",
+                        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.08)",
+                        borderRadius: "12px",
+                        padding: "8px 0",
+                        minWidth: "190px",
+                        zIndex: 100,
+                        border: "1px solid #f1f5f9",
+                      }}
+                    >
+                      <button
+                        onClick={() => triggerToast("Tech Services", "services")}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          fontSize: "14px",
+                          color: "#374151",
+                          cursor: "pointer",
+                          fontFamily: "inherit",
+                          transition: "all 0.15s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#f8fafc";
+                          e.currentTarget.style.color = "#1877F2";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
+                      >
+                        Tech Services
+                      </button>
+                      <button
+                        onClick={() => triggerToast("Marketing Services", "services")}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          fontSize: "14px",
+                          color: "#374151",
+                          cursor: "pointer",
+                          fontFamily: "inherit",
+                          transition: "all 0.15s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#f8fafc";
+                          e.currentTarget.style.color = "#1877F2";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
+                      >
+                        Marketing Services
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Toast Popover relative to Service wrapper */}
+                  {showToast && toastAnchor === "services" && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "44px",
+                        left: "200px",
+                        backgroundColor: "#0a1931",
+                        color: "#ffffff",
+                        padding: "10px 18px",
+                        borderRadius: "10px",
+                        boxShadow: "0 10px 30px rgba(0, 110, 230, 0.25)",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        fontSize: "13px",
+                        fontWeight: "600",
+                        whiteSpace: "nowrap",
+                        zIndex: 999,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        fontFamily: "Poppins, sans-serif",
+                        pointerEvents: "none",
+                        animation: "popoverFadeIn 0.2s ease-out forwards",
+                      }}
+                    >
+                      {/* Triangle pointing to the left (towards the dropdown) */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: "-5px",
+                          top: "14px",
+                          transform: "rotate(45deg)",
+                          width: "10px",
+                          height: "10px",
+                          backgroundColor: "#0a1931",
+                          borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+                          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                        }}
+                      />
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#006EE6"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        style={{ flexShrink: 0 }}
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      {toastMessage}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            if (name === "Course") {
+              return (
+                <div key={name} style={{ position: "relative", display: "inline-block" }}>
+                  <button
+                    onClick={() => triggerToast("Course", "course")}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px 0",
+                      fontSize: "15px",
+                      fontWeight: active ? "700" : "400",
+                      color: active ? "#1877F2" : "#374151",
+                      letterSpacing: "0.01em",
+                      transition: "color 0.2s",
+                      position: "relative",
+                      fontFamily: "inherit",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!active) e.currentTarget.style.color = "#1877F2";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!active) e.currentTarget.style.color = "#374151";
+                    }}
+                  >
+                    {name}
+                  </button>
+
+                  {showToast && toastAnchor === "course" && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "100%",
+                        transform: "translateY(-50%) translateX(16px)",
+                        backgroundColor: "#0a1931",
+                        color: "#ffffff",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        boxShadow: "0 6px 20px rgba(0, 110, 230, 0.25)",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        whiteSpace: "nowrap",
+                        zIndex: 999,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        fontFamily: "Poppins, sans-serif",
+                        pointerEvents: "none",
+                        animation: "popoverFadeIn 0.2s ease-out forwards",
+                      }}
+                    >
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: "-5px",
+                          top: "50%",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          width: "8px",
+                          height: "8px",
+                          backgroundColor: "#0a1931",
+                          borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+                          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                        }}
+                      />
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#006EE6"
+                        strokeWidth="2.5"
+                        style={{ flexShrink: 0 }}
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      {toastMessage}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <button
                 key={name}
@@ -143,40 +420,103 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* ── Switch to Diary Tech Button ──
-        <a
-          href="https://diarytech.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="switch-btn"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            background: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)",
-            color: "#ffffff",
-            fontSize: "13px",
-            fontWeight: "600",
-            padding: "8px 16px",
-            borderRadius: "50px",
-            textDecoration: "none",
-            whiteSpace: "nowrap",
-            transition: "filter 0.2s, transform 0.15s",
-            boxShadow: "0 3px 10px rgba(24,119,242,0.40)",
-            letterSpacing: "0.01em",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.filter = "brightness(1.12)";
-            e.currentTarget.style.transform = "scale(1.03)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.filter = "brightness(1)";
-            e.currentTarget.style.transform = "scale(1)";
-          }}
-        >
-          Switch to Diary Tech
-          <span style={{ fontSize: "16px", lineHeight: 1, fontWeight: "700" }}>⇄</span>
-        </a> */}
+        {/* ── Switch to Diary Tech Button ── */}
+        <div style={{ position: "relative", display: "inline-block" }}>
+          <button
+            onClick={() => triggerToast("Diary Tech Portal", "switch")}
+            className="switch-btn"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "#006EE6",
+              color: "#ffffff",
+              fontSize: "14px",
+              fontWeight: "600",
+              padding: "10px 24px",
+              borderRadius: "50px",
+              border: "none",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              transition: "all 0.2s ease-in-out",
+              boxShadow: "0 4px 12px rgba(0, 110, 230, 0.3)",
+              letterSpacing: "0.01em",
+              fontFamily: "inherit",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#005ec5";
+              e.currentTarget.style.transform = "scale(1.02)";
+              e.currentTarget.style.boxShadow = "0 6px 16px rgba(0, 110, 230, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#006EE6";
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 110, 230, 0.3)";
+            }}
+          >
+            Switch to Diary Tech
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ flexShrink: 0 }}
+            >
+              <path d="M4 8h16M20 8l-4-4M20 8l-4 4" />
+              <path d="M20 16H4M4 16l4 4M4 16l4-4" />
+            </svg>
+          </button>
+
+          {showToast && toastAnchor === "switch" && (
+            <div
+              style={{
+                position: "absolute",
+                top: "120%",
+                left: "50%",
+                transform: "translateX(-50%)",
+                backgroundColor: "#0a1931",
+                color: "#ffffff",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                boxShadow: "0 6px 20px rgba(0, 110, 230, 0.25)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                fontSize: "12px",
+                fontWeight: "600",
+                whiteSpace: "nowrap",
+                zIndex: 999,
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                fontFamily: "Poppins, sans-serif",
+                pointerEvents: "none",
+                animation: "toastFadeIn 0.3s ease-out forwards",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-5px",
+                  left: "50%",
+                  transform: "translateX(-50%) rotate(45deg)",
+                  width: "8px",
+                  height: "8px",
+                  backgroundColor: "#0a1931",
+                  borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+                  borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+                }}
+              />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#006EE6" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              {toastMessage}
+            </div>
+          )}
+        </div>
 
         {/* ── Mobile Hamburger ── */}
         <button
@@ -229,6 +569,113 @@ const Navbar = () => {
         >
           {NAV_LINKS.map(({ name, path, scrollTo }) => {
             const active = !scrollTo && currentPath === path;
+            if (name === "Service") {
+              return (
+                <div key={name} style={{ borderBottom: "1px solid #f3f4f6" }}>
+                  <button
+                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      textAlign: "left",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "10px 0",
+                      fontSize: "15px",
+                      fontWeight: active ? "700" : "400",
+                      color: active ? "#1877F2" : "#374151",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    <span style={{ flexGrow: 1 }}>{name}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{
+                        transform: mobileServicesOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.2s ease",
+                      }}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+
+                  {mobileServicesOpen && (
+                    <div style={{ paddingLeft: "16px", paddingBottom: "8px", backgroundColor: "#f8fafc", borderRadius: "8px" }}>
+                      <button
+                        onClick={() => { setIsOpen(false); triggerToast("Tech Services", "mobile-services"); }}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "8px 0",
+                          fontSize: "14px",
+                          color: "#4B5563",
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        Tech Services
+                      </button>
+                      <button
+                        onClick={() => { setIsOpen(false); triggerToast("Marketing Services", "mobile-services"); }}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "8px 0",
+                          fontSize: "14px",
+                          color: "#4B5563",
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        Marketing Services
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            if (name === "Course") {
+              return (
+                <button
+                  key={name}
+                  onClick={() => { setIsOpen(false); triggerToast("Course", "mobile-course"); }}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: "left",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "10px 0",
+                    fontSize: "15px",
+                    fontWeight: active ? "700" : "400",
+                    color: active ? "#1877F2" : "#374151",
+                    borderBottom: "1px solid #f3f4f6",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  {name}
+                </button>
+              );
+            }
+
             return (
               <button
                 key={name}
@@ -252,31 +699,115 @@ const Navbar = () => {
               </button>
             );
           })}
-          <a
-            href="https://diarytech.in"
-            target="_blank"
-            rel="noopener noreferrer"
+          
+          <button
+            onClick={() => { setIsOpen(false); triggerToast("Diary Tech Portal", "switch-mobile"); }}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
               marginTop: "16px",
-              background: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)",
+              background: "#006EE6",
               color: "#ffffff",
-              fontSize: "13px",
+              fontSize: "14px",
               fontWeight: "600",
-              padding: "8px 16px",
+              padding: "10px 24px",
               borderRadius: "50px",
-              textDecoration: "none",
-              boxShadow: "0 3px 10px rgba(24,119,242,0.40)",
+              border: "none",
+              cursor: "pointer",
+              boxShadow: "0 4px 12px rgba(0, 110, 230, 0.3)",
               letterSpacing: "0.01em",
+              fontFamily: "inherit",
             }}
           >
             Switch to Diary Tech
-            <span style={{ fontSize: "16px", lineHeight: 1, fontWeight: "700" }}>⇄</span>
-          </a>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ flexShrink: 0 }}
+            >
+              <path d="M4 8h16M20 8l-4-4M20 8l-4 4" />
+              <path d="M20 16H4M4 16l4 4M4 16l4-4" />
+            </svg>
+          </button>
         </div>
       )}
+
+      {/* ── Mobile Global Toast ── */}
+      {showToast && (toastAnchor === "mobile-course" || toastAnchor === "switch-mobile" || toastAnchor === "mobile-services") && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "24px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "rgba(10, 25, 49, 0.95)",
+            backdropFilter: "blur(8px)",
+            color: "#ffffff",
+            padding: "12px 24px",
+            borderRadius: "50px",
+            boxShadow: "0 10px 30px rgba(0, 110, 230, 0.25)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            fontSize: "14px",
+            fontWeight: "600",
+            letterSpacing: "0.02em",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            animation: "toastFadeIn 0.3s ease-out forwards",
+            fontFamily: "Poppins, sans-serif",
+            pointerEvents: "none",
+          }}
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#006EE6"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ flexShrink: 0 }}
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          {toastMessage}
+        </div>
+      )}
+
+      {/* ── Keyframes animations ── */}
+      <style>{`
+        @keyframes toastFadeIn {
+          from {
+            opacity: 0;
+            transform: translate(-50%, 15px);
+          }
+          to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+          }
+        }
+        @keyframes popoverFadeIn {
+          from {
+            opacity: 0;
+            transform: translateX(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
 
       {/* ── Responsive CSS ── */}
       <style>{`
