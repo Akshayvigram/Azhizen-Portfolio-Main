@@ -317,13 +317,13 @@ const Navbar = () => {
                     {name}
                   </button>
 
-                  {showToast && toastAnchor === "course" && (
+                   {showToast && toastAnchor === "course" && (
                     <div
                       style={{
                         position: "absolute",
-                        top: "50%",
-                        left: "100%",
-                        transform: "translateY(-50%) translateX(16px)",
+                        top: "100%",
+                        left: "50%",
+                        transform: "translateX(-50%) translateY(12px)",
                         backgroundColor: "#0a1931",
                         color: "#ffffff",
                         padding: "8px 16px",
@@ -339,20 +339,20 @@ const Navbar = () => {
                         gap: "6px",
                         fontFamily: "Poppins, sans-serif",
                         pointerEvents: "none",
-                        animation: "popoverFadeIn 0.2s ease-out forwards",
+                        animation: "popoverBelowFadeIn 0.2s ease-out forwards",
                       }}
                     >
                       <div
                         style={{
                           position: "absolute",
-                          left: "-5px",
-                          top: "50%",
-                          transform: "translateY(-50%) rotate(45deg)",
+                          top: "-4px",
+                          left: "50%",
+                          transform: "translateX(-50%) rotate(45deg)",
                           width: "8px",
                           height: "8px",
                           backgroundColor: "#0a1931",
                           borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
-                          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
                         }}
                       />
                       <svg
@@ -805,6 +805,16 @@ const Navbar = () => {
           to {
             opacity: 1;
             transform: translateX(0);
+          }
+        }
+        @keyframes popoverBelowFadeIn {
+          from {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+          }
+          to {
+            opacity: 1;
+            transform: translate(-50%, 12px);
           }
         }
       `}</style>
