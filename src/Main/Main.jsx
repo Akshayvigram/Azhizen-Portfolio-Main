@@ -6,7 +6,7 @@ import ClientsSection from '../components/ClientsSection';
 
 const Main = () => {
   return (
-    <div className="font-sans">
+    <div className="font-poppins">
       <div className="pt-16">
         <HeroSection />
         <section id="about-us">

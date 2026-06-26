@@ -82,15 +82,19 @@ const Aboutus = () => {
           className="
             relative
             z-[1]
-            max-w-[1180px]
+            max-w-7xl
             mx-auto
-            px-5
-            md:px-10
+            px-6
+            lg:px-8
+            w-full
             flex
             flex-col
             lg:flex-row
             items-center
-            gap-[70px]
+            justify-center
+            gap-12
+            lg:gap-32
+            xl:gap-36
           "
         >
 
@@ -191,7 +195,9 @@ const Aboutus = () => {
             <p
               className="
                 text-[#4B5563]
-                text-[15px]
+                text-sm
+                lg:text-base
+                2xl:text-lg
                 leading-[1.75]
                 mb-[22px]
                 max-w-[100%]
@@ -225,7 +231,9 @@ const Aboutus = () => {
                     items-center
                     gap-[10px]
                     text-[#374151]
-                    text-[15px]
+                    text-sm
+                    lg:text-base
+                    2xl:text-lg
                   "
                 >
                   <span

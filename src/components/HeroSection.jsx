@@ -69,7 +69,7 @@ const HeroSection = () => {
   return (
     <div className="bg-white w-full overflow-x-hidden">
       {/* Mobile View */}
-      <div className="block sm:hidden px-4 py-4 mt-16 text-center">
+      <div className="block sm:hidden px-4 py-4 mt-2 text-center">
         <div className="max-w-md mx-auto">
           <h1
             className="text-2xl font-bold text-black leading-tight mb-2"
@@ -96,9 +96,9 @@ const HeroSection = () => {
       </div>
 
       {/* Tablet, Desktop, and 4K View */}
-      <div className="hidden sm:flex bg-white h-auto lg:min-h-auto items-center relative py-15 sm:py-12 lg:py-22 mt-5">
-        <div className="container mx-auto px-6 sm:px-8 lg:px-12 2xl:px-16 max-w-7xl 2xl:max-w-[1920px]">
-          <div className="w-full sm:w-3/4 lg:w-1/2 relative z-10">
+      <div className="hidden sm:flex bg-white h-auto lg:min-h-auto items-center relative py-10 sm:py-8 lg:py-12 mt-0">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-8 relative z-10">
+          <div className="flex-1 max-w-2xl relative z-10 text-left">
             <h1
               className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-black leading-tight mb-6"
               style={{ fontFamily: "Poppins, sans-serif" }}
@@ -133,7 +133,17 @@ const HeroSection = () => {
               </button>
             </div>
           </div>
+
+          {/* Right Image Container */}
+          <div className="flex-1 w-full lg:max-w-[500px] xl:max-w-[600px] flex justify-end relative z-10 lg:left-12 xl:left-20 2xl:left-28">
+            <img
+              src={ariz}
+              alt="Ariz"
+              className="w-full h-auto object-contain animate-float"
+            />
+          </div>
         </div>
+
         {/* Blue Gradient Background (z-0) */}
         <div
           className="hidden sm:block absolute bottom-0 right-0 w-1/3 sm:w-1/4 lg:w-1/5 2xl:w-1/6 h-full bg-gradient-to-br from-[#1877F2] to-[#0F5FD4] blur-[35.5px] opacity-20 z-0 ipad-half-circle"
@@ -143,15 +153,6 @@ const HeroSection = () => {
             overflow: 'hidden',
           }}
         ></div>
-
-        {/* Ariz Image */}
-        <div className="hidden sm:block absolute bottom-0 right-0 z-0 w-[280px] sm:w-[320px] md:w-[380px] lg:w-[440px] xl:w-[500px] 2xl:w-[560px] mb-15 mr-10">
-          <img
-            src={ariz}
-            alt="Ariz"
-            className="w-full h-auto object-contain animate-float"
-          />
-        </div>
 
 
       </div>
