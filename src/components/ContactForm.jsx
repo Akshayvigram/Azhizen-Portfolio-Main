@@ -266,7 +266,7 @@ function ContactForm() {
 
           {/* Full-cover banner photo */}
           <img
-            src="/image 476.png"
+            src="/image 476.webp"
             alt="Contact banner"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />

@@ -120,7 +120,7 @@ const ClientsSection = () => {
               }}
             >
               <img
-                src="/What our Clients say.png"
+                src="/What our Clients say.webp"
                 alt="Gladson — client"
                 style={{
                   width: "100%",

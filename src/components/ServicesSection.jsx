@@ -4,28 +4,28 @@ import { useNavigate } from "react-router-dom";
 const SERVICES = [
   {
     id: 1,
-    image: "/service1.png",
+    image: "/service1.webp",
     title: "Custom Hardware Design",
     description:
       "We Deliver Advanced Hardware Prototyping With Custom PCB Design, Tailored Solution For Embedded Systems And IoT Innovation.",
   },
   {
     id: 2,
-    image: "/service2.png",
+    image: "/service2.webp",
     title: "AI/ML & Firmware Integration",
     description:
       "We Integrate AI/ML Capabilities And Firmware Updates. Smart, Adaptable Systems Built For The Future",
   },
   {
     id: 3,
-    image: "/service3.png",
+    image: "/service3.webp",
     title: "Research & Development",
     description:
       "Experts In Research And Development Employ Rigorous Methodologies And Validation Processes.",
   },
   {
     id: 4,
-    image: "/service4.png",
+    image: "/service4.webp",
     title: "IoT & Smart Automation",
     description:
       "We Design And Deploy Scalable IoT Architectures, Smart Sensors, And Cloud-Connected Automation Systems For Industrial And Consumer Needs.",

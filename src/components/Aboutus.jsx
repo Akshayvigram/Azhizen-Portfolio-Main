@@ -110,7 +110,7 @@ const Aboutus = () => {
 
             {/* Main image */}
             <img
-              src="/image 649.png"
+              src="/image 649.webp"
               alt="Azhizen Team"
               className="
                 w-full

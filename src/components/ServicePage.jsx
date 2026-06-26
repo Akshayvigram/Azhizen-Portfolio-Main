@@ -339,19 +339,19 @@ import { LuBadge } from "react-icons/lu";
 const services = [
   {
     id: 1,
-    image: "/service1.png",
+    image: "/service1.webp",
     title: "IoT Solutions",
     desc: "Cloud-connected smart monitoring systems.",
   },
   {
     id: 2,
-    image: "/service2.png",
+    image: "/service2.webp",
     title: "Embedded Systems",
     desc: "Custom hardware & firmware development.",
   },
   {
     id: 3,
-    image: "/service3.png",
+    image: "/service3.webp",
     title: "AI & Intelligent Automation",
     desc: "Intelligent decision-based engineering.",
   },
@@ -364,7 +364,7 @@ export default function ServicePage() {
       {/* HERO */}
       <div>
       <img
-          src="/image1.png"
+          src="/image1.webp"
           alt="hero"
           className="
           w-full
