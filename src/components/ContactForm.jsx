@@ -66,7 +66,7 @@ function ContactNavbar() {
           <img
             src="/logo1.png"
             alt="Azhizen"
-            style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+            style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
           />
         </a>
 
@@ -495,7 +495,11 @@ function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Email Us</h4>
-                    <p className="text-sm text-gray-500">Azhizen@Azhizen.Com</p>
+                    <p className="text-sm text-gray-500">
+                      <a href="mailto:azhizensolutions@gmail.com" className="hover:underline">
+                        azhizensolutions@gmail.com
+                      </a>
+                    </p>
                   </div>
                 </div>
 
@@ -510,7 +514,11 @@ function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Call Us</h4>
-                    <p className="text-sm text-gray-500">Phone: +91 9685741230</p>
+                    <p className="text-sm text-gray-500">
+                      <a href="tel:+919750603988" className="hover:underline">
+                        Phone: +91 9750603988
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -544,10 +552,12 @@ function ContactForm() {
       <section className="w-full">
         <div className="w-full" style={{ height: '480px' }}>
           <iframe
-            src="https://www.google.com/maps?q=319%20Mercury%20Block%20KSRCE%20Neo%20Tiruchengode%20637215&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3911.6738395570555!2d77.82916837509707!3d11.358516788827906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba965003111cd9d%3A0xade9181c8a953dcf!2sAzhizen%20Solutions!5e0!3m2!1sen!2sin!4v1782457656042!5m2!1sen!2sin"
             className="w-full h-full border-0"
             loading="lazy"
             title="Azhizen Location Map"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
           />
         </div>
       </section>
