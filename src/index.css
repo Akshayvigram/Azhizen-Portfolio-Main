@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-brand: #1877F2;
   --font-poppins: "Poppins", sans-serif;
 }
 
@@ -87,4 +88,13 @@ button {
   .ipad-tight-spacing {
     margin-top: -40px !important;
   }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

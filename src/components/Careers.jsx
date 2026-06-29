@@ -108,8 +108,8 @@
 
 
 
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { useMemo, useState, useRef, useEffect } from "react";
+import { Search, Pointer } from "lucide-react";
 // import Navbar from "@/components/careers/Navbar";
 // import Footer from "@/components/careers/Footer";
 import JobCard from "../components/support/JobCard";
@@ -125,6 +125,12 @@ const Careers = () => {
   const [selected, setSelected] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [applyOpen, setApplyOpen] = useState(false);
+  
+  const listRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const [listScrollRange, setListScrollRange] = useState(0);
+
+  const SCROLL_SPEED_FACTOR = 0.5; // Lower values make options scroll slower. E.g., 0.5 is 50% scroll speed.
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -136,6 +142,57 @@ const Careers = () => {
         j.type.toLowerCase().includes(q)
     );
   }, [query]);
+
+  // Calculate the scroll range of the list items once items are loaded
+  useEffect(() => {
+    const updateScrollRange = () => {
+      const listEl = listRef.current;
+      if (!listEl) return;
+      const range = listEl.scrollHeight - listEl.clientHeight;
+      setListScrollRange(range > 0 ? range : 0);
+    };
+
+    updateScrollRange();
+    
+    // Resize and rendering changes can affect scrollHeight
+    window.addEventListener("resize", updateScrollRange);
+    const timer = setTimeout(updateScrollRange, 300);
+
+    return () => {
+      window.removeEventListener("resize", updateScrollRange);
+      clearTimeout(timer);
+    };
+  }, [filtered]);
+
+  // Synchronize window scroll offset to list scroll position during sticky phase
+  useEffect(() => {
+    const listEl = listRef.current;
+    const containerEl = scrollContainerRef.current;
+    if (!listEl || !containerEl || listScrollRange <= 0) {
+      if (listEl) listEl.scrollTop = 0;
+      return;
+    }
+
+    const handleScroll = () => {
+      const rect = containerEl.getBoundingClientRect();
+      const navbarHeight = 64;
+
+      if (rect.top <= navbarHeight) {
+        const scrolledPixels = navbarHeight - rect.top;
+        const targetScrollTop = scrolledPixels * SCROLL_SPEED_FACTOR;
+        listEl.scrollTop = Math.max(0, Math.min(listScrollRange, targetScrollTop));
+      } else {
+        listEl.scrollTop = 0;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [listScrollRange]);
 
   const openJob = (job) => {
     setSelected(job);
@@ -151,14 +208,14 @@ const Careers = () => {
     <div className="min-h-screen bg-white">
       {/* <Navbar /> */}
 
-      <main>
+      <main id="career-section-container">
         {/* Hero */}
         <section
           aria-labelledby="careers-hero"
           className="relative overflow-hidden"
           style={{
             backgroundImage:
-              "linear-gradient(110deg, hsl(var(--hero-from)) 0%, hsl(var(--hero-via)) 55%, hsl(var(--hero-to)) 100%)",
+              "linear-gradient(110deg, #EFF6FF 0%, #E0F2FE 40%, #00B4D9 100%)",
           }}
         >
           <img
@@ -167,14 +224,14 @@ const Careers = () => {
             aria-hidden
             className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
           />
-          <div className="container relative mx-auto px-6 py-20 md:py-28">
+          <div className="relative mx-auto px-6 pt-24 pb-20 md:pt-36 md:pb-28 lg:pt-40 lg:pb-32" style={{ maxWidth: "1280px" }}>
             <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center">
               <h1
                 id="careers-hero"
-                className="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl"
+                className="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-[#111827] md:text-5xl lg:text-6xl"
               >
-                We are Looking For{" "}
-                <span className="text-brand text-blue-500">Skilled</span> people.
+                We are Looking For <br />
+                <span className="text-brand">Skilled</span> people.
               </h1>
 
               <div className="w-full max-w-md">
@@ -202,74 +259,71 @@ const Careers = () => {
           </div>
         </section>
 
-        {/* Join Our Team */}
-        <section id="career" aria-labelledby="join-our-team" className="bg-muted/30">
-          <div className="container mx-auto px-6 py-16 md:py-20">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-              {/* Left */}
-              <div className="relative flex flex-col">
-                <div className="flex items-start gap-3">
-                  <span aria-hidden className="mt-1 text-3xl text-brand">
-                    👆
-                  </span>
-                  <div>
-                    <h2
-                      id="join-our-team"
-                      className="text-3xl font-bold tracking-tight md:text-4xl"
-                    >
-                      <span className="text-brand">Join</span>{" "}
-                      <span className="text-foreground">Our Team</span>
-                    </h2>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Display{" "}
-                      <span className="font-semibold text-foreground">
-                        {allJobs.length} Roles
-                      </span>{" "}
-                      that Open in Azhizen
-                    </p>
+        <div
+          ref={scrollContainerRef}
+          style={{ height: listScrollRange > 0 ? `calc(100vh + ${listScrollRange / SCROLL_SPEED_FACTOR}px)` : "auto" }}
+          className="relative bg-muted/30"
+        >
+          <section
+            id="career"
+            aria-labelledby="join-our-team"
+            className="sticky top-[64px] h-[calc(100vh-64px)] overflow-hidden flex flex-col justify-start pt-6 md:pt-10 lg:justify-start lg:pt-12 lg:pb-0"
+          >
+            <div className="w-full relative z-10 mx-auto px-6 py-8" style={{ maxWidth: "1280px" }}>
+              <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+                {/* Left */}
+                <div className="relative flex flex-col">
+                  <div className="flex items-start gap-3">
+                    <Pointer className="mt-1.5 h-7 w-7 text-brand" aria-hidden />
+                    <div>
+                      <h2
+                        id="join-our-team"
+                        className="text-3xl font-bold tracking-tight md:text-4xl"
+                      >
+                        <span className="text-brand">Join</span>{" "}
+                        <span className="text-foreground">Our Team</span>
+                      </h2>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Display{" "}
+                        <span className="font-semibold text-foreground">
+                          {allJobs.length} Roles
+                        </span>{" "}
+                        that Open in Azhizen
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-auto hidden pt-12 lg:block">
-                  <img
-                    src={skylineImg}
-                    alt=""
-                    aria-hidden
-                    width={1024}
-                    height={512}
-                    loading="lazy"
-                    className="w-full select-none object-contain opacity-80"
-                  />
-                </div>
-              </div>
-
-              {/* Right */}
-              <div className="flex flex-col gap-4">
-                {filtered.map((job) => (
-                  <JobCard key={job.id} job={job} onClick={() => openJob(job)} />
-                ))}
-                {filtered.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
-                    No roles match your search.
+                {/* Right */}
+                <div
+                  ref={listRef}
+                  className="h-[440px] overflow-y-hidden pr-2 no-scrollbar"
+                >
+                  <div className="flex flex-col gap-4 pb-4">
+                    {filtered.map((job) => (
+                      <JobCard key={job.id} job={job} onClick={() => openJob(job)} />
+                    ))}
+                    {filtered.length === 0 && (
+                      <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
+                        No roles match your search.
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
 
-            {/* Mobile skyline */}
-            <div className="mt-10 lg:hidden">
+            {/* Full-width Skyline background */}
+            <div className="absolute bottom-2 lg:bottom-0 left-0 right-0 w-full pointer-events-none opacity-40 z-0">
               <img
                 src={skylineImg}
                 alt=""
                 aria-hidden
-                width={1024}
-                height={512}
-                loading="lazy"
-                className="w-full select-none object-contain opacity-80"
+                className="w-full h-auto object-contain object-bottom max-h-[600px] md:max-h-[750px]"
               />
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
 
       {/* <Footer /> */}

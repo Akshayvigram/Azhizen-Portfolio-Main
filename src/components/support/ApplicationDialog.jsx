@@ -1,464 +1,79 @@
-// import { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { z } from "zod";
-// import { Upload } from "lucide-react";
-
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogDescription,
-// } from "../../components/ui/dialog";
-// import { Button } from "../../components/ui/button";
-// import { Input } from "../../components/ui/input";
-// import { Textarea } from "../../components/ui/textarea";
-// import {
-//   Form,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormControl,
-//   FormMessage,
-// } from "../../components/ui/form";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "../../components/ui/select";
-// import { ScrollArea } from "../../components/ui/scroll-area";
-// import { Separator } from "../../components/ui/separator";
-// import { toast } from "../../hooks/use-toast";
-
-// const INDIAN_STATES = [
-//   "Tamil Nadu", "Karnataka", "Kerala", "Andhra Pradesh", "Telangana",
-//   "Maharashtra", "Delhi", "Uttar Pradesh", "West Bengal"
-// ];
-
-// const MAX_RESUME_BYTES = 5 * 1024 * 1024;
-
-// const applicationSchema = z.object({
-//   firstName: z.string().min(1, "Required"),
-//   lastName: z.string().min(1, "Required"),
-//   email: z.string().email("Invalid email"),
-//   phone: z.string().min(7, "Invalid phone"),
-//   address: z.string().min(1, "Required"),
-//   state: z.string().min(1, "Select state"),
-//   city: z.string().min(1, "Required"),
-//   pincode: z.string().regex(/^\d{4,10}$/, "Invalid pincode"),
-//   education: z.string().min(1, "Required"),
-//   experience: z.string().min(1, "Required"),
-//   message: z.string().optional(),
-// });
-
-// const ApplicationDialog = ({ job, open, onOpenChange }) => {
-//   const [resume, setResume] = useState(null);
-//   const [resumeError, setResumeError] = useState(null);
-
-//   const form = useForm({
-//     resolver: zodResolver(applicationSchema),
-//     defaultValues: {
-//       firstName: "",
-//       lastName: "",
-//       email: "",
-//       phone: "",
-//       address: "",
-//       state: "",
-//       city: "",
-//       pincode: "",
-//       education: "",
-//       experience: "",
-//       message: "",
-//     },
-//   });
-
-//   const handleResumeChange = (e) => {
-//     const file = e.target.files && e.target.files[0];
-//     setResumeError(null);
-
-//     if (!file) return;
-
-//     if (!file.name.match(/\.(pdf|doc|docx)$/i)) {
-//       setResumeError("Only PDF/DOC/DOCX allowed");
-//       return;
-//     }
-
-//     if (file.size > MAX_RESUME_BYTES) {
-//       setResumeError("Max size 5MB");
-//       return;
-//     }
-
-//     setResume(file);
-//   };
-
-//   const onSubmit = (values) => {
-//     if (!resume) {
-//       setResumeError("Upload resume");
-//       return;
-//     }
-
-//     toast({
-//       title: "Application sent",
-//       description: `Thanks ${values.firstName}! Applied for ${job?.title}`,
-//     });
-
-//     form.reset();
-//     setResume(null);
-//     onOpenChange(false);
-//   };
-
-//   return (
-//     <Dialog open={open} onOpenChange={onOpenChange}>
-//       <DialogContent className="max-w-2xl p-0 bg-white">
-//         <ScrollArea className="max-h-[85vh]">
-//           <div className="p-6 space-y-6">
-//             <DialogHeader>
-//               <DialogTitle>
-//                 Apply {job ? `— ${job.title}` : ""}
-//               </DialogTitle>
-//               <DialogDescription>
-//                 Fill all required fields *
-//               </DialogDescription>
-//             </DialogHeader>
-
-//             <Separator />
-
-//             <Form {...form}>
-//               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-
-//                 {/* Name */}
-//                 <div className="grid grid-cols-2 gap-4">
-//                   <FormField
-//                     control={form.control}
-//                     name="firstName"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>First Name *</FormLabel>
-//                         <FormControl>
-//                           <Input {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-//                   <FormField
-//                     control={form.control}
-//                     name="lastName"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>Last Name *</FormLabel>
-//                         <FormControl>
-//                           <Input {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-//                 </div>
-
-//                 {/* Contact */}
-//                 <div className="grid grid-cols-2 gap-4">
-//                   <FormField
-//                     control={form.control}
-//                     name="email"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>Email *</FormLabel>
-//                         <FormControl>
-//                           <Input type="email" {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-//                   <FormField
-//                     control={form.control}
-//                     name="phone"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>Phone *</FormLabel>
-//                         <FormControl>
-//                           <Input {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-//                 </div>
-
-//                 {/* Address */}
-//                 <FormField
-//                   control={form.control}
-//                   name="address"
-//                   render={({ field }) => (
-//                     <FormItem>
-//                       <FormLabel>Address *</FormLabel>
-//                       <FormControl>
-//                         <Input {...field} />
-//                       </FormControl>
-//                       <FormMessage />
-//                     </FormItem>
-//                   )}
-//                 />
-
-//                 {/* Location */}
-//                 <div className="grid grid-cols-3 gap-4">
-//                   <FormField
-//                     control={form.control}
-//                     name="state"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>State *</FormLabel>
-//                         <Select onValueChange={field.onChange}>
-//                           <FormControl>
-//                             <SelectTrigger>
-//                               <SelectValue placeholder="State" />
-//                             </SelectTrigger>
-//                           </FormControl>
-//                           <SelectContent className="bg-white">
-//                             {INDIAN_STATES.map((s) => (
-//                               <SelectItem key={s} value={s}>{s}</SelectItem>
-//                             ))}
-//                           </SelectContent>
-//                         </Select>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-
-//                   <FormField
-//                     control={form.control}
-//                     name="city"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>City *</FormLabel>
-//                         <FormControl>
-//                           <Input {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-
-//                   <FormField
-//                     control={form.control}
-//                     name="pincode"
-//                     render={({ field }) => (
-//                       <FormItem>
-//                         <FormLabel>Pincode *</FormLabel>
-//                         <FormControl>
-//                           <Input {...field} />
-//                         </FormControl>
-//                         <FormMessage />
-//                       </FormItem>
-//                     )}
-//                   />
-//                 </div>
-
-//                 {/* Education */}
-//                 <FormField
-//                   control={form.control}
-//                   name="education"
-//                   render={({ field }) => (
-//                     <FormItem>
-//                       <FormLabel>Education *</FormLabel>
-//                       <FormControl>
-//                         <Textarea {...field} />
-//                       </FormControl>
-//                       <FormMessage />
-//                     </FormItem>
-//                   )}
-//                 />
-
-//                 {/* Experience */}
-//                 <FormField
-//                   control={form.control}
-//                   name="experience"
-//                   render={({ field }) => (
-//                     <FormItem>
-//                       <FormLabel>Experience *</FormLabel>
-//                       <FormControl>
-//                         <Textarea {...field} />
-//                       </FormControl>
-//                       <FormMessage />
-//                     </FormItem>
-//                   )}
-//                 />
-
-//                 {/* Message */}
-//                 <FormField
-//                   control={form.control}
-//                   name="message"
-//                   render={({ field }) => (
-//                     <FormItem>
-//                       <FormLabel>Message</FormLabel>
-//                       <FormControl>
-//                         <Textarea {...field} />
-//                       </FormControl>
-//                     </FormItem>
-//                   )}
-//                 />
-
-//                 {/* Resume */}
-//                 {/* <div>
-//                   <label className="text-sm font-medium">Resume *</label>
-//                   <input type="file" onChange={handleResumeChange} />
-//                   {resumeError && (
-//                     <p className="text-red-500 text-sm">{resumeError}</p>
-//                   )}
-//                 </div> */}
-
-
-//                 {/* Resume Upload */}
-//                 <div className="space-y-2">
-//                   <label className="text-sm font-medium">Resume *</label>
-
-//                   <label
-//                     htmlFor="resume-upload"
-//                     className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-5 transition-all hover:border-blue-500 hover:bg-blue-50"
-//                   >
-//                     <div className="flex items-center gap-3">
-//                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-//                         📄
-//                       </div>
-
-//                       <div>
-//                         <p className="text-sm font-medium text-gray-800">
-//                           {resume ? resume.name : "Upload your resume"}
-//                         </p>
-//                         <p className="text-xs text-gray-500">
-//                           PDF, DOC, DOCX • Max 5MB
-//                         </p>
-//                       </div>
-//                     </div>
-
-//                     {resume && (
-//                       <span className="text-xs text-gray-600">
-//                         {(resume.size / 1024).toFixed(0)} KB
-//                       </span>
-//                     )}
-//                   </label>
-
-//                   <input
-//                     id="resume-upload"
-//                     type="file"
-//                     accept=".pdf,.doc,.docx"
-//                     className="hidden"
-//                     onChange={handleResumeChange}
-//                   />
-
-//                   {resumeError && (
-//                     <p className="text-sm font-medium text-red-500">{resumeError}</p>
-//                   )}
-//                 </div>
-
-//                 {/* Buttons */}
-//                 <div className="flex justify-end gap-2">
-//                   <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-//                     Cancel
-//                   </Button>
-//                   <Button type="submit">Apply</Button>
-//                 </div>
-
-//               </form>
-//             </Form>
-//           </div>
-//         </ScrollArea>
-//       </DialogContent>
-//     </Dialog>
-//   );
-// };
-
-// export default ApplicationDialog;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Upload } from "lucide-react";
-
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "../../components/ui/dialog";
-import { Button } from "../../components/ui/button";
+  Upload, X, User, Mail, Phone, MapPin,
+  GraduationCap, Briefcase, MessageSquare, FileText, ChevronRight
+} from "lucide-react";
+
+import { Dialog, DialogContent } from "../../components/ui/dialog";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
+  Form, FormField, FormItem, FormLabel, FormControl, FormMessage,
 } from "../../components/ui/form";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "../../components/ui/select";
 import { ScrollArea } from "../../components/ui/scroll-area";
-import { Separator } from "../../components/ui/separator";
 import { toast } from "../../hooks/use-toast";
 
-
-// ✅ FULL STATES LIST
+/* ─── data ───────────────────────────────────────────────────── */
 const INDIAN_STATES = [
-  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
-  "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala",
-  "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland",
-  "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
-  "Uttar Pradesh", "Uttarakhand", "West Bengal",
-  "Andaman and Nicobar Islands", "Chandigarh",
-  "Dadra and Nagar Haveli and Daman and Diu", "Delhi",
-  "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
-];
-
-// ✅ SORTED
-const SORTED_STATES = [...INDIAN_STATES].sort();
+  "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa",
+  "Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala",
+  "Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland",
+  "Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura",
+  "Uttar Pradesh","Uttarakhand","West Bengal",
+  "Andaman and Nicobar Islands","Chandigarh",
+  "Dadra and Nagar Haveli and Daman and Diu","Delhi",
+  "Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry",
+].sort();
 
 const MAX_RESUME_BYTES = 5 * 1024 * 1024;
 
-// ✅ VALIDATION
+/* ─── validation ─────────────────────────────────────────────── */
 const applicationSchema = z.object({
   firstName: z.string().min(1, "Required"),
-  lastName: z.string().min(1, "Required"),
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(7, "Invalid phone"),
-  address: z.string().min(1, "Required"),
-  state: z.string().min(1, "Select state"),
-  city: z.string().min(1, "Required"),
-  pincode: z.string().regex(/^\d{4,10}$/, "Invalid pincode"),
+  lastName:  z.string().min(1, "Required"),
+  email:     z.string().email("Invalid email"),
+  phone:     z.string().min(7, "Invalid phone"),
+  address:   z.string().min(1, "Required"),
+  state:     z.string().min(1, "Select a state"),
+  city:      z.string().min(1, "Required"),
+  pincode:   z.string().regex(/^\d{4,10}$/, "Invalid pincode"),
   education: z.string().min(1, "Required"),
-  experience: z.string().min(1, "Required"),
-  message: z.string().optional(),
+  experience:z.string().min(1, "Required"),
+  message:   z.string().optional(),
 });
 
+/* ─── shared field styles ────────────────────────────────────── */
+const inputCls =
+  "h-10 rounded-lg border border-gray-200 bg-gray-50/60 px-3 text-sm text-gray-800 " +
+  "placeholder:text-gray-400 focus:border-[#0078B4] focus:bg-white focus:ring-2 " +
+  "focus:ring-[#0078B4]/15 transition-all duration-150";
+
+const textareaCls =
+  "min-h-[80px] rounded-lg border border-gray-200 bg-gray-50/60 px-3 py-2 text-sm text-gray-800 " +
+  "placeholder:text-gray-400 focus:border-[#0078B4] focus:bg-white focus:ring-2 " +
+  "focus:ring-[#0078B4]/15 transition-all duration-150 resize-none";
+
+/* ─── section wrapper ────────────────────────────────────────── */
+const SectionCard = ({ icon: Icon, title, children }) => (
+  <div className="rounded-xl border border-gray-100 bg-gray-50/40 p-4 space-y-4">
+    <div className="flex items-center gap-2">
+      <div className="h-5 w-1 rounded-full bg-gradient-to-b from-[#0078B4] to-[#00B4D9]" />
+      <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5" />
+        {title}
+      </h4>
+    </div>
+    {children}
+  </div>
+);
+
+/* ─── component ─────────────────────────────────────────────── */
 const ApplicationDialog = ({ job, open, onOpenChange }) => {
   const [resume, setResume] = useState(null);
   const [resumeError, setResumeError] = useState(null);
@@ -466,54 +81,27 @@ const ApplicationDialog = ({ job, open, onOpenChange }) => {
   const form = useForm({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      address: "",
-      state: "",
-      city: "",
-      pincode: "",
-      education: "",
-      experience: "",
-      message: "",
+      firstName:"", lastName:"", email:"", phone:"",
+      address:"", state:"", city:"", pincode:"",
+      education:"", experience:"", message:"",
     },
   });
 
-  // ✅ Resume handler
   const handleResumeChange = (e) => {
-    const file = e.target.files && e.target.files[0];
+    const file = e.target.files?.[0];
     setResumeError(null);
-
     if (!file) return;
-
-    if (!file.name.match(/\.(pdf|doc|docx)$/i)) {
-      setResumeError("Only PDF/DOC/DOCX allowed");
-      return;
-    }
-
-    if (file.size > MAX_RESUME_BYTES) {
-      setResumeError("Max size 5MB");
-      return;
-    }
-
+    if (!file.name.match(/\.(pdf|doc|docx)$/i)) { setResumeError("Only PDF/DOC/DOCX allowed"); return; }
+    if (file.size > MAX_RESUME_BYTES) { setResumeError("Max size 5 MB"); return; }
     setResume(file);
   };
 
-  // ✅ Submit
   const onSubmit = (values) => {
-    if (!resume) {
-      setResumeError("Upload resume");
-      return;
-    }
-
+    if (!resume) { setResumeError("Please upload your resume"); return; }
     toast({
-      title: "Application sent",
-      description: `Thanks ${values.firstName}! Applied for ${job?.title}`,
+      title: "Application sent!",
+      description: `Thanks ${values.firstName}! We've received your application for ${job?.title}.`,
     });
-
-    // toast.success("MEssage sent")
-
     form.reset();
     setResume(null);
     onOpenChange(false);
@@ -521,253 +109,246 @@ const ApplicationDialog = ({ job, open, onOpenChange }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 bg-white">
-        <ScrollArea className="max-h-[85vh]">
-          <div className="p-6 space-y-6">
+      <DialogContent className="max-w-2xl gap-0 p-0 bg-white rounded-2xl overflow-hidden border-0 shadow-2xl">
+        <ScrollArea className="max-h-[88vh]">
 
-            {/* Header */}
-            <DialogHeader>
-              <DialogTitle>
-                Apply {job ? `— ${job.title}` : ""}
-              </DialogTitle>
-              <DialogDescription>
-                Fill all required fields *
-              </DialogDescription>
-            </DialogHeader>
+          {/* ── Hero Header ─────────────────────────────────── */}
+          <div className="relative bg-gradient-to-br from-[#EFF6FF] via-[#E0F2FE] to-[#BAE6FD] px-6 pt-8 pb-6 md:px-8 md:pt-10">
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/60 backdrop-blur-sm text-gray-500 hover:bg-white hover:text-gray-800 transition-all duration-200 shadow-sm"
+              aria-label="Close dialog"
+            >
+              <X className="h-4 w-4" />
+            </button>
 
-            <Separator />
+            {/* Eyebrow */}
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border mb-4 bg-blue-50 text-blue-700 border-blue-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+              Application Form
+            </span>
 
+            {/* Title */}
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl leading-tight">
+              Apply — <span className="text-[#0078B4]">{job?.title ?? "Open Position"}</span>
+            </h2>
+            <p className="mt-1.5 text-sm text-gray-500">
+              Fields marked with <span className="text-red-500 font-medium">*</span> are required
+            </p>
+          </div>
+
+          {/* ── Form Body ────────────────────────────────────── */}
+          <div className="px-6 py-6 md:px-8">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-                {/* Name */}
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
+                {/* Personal Info */}
+                <SectionCard icon={User} title="Personal Information">
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField control={form.control} name="firstName" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>First Name *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-xs font-medium text-gray-600">First Name *</FormLabel>
+                        <FormControl><Input className={inputCls} placeholder="John" {...field} /></FormControl>
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
+                    )} />
+                    <FormField control={form.control} name="lastName" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Last Name *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-xs font-medium text-gray-600">Last Name *</FormLabel>
+                        <FormControl><Input className={inputCls} placeholder="Doe" {...field} /></FormControl>
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
-                </div>
+                    )} />
+                  </div>
 
-                {/* Contact */}
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField control={form.control} name="email" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email *</FormLabel>
+                        <FormLabel className="text-xs font-medium text-gray-600">Email *</FormLabel>
                         <FormControl>
-                          <Input type="email" {...field} />
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                            <Input type="email" className={`${inputCls} pl-8`} placeholder="you@example.com" {...field} />
+                          </div>
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
+                    )} />
+                    <FormField control={form.control} name="phone" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone *</FormLabel>
+                        <FormLabel className="text-xs font-medium text-gray-600">Phone *</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <div className="relative">
+                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                            <Input className={`${inputCls} pl-8`} placeholder="+91 98765 43210" {...field} />
+                          </div>
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
-                </div>
+                    )} />
+                  </div>
+                </SectionCard>
 
                 {/* Address */}
-                <FormField
-                  control={form.control}
-                  name="address"
-                  render={({ field }) => (
+                <SectionCard icon={MapPin} title="Address">
+                  <FormField control={form.control} name="address" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Address *</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
+                      <FormLabel className="text-xs font-medium text-gray-600">Street Address *</FormLabel>
+                      <FormControl><Input className={inputCls} placeholder="123 Main Street, Apt 4B" {...field} /></FormControl>
+                      <FormMessage className="text-xs" />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                {/* Location */}
-                <div className="grid grid-cols-3 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="state"
-                    render={({ field }) => (
+                  <div className="grid grid-cols-3 gap-3">
+                    <FormField control={form.control} name="state" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>State *</FormLabel>
-
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value}   // ✅ IMPORTANT FIX
-                        >
+                        <FormLabel className="text-xs font-medium text-gray-600">State *</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select state" />
+                            <SelectTrigger className={`${inputCls} w-full`}>
+                              <SelectValue placeholder="State" />
                             </SelectTrigger>
                           </FormControl>
-
-                          {/* 🔥 FIX: Make dropdown scrollable */}
                           <SelectContent className="max-h-60 overflow-y-auto bg-white">
-                            {SORTED_STATES.map((s) => (
-                              <SelectItem key={s} value={s}>
-                                {s}
-                              </SelectItem>
+                            {INDIAN_STATES.map((s) => (
+                              <SelectItem key={s} value={s}>{s}</SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
-
-                        <FormMessage />
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
+                    )} />
 
-                  <FormField
-                    control={form.control}
-                    name="city"
-                    render={({ field }) => (
+                    <FormField control={form.control} name="city" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-xs font-medium text-gray-600">City *</FormLabel>
+                        <FormControl><Input className={inputCls} placeholder="Chennai" {...field} /></FormControl>
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
+                    )} />
 
-                  <FormField
-                    control={form.control}
-                    name="pincode"
-                    render={({ field }) => (
+                    <FormField control={form.control} name="pincode" render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Pincode *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
+                        <FormLabel className="text-xs font-medium text-gray-600">Pincode *</FormLabel>
+                        <FormControl><Input className={inputCls} placeholder="600001" {...field} /></FormControl>
+                        <FormMessage className="text-xs" />
                       </FormItem>
-                    )}
-                  />
-                </div>
+                    )} />
+                  </div>
+                </SectionCard>
 
-                {/* Education */}
-                <FormField
-                  control={form.control}
-                  name="education"
-                  render={({ field }) => (
+                {/* Background */}
+                <SectionCard icon={GraduationCap} title="Background">
+                  <FormField control={form.control} name="education" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Education *</FormLabel>
+                      <FormLabel className="text-xs font-medium text-gray-600">Education *</FormLabel>
                       <FormControl>
-                        <Textarea {...field} />
+                        <Textarea
+                          className={textareaCls}
+                          placeholder="e.g. B.E. Computer Science, Anna University, 2023 — CGPA 8.4"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                {/* Experience */}
-                <FormField
-                  control={form.control}
-                  name="experience"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="experience" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Experience *</FormLabel>
+                      <FormLabel className="text-xs font-medium text-gray-600">Experience *</FormLabel>
                       <FormControl>
-                        <Textarea {...field} />
+                        <Textarea
+                          className={textareaCls}
+                          placeholder="Describe any relevant work, internship, or project experience…"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
-                  )}
-                />
-
-                {/* Message */}
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                  )} />
+                </SectionCard>
 
                 {/* Resume Upload */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Resume *</label>
-
-                  <label
-                    htmlFor="resume-upload"
-                    className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-5 hover:border-blue-500 hover:bg-blue-50"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Upload className="h-5 w-5 text-blue-500" />
-                      <div>
-                        <p className="text-sm font-medium">
-                          {resume ? resume.name : "Upload your resume"}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          PDF, DOC, DOCX • Max 5MB
-                        </p>
+                <SectionCard icon={FileText} title="Resume">
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="resume-upload"
+                      className={`
+                        flex cursor-pointer items-center justify-between gap-4
+                        rounded-xl border-2 border-dashed px-4 py-4 transition-all duration-200
+                        ${resume
+                          ? "border-[#0078B4] bg-blue-50/50"
+                          : "border-gray-200 bg-gray-50/60 hover:border-[#0078B4] hover:bg-blue-50/30"
+                        }
+                      `}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-full ${resume ? "bg-blue-100" : "bg-gray-100"}`}>
+                          {resume
+                            ? <FileText className="h-5 w-5 text-[#0078B4]" />
+                            : <Upload className="h-5 w-5 text-gray-400" />
+                          }
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-800">
+                            {resume ? resume.name : "Upload your resume"}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {resume
+                              ? `${(resume.size / 1024).toFixed(0)} KB — PDF / DOC / DOCX`
+                              : "PDF, DOC, DOCX · Max 5 MB"
+                            }
+                          </p>
+                        </div>
                       </div>
-                    </div>
+                      {resume && (
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); setResume(null); }}
+                          className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-red-500 hover:bg-red-200 transition-colors"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </label>
+                    <input id="resume-upload" type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleResumeChange} />
+                    {resumeError && <p className="text-xs font-medium text-red-500">{resumeError}</p>}
+                  </div>
+                </SectionCard>
 
-                    {resume && (
-                      <span className="text-xs text-gray-600">
-                        {(resume.size / 1024).toFixed(0)} KB
-                      </span>
-                    )}
-                  </label>
+                {/* Optional Message */}
+                <SectionCard icon={MessageSquare} title="Cover Message (Optional)">
+                  <FormField control={form.control} name="message" render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          className={textareaCls}
+                          placeholder="Tell us why you're excited about this role…"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )} />
+                </SectionCard>
 
-                  <input
-                    id="resume-upload"
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    className="hidden"
-                    onChange={handleResumeChange}
-                  />
-
-                  {resumeError && (
-                    <p className="text-sm text-red-500">{resumeError}</p>
-                  )}
-                </div>
-
-                {/* Buttons */}
-                <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                {/* Action Buttons */}
+                <div className="flex items-center justify-end gap-3 pt-2 pb-1">
+                  <button
+                    type="button"
+                    onClick={() => onOpenChange(false)}
+                    className="inline-flex items-center justify-center h-10 px-5 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all duration-150"
+                  >
                     Cancel
-                  </Button>
-                  <Button type="submit">Apply</Button>
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-gradient-to-r from-[#0078B4] to-[#00B4D9] text-white text-sm font-semibold shadow-md hover:shadow-lg hover:opacity-90 active:scale-95 transition-all duration-200"
+                  >
+                    Submit Application
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
                 </div>
 
               </form>
