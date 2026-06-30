@@ -1,0 +1,329 @@
+import React, { useState } from "react";
+import { Star, ArrowRight, ArrowUpRight, BookOpen, Clock } from "lucide-react";
+
+// Featured Partner Courses
+const FEATURED_COURSES = [
+  {
+    id: "f1",
+    title: "Java Course",
+    image: "/b44633a77cb38d34997b93dc656d52c119367715.png",
+    category: "Beginner Level",
+    rating: 4.1,
+  },
+  {
+    id: "f2",
+    title: "Web Design",
+    image: "/cdba1ef077424f1f987781487a1ea96c897a397b.png",
+    category: "Beginner Level",
+    rating: 4.1,
+  },
+  {
+    id: "f3",
+    title: "Robotic and Automation Course",
+    image: "/865f5d044541f31153adc33831959dd291188e56.png",
+    category: "Beginner Level",
+    rating: 4.1,
+  },
+  {
+    id: "f4",
+    title: "Mern Course",
+    image: "/b6d1fd9f8831b00133d94fe94a7fdf4329ec97f8.png",
+    category: "Beginner Level",
+    rating: 4.1,
+  },
+];
+
+// Main Course Listing
+const MAIN_COURSES = [
+  {
+    id: "c1",
+    title: "ROS2 With Python / C++ - Arduino + Sensors & Actuators",
+    image: "/fee65732d062a4d091f6d379fb64ec6cbda7d0aa.png",
+    categories: ["Trending Course", "Robatics", "Automation"],
+    price: "₹8,300.00",
+    rating: 4.5,
+    duration: "12 Weeks",
+    level: "Beginner"
+  },
+  {
+    id: "c2",
+    title: "VHDL/Verilog For Beginners - ASIC Flow Using Synopsys Tools",
+    image: "/f640e38ff651cb30fe178c04f368275ec4244cd3.png",
+    categories: ["Trending Course", "Automation"],
+    price: "₹8,300.00",
+    rating: 4.5,
+    duration: "12 Weeks",
+    level: "Beginner"
+  },
+  {
+    id: "c4",
+    title: "AI Artificial Intelligence Course",
+    image: "/21577a0198e0b3866b3688c799fd718d27783c98.png",
+    categories: ["Trending Course", "Artificial Intelligence AI"],
+    price: "₹8,300.00",
+    rating: 4.5,
+    duration: "12 Weeks",
+    level: "Beginner"
+  },
+  {
+    id: "c3",
+    title: "CEH (Certified Ethical Hacking) Prep - Bug Bounty & Web",
+    image: "/e248f34a7bfca4bdcb6f77caf7bf1438cdb51911.png",
+    categories: ["Trending Course", "Web Development"],
+    price: "₹8,300.00",
+    rating: 4.5,
+    duration: "12 Weeks",
+    level: "Beginner"
+  },
+];
+
+const TABS = [
+  "Trending Course",
+  "Artificial Intelligence AI",
+  "Web Development",
+  "Robatics",
+  "Automation",
+];
+
+export default function CoursePage() {
+  const [activeTab, setActiveTab] = useState("Trending Course");
+
+  // Filter courses based on active tab
+  const filteredCourses = MAIN_COURSES.filter((course) =>
+    course.categories.includes(activeTab)
+  );
+
+  return (
+    <div className="bg-[#FAFBFD] min-h-screen font-sans">
+      
+      {/* ────────────────── HERO SECTION ────────────────── */}
+      <div 
+        className="relative bg-cover bg-center pt-[128px] md:pt-[160px] px-6 overflow-visible flex flex-col items-center"
+        style={{ 
+          backgroundImage: `url('/f27dd8893d259b0c63d6fd23d1b7d9e24e85b44a (5).png')`,
+          paddingBottom: 'clamp(180px, 31vw + 25px, 410px)'
+        }}
+      >
+        {/* Subtle overlay to enhance contrast */}
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] pointer-events-none"></div>
+ 
+        <div className="relative z-10 max-w-[1200px] mx-auto text-center flex flex-col items-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-950 leading-[1.2] tracking-tight max-w-[800px]">
+            Industry-Driven Courses Powered by <br /> Azhizen Academy
+          </h1>
+          
+          <p className="text-sm sm:text-base text-slate-500 max-w-[700px] mt-5 leading-relaxed font-normal">
+            Gain real-world skills through expert-led training, hands-on projects, and innovation-focused learning designed for future-ready careers.
+          </p>
+ 
+          <span 
+            role="button"
+            onClick={() => window.location.href = '#'}
+            className="mt-8 px-6 py-[12px] bg-[#1877F2] text-white rounded-full text-[15px] font-semibold flex items-center gap-2 transition-all duration-300 shadow-[0_6px_20px_rgba(24,119,242,0.4)] hover:bg-[#1466d0] hover:scale-[1.03] hover:shadow-[0_8px_24px_rgba(24,119,242,0.5)] cursor-pointer"
+          >
+            Explore Azhizen Acedemy
+            <ArrowUpRight className="w-4 h-4" />
+          </span>
+        </div>
+ 
+        {/* Overlapping Laptop Mockups */}
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 w-[75%] sm:w-[80%] max-w-[1000px] z-40 transform hover:scale-[1.01] transition-transform duration-500 px-4"
+          style={{
+            top: 'calc(100% - clamp(180px, 31vw + 25px, 410px) + 25px)'
+          }}
+        >
+          <div className="relative w-full overflow-hidden" style={{ aspectRatio: '2.15 / 1' }}>
+            <img 
+              src="/WhatsApp Image 2026-06-29 at 8,05,30 PM-Picsart-BackgroundRemover.jpeg" 
+              alt="Course Interface Mockup" 
+              className="w-full h-full object-cover object-top drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+            />
+            {/* Light smoke gradient overlay to softly fade the cropped bottom edge */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-24 bg-gradient-to-t from-[#FAFBFD] via-[#FAFBFD]/70 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+ 
+        {/* White Curved Wave Overlay at bottom */}
+        <div className="absolute bottom-0 left-0 w-full z-30 pointer-events-none translate-y-[2px]">
+          <img 
+            src="/Group 429.png" 
+            alt="Transition Wave" 
+            className="w-full h-auto object-cover min-h-[40px] md:min-h-[80px]"
+          />
+        </div>
+      </div>
+
+      {/* ────────────────── PARTNER / FEATURED SECTION ────────────────── */}
+      <div className="relative z-30 max-w-[1280px] mx-auto px-4 mt-8 sm:mt-16 md:mt-24 lg:mt-32 xl:mt-40">
+        <div 
+          className="bg-slate-950 p-8 md:p-10 rounded-[2rem] shadow-[0_25px_60px_rgba(0,0,0,0.3)] border border-white/10 overflow-hidden relative bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url('/0993ac0efcfb23291ba8a4ac6b66a79589b7d0dc.png')` 
+          }}
+        >
+          {/* Deep Overlay for contrast */}
+          <div className="absolute inset-0 bg-slate-950/60 pointer-events-none"></div>
+
+          <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
+            
+            {/* Left Partner Info Card */}
+            <div className="lg:w-[26%] flex flex-col justify-center text-left py-1">
+              <div>
+                <h3 className="text-[26px] sm:text-[28px] font-bold leading-[1.2] tracking-tight" style={{ color: '#ffffff' }}>
+                  Proudly Present By <br />
+                  our Partner <br />
+                  Azhizen Academy
+                </h3>
+              </div>
+
+              <button className="mt-7 px-6 py-[12px] bg-gradient-to-r from-[#FF8E00] to-[#B62C00] text-white font-bold rounded-[8px] text-[14px] flex items-center justify-center gap-2 self-start hover:brightness-105 hover:scale-[1.01] transition-all cursor-pointer shadow-none">
+                Explore Azhizen Acedemy
+                <ArrowUpRight className="w-4.5 h-4.5" />
+              </button>
+            </div>
+
+            {/* Right Featured Courses Row */}
+            <div className="lg:w-[74%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+              {FEATURED_COURSES.map((course) => (
+                <div 
+                  key={course.id}
+                  className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] hover:-translate-y-1 transition-all duration-300 group text-left shadow-none"
+                >
+                  <div>
+                    {/* Course Image Wrapper */}
+                    <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
+                      <img 
+                        src={course.image} 
+                        alt={course.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                    </div>
+
+                    {/* Tag & Title */}
+                    <div className="mt-4">
+                      <span className="text-[12px] font-bold text-[#1877F2] tracking-wide block">
+                        {course.category}
+                      </span>
+                      <h4 className="text-[16px] font-bold text-slate-800 mt-1 line-clamp-2 min-h-[48px] leading-[1.3]">
+                        {course.title}
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Specialization & Rating */}
+                  <div className="mt-5">
+                    <span className="text-[12px] text-gray-400 block font-medium">specialization</span>
+                    <div className="flex items-center gap-1 mt-0.5 text-[12px] font-bold text-[#FF8C00]">
+                      <Star className="w-3.5 h-3.5 fill-[#FF8C00] text-[#FF8C00]" />
+                      <span>{course.rating}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ────────────────── SKILL BASED COURSES SECTION ────────────────── */}
+      <div className="max-w-[1280px] mx-auto px-6 py-20">
+        
+        {/* Section Header */}
+        <div className="text-left mb-10">
+          <h2 className="text-[32px] font-bold text-slate-900 leading-tight">
+            Skill Based Course that transform your career
+          </h2>
+          <p className="text-[16px] text-slate-500 mt-2 font-normal">
+            From Basic topic to Advance topic that hep to bright your Career
+          </p>
+        </div>
+
+        {/* Tab Filters */}
+        <div className="flex border-b border-slate-200 mb-10 w-full">
+          <div className="flex overflow-x-auto gap-8 no-scrollbar pb-1.5">
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab;
+              return (
+                <span
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`relative whitespace-nowrap text-[16px] font-bold pb-3.5 transition-colors duration-200 cursor-pointer ${
+                    isActive ? "text-slate-900" : "text-gray-400 hover:text-slate-600"
+                  }`}
+                >
+                  {tab}
+                  {isActive && (
+                    <span className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-slate-900 rounded-t-sm"></span>
+                  )}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Courses Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredCourses.map((course) => (
+            <div
+              key={course.id}
+              className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] hover:-translate-y-1 transition-all duration-300 group text-left shadow-none"
+            >
+              <div>
+                {/* Image */}
+                <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 className="font-bold text-slate-800 text-[16px] leading-[1.3] mt-4 line-clamp-2 min-h-[48px]">
+                  {course.title}
+                </h3>
+
+                {/* Badges Container */}
+                <div className="flex items-center gap-1.5 mt-4">
+                  {/* Level Badge */}
+                  <span className="border border-[#E2E8F0] text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded">
+                    {course.level}
+                  </span>
+                  
+                  {/* Rating Badge */}
+                  <span className="border border-[#E2E8F0] text-orange-500 text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-0.5">
+                    <Star className="w-3 h-3 fill-orange-500 text-orange-500" />
+                    <span>{course.rating}</span>
+                  </span>
+
+                  {/* Duration Badge */}
+                  <span className="bg-[#1877F2] text-white text-[10px] font-bold px-2.5 py-0.5 rounded flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-white" />
+                    <span>{course.duration}</span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Price */}
+              <div className="mt-4 block">
+                <span className="text-[16px] font-extrabold text-slate-900">{course.price}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Empty state when no courses match filter */}
+        {filteredCourses.length === 0 && (
+          <div className="text-center py-16 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-500 font-semibold">No courses found in this category.</p>
+            <p className="text-slate-400 text-sm mt-1">We are adding new programs soon!</p>
+          </div>
+        )}
+      </div>
+
+    </div>
+  );
+}

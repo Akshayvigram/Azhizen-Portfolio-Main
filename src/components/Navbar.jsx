@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
-  { name: "Home",     path: "/" },
-  { name: "Service",  path: "/", scrollTo: "services" },
-  { name: "Course",   path: "/course" },
-  { name: "About us", path: "/about"},
-  { name: "Career",   path: "/career" },
-  { name: "Contact",  path: "/contact-us" },
+  { name: "Home", path: "/" },
+  { name: "Service", path: "/", scrollTo: "services" },
+  { name: "Course", path: "/course" },
+  { name: "About us", path: "/about" },
+  { name: "Contact", path: "/contact-us" },
+  { name: "Career", path: "/career" },
 ];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen]       = useState(false);
-  const [scrolled, setScrolled]   = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [servicesHovered, setServicesHovered] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastAnchor, setToastAnchor] = useState("");
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const currentPath = location.pathname;
 
   const triggerToast = (serviceName, anchor) => {
@@ -69,11 +69,13 @@ const Navbar = () => {
         left: 0,
         right: 0,
         zIndex: 50,
-        backgroundColor: "#ffffff",
+        backgroundColor: scrolled
+          ? "#ffffff"
+          : (currentPath === "/course" ? "transparent" : "#ffffff"),
         boxShadow: scrolled
           ? "0 2px 12px rgba(0,0,0,0.10)"
-          : "0 1px 4px rgba(0,0,0,0.06)",
-        transition: "box-shadow 0.3s ease",
+          : (currentPath === "/course" ? "none" : "0 1px 4px rgba(0,0,0,0.06)"),
+        transition: "background-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       <div
@@ -289,92 +291,6 @@ const Navbar = () => {
               );
             }
 
-            if (name === "Course") {
-              return (
-                <div key={name} style={{ position: "relative", display: "inline-block" }}>
-                  <button
-                    onClick={() => triggerToast("Course", "course")}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: "4px 0",
-                      fontSize: "15px",
-                      fontWeight: active ? "700" : "400",
-                      color: active ? "#1877F2" : "#374151",
-                      letterSpacing: "0.01em",
-                      transition: "color 0.2s",
-                      position: "relative",
-                      fontFamily: "inherit",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!active) e.currentTarget.style.color = "#1877F2";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!active) e.currentTarget.style.color = "#374151";
-                    }}
-                  >
-                    {name}
-                  </button>
-
-                   {showToast && toastAnchor === "course" && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "100%",
-                        left: "50%",
-                        transform: "translateX(-50%) translateY(12px)",
-                        backgroundColor: "#0a1931",
-                        color: "#ffffff",
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        boxShadow: "0 6px 20px rgba(0, 110, 230, 0.25)",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        whiteSpace: "nowrap",
-                        zIndex: 999,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontFamily: "Poppins, sans-serif",
-                        pointerEvents: "none",
-                        animation: "popoverBelowFadeIn 0.2s ease-out forwards",
-                      }}
-                    >
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "-4px",
-                          left: "50%",
-                          transform: "translateX(-50%) rotate(45deg)",
-                          width: "8px",
-                          height: "8px",
-                          backgroundColor: "#0a1931",
-                          borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
-                          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-                        }}
-                      />
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#006EE6"
-                        strokeWidth="2.5"
-                        style={{ flexShrink: 0 }}
-                      >
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" y1="8" x2="12" y2="12" />
-                        <line x1="12" y1="16" x2="12.01" y2="16" />
-                      </svg>
-                      {toastMessage}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
             return (
               <button
                 key={name}
@@ -401,7 +317,7 @@ const Navbar = () => {
               >
                 {name}
                 {/* active underline */}
-                {active && (
+                {active && currentPath !== "/course" && (
                   <span
                     style={{
                       position: "absolute",
@@ -549,7 +465,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <line x1="3" y1="6"  x2="21" y2="6" />
+                <line x1="3" y1="6" x2="21" y2="6" />
                 <line x1="3" y1="12" x2="21" y2="12" />
                 <line x1="3" y1="18" x2="21" y2="18" />
               </>
@@ -651,31 +567,6 @@ const Navbar = () => {
               );
             }
 
-            if (name === "Course") {
-              return (
-                <button
-                  key={name}
-                  onClick={() => { setIsOpen(false); triggerToast("Course", "mobile-course"); }}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    textAlign: "left",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "10px 0",
-                    fontSize: "15px",
-                    fontWeight: active ? "700" : "400",
-                    color: active ? "#1877F2" : "#374151",
-                    borderBottom: "1px solid #f3f4f6",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  {name}
-                </button>
-              );
-            }
-
             return (
               <button
                 key={name}
@@ -699,7 +590,7 @@ const Navbar = () => {
               </button>
             );
           })}
-          
+
           <button
             onClick={() => { setIsOpen(false); triggerToast("Diary Tech Portal", "switch-mobile"); }}
             style={{
