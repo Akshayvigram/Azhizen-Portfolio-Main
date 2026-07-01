@@ -225,6 +225,32 @@ const Navbar = () => {
                       >
                         Marketing Services
                       </button>
+                      <button
+                        onClick={() => navigate("/training-support")}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          fontSize: "14px",
+                          color: "#374151",
+                          cursor: "pointer",
+                          fontFamily: "inherit",
+                          transition: "all 0.15s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#f8fafc";
+                          e.currentTarget.style.color = "#1877F2";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
+                      >
+                        Training Support
+                      </button>
                     </div>
                   )}
 
@@ -644,6 +670,23 @@ const Navbar = () => {
                         }}
                       >
                         Marketing Services
+                      </button>
+                      <button
+                        onClick={() => { setIsOpen(false); navigate("/training-support"); }}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          textAlign: "left",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "8px 0",
+                          fontSize: "14px",
+                          color: "#4B5563",
+                          fontFamily: "inherit",
+                        }}
+                      >
+                        Training Support
                       </button>
                     </div>
                   )}
