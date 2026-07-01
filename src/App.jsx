@@ -8,7 +8,8 @@ import Careers from "./components/Careers";
 import JobApplicationForm from "./components/JobApplicationForm";
 import AboutUsPage from "./components/AboutUsPage";
 import ServicePage from "./components/ServicePage"
-import TrainingSupport from "./components/TrainingSupport"
+import TrainingSupport from "./components/TrainingSupport";
+import CoursePage from "./components/CoursePage";
 import { useEffect } from "react";
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
         <Route path="/services" element={<ServicePage />} />
         <Route path="/training-support" element={<TrainingSupport />} />
+        <Route path="/course" element={<CoursePage />} />
       </Routes>
 
       {/* Contact page renders its own footer */}
