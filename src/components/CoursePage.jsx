@@ -1,5 +1,20 @@
 import React, { useState } from "react";
-import { Star, ArrowRight, ArrowUpRight, BookOpen, Clock } from "lucide-react";
+import { Star, ArrowRight, BookOpen, Clock } from "lucide-react";
+
+const DoubleCornerArrow = ({ className = "w-[18px] h-[18px]" }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.8"
+    strokeLinecap="square"
+    strokeLinejoin="miter"
+  >
+    <path d="M11 5h8v8" />
+    <path d="M5 11h8v8" />
+  </svg>
+);
 
 // Featured Partner Courses
 const FEATURED_COURSES = [
@@ -122,7 +137,7 @@ export default function CoursePage() {
             className="mt-8 px-6 py-[12px] bg-[#1877F2] text-white rounded-full text-[15px] font-semibold flex items-center gap-2 transition-all duration-300 shadow-[0_6px_20px_rgba(24,119,242,0.4)] hover:bg-[#1466d0] hover:scale-[1.03] hover:shadow-[0_8px_24px_rgba(24,119,242,0.5)] cursor-pointer"
           >
             Explore Azhizen Acedemy
-            <ArrowUpRight className="w-4 h-4" />
+            <DoubleCornerArrow className="w-4 h-4" />
           </span>
         </div>
  
@@ -179,7 +194,7 @@ export default function CoursePage() {
 
               <button className="mt-7 px-6 py-[12px] bg-gradient-to-r from-[#FF8E00] to-[#B62C00] text-white font-bold rounded-[8px] text-[14px] flex items-center justify-center gap-2 self-start hover:brightness-105 hover:scale-[1.01] transition-all cursor-pointer shadow-none">
                 Explore Azhizen Acedemy
-                <ArrowUpRight className="w-4.5 h-4.5" />
+                <DoubleCornerArrow className="w-4.5 h-4.5" />
               </button>
             </div>
 
