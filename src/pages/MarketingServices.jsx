@@ -64,164 +64,199 @@ const MarketingServices = () => {
   };
 
   return (
-    <div className="font-poppins bg-[#F8FAFC] w-full min-h-screen overflow-x-hidden">
+    <div className="font-poppins bg-white w-full min-h-screen overflow-x-hidden">
       
       {/* ── HERO SECTION ── */}
-      <div 
-        className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat pt-[120px] pb-[160px] flex flex-col items-center justify-between text-center overflow-visible"
+      <div
+        className="relative w-full bg-cover bg-center bg-no-repeat overflow-visible"
         style={{
-          backgroundImage: "url('/093d9e168be8563656ac2661688920c1fda133cf.png')"
+          backgroundImage: "url('/093d9e168be8563656ac2661688920c1fda133cf.png')",
+          paddingTop: "96px",
+          paddingBottom: "230px",
         }}
       >
-        {/* Spacer to push content down on desktop */}
-        <div className="hidden lg:block h-6"></div>
-
-        {/* Centered Heading & CTA */}
-        <div className="max-w-[1320px] mx-auto w-full px-6 flex flex-col items-center relative z-10">
-          <motion.h1 
-            variants={headingVariants}
-            initial="hidden"
-            animate="visible"
-            className="font-poppins font-bold text-[36px] sm:text-[48px] lg:text-[64px] text-white leading-[1.1] max-w-[950px] mb-8 text-center"
+        {/* ── Title — centered, white ── */}
+        <motion.div
+          variants={headingVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative z-10 text-center px-6 pt-8 pb-5"
+        >
+          <h1
+            style={{ color: '#ffffff' }}
+            className="font-poppins font-extrabold text-[28px] sm:text-[38px] lg:text-[44px] leading-tight max-w-[820px] mx-auto"
           >
             Next-Gen Digital Marketing<br />by Azhizen Media
-          </motion.h1>
+          </h1>
+        </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleAcademyClick}
-            className="bg-gradient-to-r from-[#1877F2] to-[#006EE6] hover:from-[#1565C0] hover:to-[#005cb3] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[50px] transition-all duration-300 shadow-[0_8px_20px_rgba(24,119,242,0.35)] flex items-center gap-2 cursor-pointer mb-[70px] border-none"
-          >
-            Explore Azhizen Acedemy <ArrowUpRight />
-          </motion.button>
-        </div>
-
-        {/* Three Floating Cards Container */}
-        <motion.div 
+        {/* ── THREE-COLUMN LAYOUT (matches Figma exactly) ── */}
+        {/*
+            LEFT  col : image card  (top = same level as button)
+            CENTER col: [button] then [center white card below]
+            RIGHT  col: [Logo badge] then [right white card below] then [Mobile badge]
+        */}
+        <motion.div
           variants={cardsContainerVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-12 lg:gap-[40px] w-full max-w-[1100px] px-6 relative z-20 mt-4 mb-8"
+          className="relative z-20 w-full max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-10 pb-4"
         >
-          
-          {/* Left Card: Dark Image Card */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -10 }}
-            className="relative w-[320px] md:w-[330px] h-[320px] md:h-[330px] shrink-0 order-1 lg:order-1"
-          >
-            <img 
-              src="/63f3b2d49cbe4d045aafdb6f4177d911f7ed72ff.png" 
-              alt="Website & UI/UX" 
-              className="w-full h-full object-cover rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)]"
-            />
-            {/* Website Development badge */}
-            <FloatingBadge className="absolute -left-6 bottom-[40px] z-30 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100/30" delay={0} duration={3}>
-              <span className="flex items-center justify-center bg-purple-100 text-purple-600 rounded-lg w-7 h-7">
+
+          {/* ══ LEFT COLUMN : Image Card + badges below ══ */}
+          <div className="flex flex-col self-center lg:self-start order-2 lg:order-1 overflow-visible">
+
+            {/* Image card */}
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ y: -6 }}
+              className="relative w-[260px] h-[260px] shrink-0"
+            >
+              <img
+                src="/63f3b2d49cbe4d045aafdb6f4177d911f7ed72ff.png"
+                alt="What We Do — Azhizen"
+                className="w-full h-full object-cover rounded-[20px] shadow-[6px_8px_20px_rgba(0,0,0,0.25)]"
+              />
+            </motion.div>
+
+            {/* Website Development badge — below card, shifted slightly left */}
+            <div
+              className="mt-3 -ml-4 flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
+            >
+              <span className="flex items-center justify-center bg-purple-100 text-purple-600 rounded-md w-7 h-7">
                 <Laptop className="w-4 h-4" />
               </span>
-              <span className="text-slate-800 font-poppins font-semibold text-[13px] whitespace-nowrap">
+              <span className="text-slate-800 font-poppins font-medium text-[12.5px] whitespace-nowrap">
                 Website Development
               </span>
-            </FloatingBadge>
-            {/* UI/UX Design badge */}
-            <FloatingBadge className="absolute left-[110px] -bottom-[20px] z-30 flex items-center gap-2 bg-white pl-2 pr-4 py-2 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100/30" delay={0.4} duration={3.2}>
-              <div className="bg-[#1877F2] text-white text-[9px] font-bold rounded-full w-8 h-8 flex items-center justify-center font-poppins shrink-0">
+            </div>
+
+            {/* UI/UX Design badge — below Website Dev, shifted right */}
+            <div
+              className="mt-2 ml-[35px] flex items-center gap-2 bg-white pl-2 pr-3 py-1.5 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
+            >
+              <div className="bg-[#1877F2] text-white text-[9px] font-bold rounded-full w-7 h-7 flex items-center justify-center font-poppins shrink-0">
                 UI/UX
               </div>
-              <span className="text-slate-800 font-poppins font-semibold text-[13px] whitespace-nowrap">
+              <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 UI/UX Design
               </span>
-            </FloatingBadge>
-          </motion.div>
-
-          {/* Center Card: White Rounded Card */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -10 }}
-            className="relative w-[320px] md:w-[330px] bg-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] shrink-0 p-6 flex flex-col items-center justify-between min-h-[440px] lg:-translate-y-6 order-3 lg:order-2 z-20"
-          >
-            {/* Azhizen Media Badge */}
-            <FloatingBadge className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 flex items-center bg-white px-6 py-2 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100/80" delay={0.2} duration={2.8}>
-              <span className="text-[#050505] font-poppins font-semibold text-[13px]">
-                Azhizen Media
-              </span>
-            </FloatingBadge>
-
-            <h3 className="font-poppins font-bold text-[22px] text-[#050505] mt-4 leading-snug text-center">
-              Providing 10+<br />Marketing Service
-            </h3>
-            
-            <div className="flex items-start gap-2.5 my-5 text-left w-full px-2">
-              <Check className="w-5 h-5 text-[#1877F2] shrink-0 mt-0.5 stroke-[3.5]" />
-              <span className="text-[14px] text-gray-700 font-poppins font-medium leading-relaxed">
-                grow your business<br />
-                through Digital platform<br />
-                to get Sucess
-              </span>
             </div>
-            
-            <div className="w-full px-2 pb-2">
-              <img 
-                src="/Frame 1268.png" 
-                alt="Digital Marketing Preview" 
-                className="w-full h-auto object-cover rounded-2xl"
-              />
-            </div>
-          </motion.div>
+          </div>
 
-          {/* Right Card: White Rounded Card */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -10 }}
-            className="relative w-[320px] md:w-[330px] bg-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] shrink-0 p-6 flex flex-col items-center justify-between min-h-[380px] order-2 lg:order-3"
-          >
-            <h3 className="font-poppins font-bold text-[18px] text-[#050505] leading-snug mt-2 text-center w-full">
-              Advanced Billing System<br />for Modern Businesses
-            </h3>
-            
-            <div className="w-full flex justify-center py-4">
-              <img 
-                src="/64e37823845fcd721b630868cf1244cdfca89c9d.png" 
-                alt="Billing Dashboard" 
-                className="h-[120px] w-auto object-contain"
-              />
-            </div>
-            
-            <div className="font-poppins font-bold text-[14px] text-slate-800 mt-2 mb-2 text-center w-full">
-              Grow your Business
-            </div>
+          {/* ══ CENTER COLUMN : Button → Center Card ══ */}
+          <div className="flex flex-col items-center shrink-0 order-1 lg:order-2 self-center lg:self-start">
 
-            {/* Logo And Poster Design badge */}
-            <FloatingBadge className="absolute -right-10 -top-6 z-30 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100/30" delay={0.1} duration={3.4}>
-              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-lg w-7 h-7">
+            {/* Explore Button — sits above center card */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleAcademyClick}
+              className="bg-[#1877F2] hover:bg-[#1565C0] text-white font-poppins font-semibold text-[15px] px-6 py-3 rounded-md transition-all duration-200 flex items-center gap-2 cursor-pointer border-none mb-5 shadow-[0_4px_14px_rgba(24,119,242,0.35)]"
+              style={{ color: '#ffffff', backgroundColor: '#1877F2' }}
+            >
+              Explore Azhizen Acedemy <ArrowUpRight />
+            </motion.button>
+
+            {/* Center white card */}
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ y: -6 }}
+              className="relative w-[300px] bg-gradient-to-b from-slate-100 to-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] p-6 flex flex-col z-20"
+              style={{ minHeight: '390px' }}
+            >
+              {/* Azhizen Media badge inside the card top (static, no floating animation) */}
+              <div
+                className="self-center flex items-center bg-white px-5 py-2 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.08)] mb-3"
+              >
+                <span style={{ color: '#050505' }} className="font-poppins font-semibold text-[14px]">
+                  Azhizen Media
+                </span>
+              </div>
+
+              <h3 style={{ color: '#000000' }} className="font-poppins font-semibold text-[24px] mt-2 leading-tight">
+                Providing 10+<br />Marketing Service
+              </h3>
+
+              <div className="flex items-start gap-3 mt-3 mb-4">
+                <Check className="w-7 h-7 text-[#1877F2] shrink-0 mt-0.5 stroke-[3]" />
+                <span className="text-[16px] text-[#000000] font-poppins font-medium leading-relaxed">
+                  grow your business<br />
+                  through Digital platform<br />
+                  to get Sucess
+                </span>
+              </div>
+
+              <div className="w-full mt-auto">
+                <img
+                  src="/Frame 1268.png"
+                  alt="Digital Marketing Preview"
+                  className="w-full h-auto object-cover rounded-xl"
+                />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ══ RIGHT COLUMN : Logo Badge → Right Card → Mobile Badge ══ */}
+          <div className="flex flex-col items-start shrink-0 order-3 self-center lg:self-start">
+
+            {/* Logo And Poster Design badge — ABOVE right card */}
+            <div
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mb-4 self-end"
+            >
+              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-md w-7 h-7">
                 <Palette className="w-4 h-4" />
               </span>
-              <span className="text-slate-800 font-poppins font-semibold text-[13px] whitespace-nowrap">
+              <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Logo And Poster Design
               </span>
-            </FloatingBadge>
+            </div>
 
-            {/* Mobile App Development badge */}
-            <FloatingBadge className="absolute -left-12 -bottom-6 z-30 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100/30" delay={0.3} duration={3}>
-              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-lg w-7 h-7">
+            {/* Right white card */}
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ y: -6 }}
+              className="relative w-[260px] bg-white rounded-[20px] shadow-[-6px_8px_20px_rgba(0,0,0,0.20)] p-6 flex flex-col items-center justify-between"
+              style={{ height: '240px' }}
+            >
+              <h3 style={{ color: '#050505' }} className="font-poppins font-medium text-[15px] leading-snug mt-1 text-center w-full">
+                Advanced Billing System<br />for Modern Businesses
+              </h3>
+
+              <div className="w-full flex justify-center my-1">
+                <img
+                  src="/64e37823845fcd721b630868cf1244cdfca89c9d.png"
+                  alt="Billing Dashboard"
+                  className="w-[120px] h-[125px] object-contain"
+                />
+              </div>
+
+              <div style={{ color: '#050505' }} className="font-poppins font-medium text-[15px] text-center mt-auto mb-2">
+                Grow your Business
+              </div>
+            </motion.div>
+
+            {/* Mobile App Development badge — BELOW right card */}
+            <div
+              className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mt-4 self-start"
+            >
+              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-md w-7 h-7">
                 <Smartphone className="w-4 h-4" />
               </span>
-              <span className="text-slate-800 font-poppins font-semibold text-[13px] whitespace-nowrap">
+              <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Mobile App Development
               </span>
-            </FloatingBadge>
-          </motion.div>
+            </div>
+          </div>
 
         </motion.div>
 
-        {/* Large White Vector Path (Visually bridging into the next section) */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[82%] w-[380px] md:w-[600px] lg:w-[1000px] xl:w-[1200px] z-[5] pointer-events-none">
-          <img 
-            src="/Vector 131 (1).png" 
-            alt="White Center Path" 
-            className="w-full h-auto object-contain"
+        {/* White Vector path bridging into next section */}
+        <div className="absolute -bottom-[100px] left-1/2 -translate-x-1/2 w-[450px] md:w-[650px] lg:w-[1300px] xl:w-[1400px] h-[350px] z-[5] pointer-events-none">
+          <img
+            src="/Vector 131 (1).png"
+            alt="White Centre Path"
+            className="w-full h-full object-fill"
           />
         </div>
       </div>
@@ -229,7 +264,7 @@ const MarketingServices = () => {
       {/* ── SECTION 2 ── */}
       <section
         id="services-section"
-        className="bg-[#F8FAFC] pt-[180px] pb-[120px] w-full flex flex-col items-center relative z-10"
+        className="bg-white pt-[70px] pb-[120px] w-full flex flex-col items-center relative z-10 -mt-20"
       >
         <div className="max-w-[1320px] mx-auto w-full px-6 flex flex-col items-center">
           

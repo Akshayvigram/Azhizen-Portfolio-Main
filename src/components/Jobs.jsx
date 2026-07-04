@@ -1,26 +1,9 @@
-import React, { useState, useEffect } from "react";
-import JobPosting from "./Jobposting.jsx"; // Update path as necessary
-import jobsAvailabe from "../assets/jobs.json"
+import React, { useState } from "react";
+import JobPosting from "./Jobposting.jsx";
+import { internJobs } from "../data/internJobs";
 
 const Jobs = () => {
-  const [jobListings, setJobListings] = useState([]);
-
-  // useEffect(() => {
-  //   // Fetch job listings from the JSON file
-  //   const fetchJobListings = async () => {
-  //     // const response = await fetch("/jobs.json");
-  //     const response = await fetch("F:\Azhizen Site\Azhizen-Portfolio-Main\src\assets\jobs.json");
-  //     const data = await response.json();
-  //     setJobListings(data);
-  //   };
-
-  //   fetchJobListings();
-  // }, []);
-
-
-  useEffect(() => {
-    setJobListings(jobsAvailabe);
-  })
+  const [jobListings] = useState(internJobs);
 
 
   const [favorites, setFavorites] = useState([]);

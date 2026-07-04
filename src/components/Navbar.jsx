@@ -40,7 +40,7 @@ const Navbar = () => {
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      const limit = location.pathname.endsWith("/marketing-services") ? 80 : 4;
+      const limit = 4;
       setScrolled(scrollTop > limit);
     };
     onScroll();
@@ -66,7 +66,7 @@ const Navbar = () => {
     }
   };
 
-  const isTransparentRoute = currentPath.endsWith("/marketing-services");
+  const isTransparentRoute = false;
   const isTransparentNavbar = !scrolled && isTransparentRoute;
   const defaultTextColor = isTransparentNavbar ? "#ffffff" : "#374151";
 
