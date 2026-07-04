@@ -38,10 +38,15 @@ const Navbar = () => {
 
   /* subtle box-shadow on scroll */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 4);
+    const onScroll = () => {
+      const scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const limit = location.pathname.endsWith("/marketing-services") ? 80 : 4;
+      setScrolled(scrollTop > limit);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [location.pathname]);
 
   /* handle nav clicks — supports scroll-to-section */
   const handleNavClick = ({ path, scrollTo }) => {
@@ -61,18 +66,27 @@ const Navbar = () => {
     }
   };
 
+  const isTransparentRoute = currentPath.endsWith("/marketing-services");
+  const isTransparentNavbar = !scrolled && isTransparentRoute;
+  const defaultTextColor = isTransparentNavbar ? "#ffffff" : "#374151";
+
+  const navPosition = isTransparentNavbar ? "absolute" : "fixed";
+  const navZIndex = isTransparentNavbar ? 100 : 50;
+  const navBg = isTransparentNavbar ? "transparent" : "#ffffff";
+  const navShadow = isTransparentNavbar
+    ? "none"
+    : (scrolled ? "0 2px 12px rgba(0,0,0,0.10)" : "0 1px 4px rgba(0,0,0,0.06)");
+
   return (
     <nav
       style={{
-        position: "fixed",
+        position: navPosition,
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 50,
-        backgroundColor: "#ffffff",
-        boxShadow: scrolled
-          ? "0 2px 12px rgba(0,0,0,0.10)"
-          : "0 1px 4px rgba(0,0,0,0.06)",
+        zIndex: navZIndex,
+        backgroundColor: navBg,
+        boxShadow: navShadow,
         transition: "background-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
@@ -110,7 +124,9 @@ const Navbar = () => {
           }}
         >
           {NAV_LINKS.map(({ name, path, scrollTo }) => {
-            const active = !scrollTo && currentPath === path;
+            const active =
+              (!scrollTo && currentPath === path) ||
+              (name === "Service" && currentPath === "/marketing-services");
             if (name === "Service") {
               return (
                 <div
@@ -128,7 +144,7 @@ const Navbar = () => {
                       padding: "4px 0",
                       fontSize: "15px",
                       fontWeight: active ? "700" : "400",
-                      color: servicesHovered || active ? "#1877F2" : "#374151",
+                      color: servicesHovered || active ? "#1877F2" : defaultTextColor,
                       letterSpacing: "0.01em",
                       transition: "color 0.2s",
                       position: "relative",
@@ -200,7 +216,7 @@ const Navbar = () => {
                         Tech Services
                       </button>
                       <button
-                        onClick={() => triggerToast("Marketing Services", "services")}
+                        onClick={() => navigate("/marketing-services")}
                         style={{
                           display: "block",
                           width: "100%",
@@ -326,7 +342,7 @@ const Navbar = () => {
                   padding: "4px 0",
                   fontSize: "15px",
                   fontWeight: active ? "700" : "400",
-                  color: active ? "#1877F2" : "#374151",
+                  color: active ? "#1877F2" : defaultTextColor,
                   letterSpacing: "0.01em",
                   transition: "color 0.2s",
                   position: "relative",
@@ -336,7 +352,7 @@ const Navbar = () => {
                   if (!active) e.currentTarget.style.color = "#1877F2";
                 }}
                 onMouseLeave={(e) => {
-                  if (!active) e.currentTarget.style.color = "#374151";
+                  if (!active) e.currentTarget.style.color = defaultTextColor;
                 }}
               >
                 {name}
@@ -369,29 +385,37 @@ const Navbar = () => {
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              background: "#006EE6",
+              background: isTransparentNavbar ? "transparent" : "#1877F2",
               color: "#ffffff",
+              border: isTransparentNavbar ? "1px solid rgba(255, 255, 255, 0.6)" : "none",
               fontSize: "14px",
               fontWeight: "600",
               padding: "10px 24px",
               borderRadius: "50px",
-              border: "none",
               cursor: "pointer",
               whiteSpace: "nowrap",
               transition: "all 0.2s ease-in-out",
-              boxShadow: "0 4px 12px rgba(0, 110, 230, 0.3)",
+              boxShadow: isTransparentNavbar ? "none" : "0 4px 12px rgba(24, 119, 242, 0.3)",
               letterSpacing: "0.01em",
               fontFamily: "inherit",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#005ec5";
-              e.currentTarget.style.transform = "scale(1.02)";
-              e.currentTarget.style.boxShadow = "0 6px 16px rgba(0, 110, 230, 0.4)";
+              if (isTransparentNavbar) {
+                e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+              } else {
+                e.currentTarget.style.background = "#1565C0";
+                e.currentTarget.style.transform = "scale(1.02)";
+                e.currentTarget.style.boxShadow = "0 6px 16px rgba(24, 119, 242, 0.4)";
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#006EE6";
-              e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 110, 230, 0.3)";
+              if (isTransparentNavbar) {
+                e.currentTarget.style.background = "transparent";
+              } else {
+                e.currentTarget.style.background = "#1877F2";
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(24, 119, 242, 0.3)";
+              }
             }}
           >
             Switch to Diary Tech
@@ -469,7 +493,7 @@ const Navbar = () => {
             border: "none",
             cursor: "pointer",
             padding: "4px",
-            color: "#374151",
+            color: isTransparentNavbar ? "#ffffff" : "#374151",
           }}
         >
           <svg
@@ -569,7 +593,7 @@ const Navbar = () => {
                         Tech Services
                       </button>
                       <button
-                        onClick={() => { setIsOpen(false); triggerToast("Marketing Services", "mobile-services"); }}
+                        onClick={() => { setIsOpen(false); navigate("/marketing-services"); }}
                         style={{
                           display: "block",
                           width: "100%",
@@ -639,7 +663,7 @@ const Navbar = () => {
               alignItems: "center",
               gap: "8px",
               marginTop: "16px",
-              background: "#006EE6",
+              background: "#1877F2",
               color: "#ffffff",
               fontSize: "14px",
               fontWeight: "600",
@@ -647,7 +671,7 @@ const Navbar = () => {
               borderRadius: "50px",
               border: "none",
               cursor: "pointer",
-              boxShadow: "0 4px 12px rgba(0, 110, 230, 0.3)",
+              boxShadow: "0 4px 12px rgba(24, 119, 242, 0.3)",
               letterSpacing: "0.01em",
               fontFamily: "inherit",
             }}
@@ -684,7 +708,7 @@ const Navbar = () => {
             color: "#ffffff",
             padding: "12px 24px",
             borderRadius: "50px",
-            boxShadow: "0 10px 30px rgba(0, 110, 230, 0.25)",
+            boxShadow: "0 10px 30px rgba(24, 119, 242, 0.25)",
             border: "1px solid rgba(255, 255, 255, 0.1)",
             fontSize: "14px",
             fontWeight: "600",
@@ -703,7 +727,7 @@ const Navbar = () => {
             height="18"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#006EE6"
+            stroke="#1877F2"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
