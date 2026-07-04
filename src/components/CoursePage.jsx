@@ -98,7 +98,7 @@ export default function CoursePage() {
       
       {/* ────────────────── HERO SECTION ────────────────── */}
       <div 
-        className="relative bg-cover bg-center pt-[128px] md:pt-[160px] px-6 overflow-visible flex flex-col items-center"
+        className="relative bg-cover bg-center pt-[80px] md:pt-[96px] px-6 overflow-visible flex flex-col items-center"
         style={{ 
           backgroundImage: `url('/f27dd8893d259b0c63d6fd23d1b7d9e24e85b44a (5).png')`,
           paddingBottom: 'clamp(180px, 31vw + 25px, 410px)'
@@ -308,7 +308,7 @@ export default function CoursePage() {
 
               {/* Price */}
               <div className="mt-4 block">
-                <span className="text-[16px] font-extrabold text-slate-900">{course.price}</span>
+                <span className="text-[15px] font-semibold text-slate-700">{course.price}</span>
               </div>
             </div>
           ))}

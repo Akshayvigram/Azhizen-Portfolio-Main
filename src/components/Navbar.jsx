@@ -69,12 +69,10 @@ const Navbar = () => {
         left: 0,
         right: 0,
         zIndex: 50,
-        backgroundColor: scrolled
-          ? "#ffffff"
-          : (currentPath === "/course" ? "transparent" : "#ffffff"),
+        backgroundColor: "#ffffff",
         boxShadow: scrolled
           ? "0 2px 12px rgba(0,0,0,0.10)"
-          : (currentPath === "/course" ? "none" : "0 1px 4px rgba(0,0,0,0.06)"),
+          : "0 1px 4px rgba(0,0,0,0.06)",
         transition: "background-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
@@ -343,7 +341,7 @@ const Navbar = () => {
               >
                 {name}
                 {/* active underline */}
-                {active && currentPath !== "/course" && (
+                {active && (
                   <span
                     style={{
                       position: "absolute",
