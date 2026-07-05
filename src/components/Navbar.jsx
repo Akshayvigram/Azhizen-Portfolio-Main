@@ -5,9 +5,9 @@ const NAV_LINKS = [
   { name: "Home", path: "/" },
   { name: "Service", path: "/", scrollTo: "services" },
   { name: "Course", path: "/course" },
+  { name: "Career", path: "/career" },
   { name: "About us", path: "/about" },
   { name: "Contact", path: "/contact-us" },
-  { name: "Career", path: "/career" },
 ];
 
 const Navbar = () => {

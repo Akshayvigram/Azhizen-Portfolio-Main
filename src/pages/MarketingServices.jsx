@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Laptop, Palette, Smartphone, Check } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
-import { marketingServices } from '../data/marketingServices';
+import { marketingServices } from '../data/marketingServicesNew';
+// Trigger rebuild with cache-bypassed data source
 
 // Standard up-right arrow icon
 const ArrowUpRight = ({ className = "w-[16px] h-[16px]" }) => (
@@ -12,11 +13,11 @@ const ArrowUpRight = ({ className = "w-[16px] h-[16px]" }) => (
     fill="none"
     stroke="currentColor"
     strokeWidth="3.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    strokeLinecap="square"
+    strokeLinejoin="miter"
   >
-    <line x1="7" y1="17" x2="17" y2="7" />
-    <polyline points="7 7 17 7 17 17" />
+    <polyline points="11 6 18 6 18 13" />
+    <polyline points="6 11 13 11 13 18" />
   </svg>
 );
 
@@ -123,9 +124,11 @@ const MarketingServices = () => {
             <div
               className="mt-3 -ml-4 flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
             >
-              <span className="flex items-center justify-center bg-purple-100 text-purple-600 rounded-md w-7 h-7">
-                <Laptop className="w-4 h-4" />
-              </span>
+              <img
+                src="/a0ca5728adf4f3483881e71386b34061c9289922.png"
+                alt="Website Development"
+                className="w-7 h-7 object-contain shrink-0"
+              />
               <span className="text-slate-800 font-poppins font-medium text-[12.5px] whitespace-nowrap">
                 Website Development
               </span>
@@ -135,9 +138,11 @@ const MarketingServices = () => {
             <div
               className="mt-2 ml-[35px] flex items-center gap-2 bg-white pl-2 pr-3 py-1.5 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
             >
-              <div className="bg-[#1877F2] text-white text-[9px] font-bold rounded-full w-7 h-7 flex items-center justify-center font-poppins shrink-0">
-                UI/UX
-              </div>
+              <img
+                src="/9795a08d13bc8ef72ac67ba281e7618cf4319f00.png"
+                alt="UI/UX Design"
+                className="w-7 h-7 object-contain rounded-md shrink-0"
+              />
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 UI/UX Design
               </span>
@@ -204,9 +209,11 @@ const MarketingServices = () => {
             <div
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mb-4 self-end"
             >
-              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-md w-7 h-7">
-                <Palette className="w-4 h-4" />
-              </span>
+              <img
+                src="/f56ccd0b935ef7dfbcda12e105db5f6c6c1db522.png"
+                alt="Logo And Poster Design"
+                className="w-7 h-7 object-contain shrink-0"
+              />
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Logo And Poster Design
               </span>
@@ -240,9 +247,11 @@ const MarketingServices = () => {
             <div
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mt-4 self-start"
             >
-              <span className="flex items-center justify-center bg-blue-50 text-blue-500 rounded-md w-7 h-7">
-                <Smartphone className="w-4 h-4" />
-              </span>
+              <img
+                src="/3f80251d3161d5439bee3d41bea64dbc4b3c2600.png"
+                alt="Mobile App Development"
+                className="w-7 h-7 object-contain shrink-0"
+              />
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Mobile App Development
               </span>
