@@ -110,6 +110,7 @@
 
 import { useMemo, useState, useRef, useEffect } from "react";
 import { Search, Pointer } from "lucide-react";
+import { motion } from "framer-motion";
 // import Navbar from "@/components/careers/Navbar";
 // import Footer from "@/components/careers/Footer";
 import JobCard from "../components/support/JobCard";
@@ -131,6 +132,20 @@ const Careers = () => {
   const [listScrollRange, setListScrollRange] = useState(0);
 
   const SCROLL_SPEED_FACTOR = 0.5; // Lower values make options scroll slower. E.g., 0.5 is 50% scroll speed.
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -226,15 +241,23 @@ const Careers = () => {
           />
           <div className="relative mx-auto px-6 pt-24 pb-20 md:pt-36 md:pb-28 lg:pt-40 lg:pb-32" style={{ maxWidth: "1280px" }}>
             <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center">
-              <h1
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 id="careers-hero"
                 className="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-[#111827] md:text-5xl lg:text-6xl"
               >
                 We are Looking For <br />
                 <span className="text-brand">Skilled</span> people.
-              </h1>
+              </motion.h1>
 
-              <div className="w-full max-w-md">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+                className="w-full max-w-md"
+              >
                 <label htmlFor="job-search" className="sr-only">
                   Search jobs
                 </label>
@@ -254,7 +277,7 @@ const Careers = () => {
                     <Search className="h-5 w-5" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -272,7 +295,13 @@ const Careers = () => {
             <div className="w-full relative z-10 mx-auto px-6 py-8" style={{ maxWidth: "1280px" }}>
               <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
                 {/* Left */}
-                <div className="relative flex flex-col">
+                <motion.div 
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="relative flex flex-col"
+                >
                   <div className="flex items-start gap-3">
                     <Pointer className="mt-1.5 h-7 w-7 text-brand" aria-hidden />
                     <div>
@@ -292,23 +321,31 @@ const Careers = () => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Right */}
                 <div
                   ref={listRef}
-                  className="h-[440px] overflow-y-hidden pr-2 no-scrollbar"
+                  className="h-[445px] overflow-y-hidden pt-3 pr-2 no-scrollbar"
                 >
-                  <div className="flex flex-col gap-4 pb-4">
+                  <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="flex flex-col gap-4 pb-4"
+                  >
                     {filtered.map((job) => (
-                      <JobCard key={job.id} job={job} onClick={() => openJob(job)} />
+                      <motion.div key={job.id} variants={itemVariants}>
+                        <JobCard job={job} onClick={() => openJob(job)} />
+                      </motion.div>
                     ))}
                     {filtered.length === 0 && (
                       <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
                         No roles match your search.
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>

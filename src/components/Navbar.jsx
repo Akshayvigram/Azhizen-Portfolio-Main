@@ -126,7 +126,7 @@ const Navbar = () => {
           {NAV_LINKS.map(({ name, path, scrollTo }) => {
             const active =
               (!scrollTo && currentPath === path) ||
-              (name === "Service" && currentPath === "/marketing-services");
+              (name === "Service" && ["/marketing-services", "/training-support", "/services"].includes(currentPath));
             if (name === "Service") {
               return (
                 <div
@@ -532,7 +532,9 @@ const Navbar = () => {
           }}
         >
           {NAV_LINKS.map(({ name, path, scrollTo }) => {
-            const active = !scrollTo && currentPath === path;
+            const active =
+              (!scrollTo && currentPath === path) ||
+              (name === "Service" && ["/marketing-services", "/training-support", "/services"].includes(currentPath));
             if (name === "Service") {
               return (
                 <div key={name} style={{ borderBottom: "1px solid #f3f4f6" }}>

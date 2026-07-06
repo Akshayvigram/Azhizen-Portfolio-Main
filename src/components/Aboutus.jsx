@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 /* ─── Icons ──────────────────────────────────────────────── */
 const AwardIcon = () => (
@@ -99,7 +100,11 @@ const Aboutus = () => {
         >
 
           {/* ── LEFT: Image Section ── */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="
               relative
               w-full
@@ -148,10 +153,16 @@ const Aboutus = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* ── RIGHT: Content ── */}
-          <div className="flex-1 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex-1 w-full"
+          >
 
             {/* Badge */}
             <span
@@ -251,7 +262,14 @@ const Aboutus = () => {
             </ul>
 
             {/* Feature cards */}
-            <div
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.15 } }
+              }}
               className="
                 flex
                 flex-col
@@ -262,7 +280,11 @@ const Aboutus = () => {
             >
 
               {/* Award Ceremony */}
-              <div
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
                 className="
                   flex
                   gap-3
@@ -297,10 +319,14 @@ const Aboutus = () => {
                     It Service
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Certified Company */}
-              <div
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
                 className="
                   flex
                   gap-3
@@ -334,10 +360,10 @@ const Aboutus = () => {
                     Trusted and Certified for delivering quality IT Solutions.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
         </div>
       </section>

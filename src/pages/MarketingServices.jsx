@@ -121,7 +121,9 @@ const MarketingServices = () => {
             </motion.div>
 
             {/* Website Development badge — below card, shifted slightly left */}
-            <div
+            <FloatingBadge
+              delay={0.2}
+              duration={3.2}
               className="mt-3 -ml-4 flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
             >
               <img
@@ -132,10 +134,12 @@ const MarketingServices = () => {
               <span className="text-slate-800 font-poppins font-medium text-[12.5px] whitespace-nowrap">
                 Website Development
               </span>
-            </div>
+            </FloatingBadge>
 
             {/* UI/UX Design badge — below Website Dev, shifted right */}
-            <div
+            <FloatingBadge
+              delay={0.6}
+              duration={3.6}
               className="mt-2 ml-[35px] flex items-center gap-2 bg-white pl-2 pr-3 py-1.5 rounded-xl shadow-[6px_8px_12px_rgba(0,0,0,0.18)]"
             >
               <img
@@ -146,7 +150,7 @@ const MarketingServices = () => {
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 UI/UX Design
               </span>
-            </div>
+            </FloatingBadge>
           </div>
 
           {/* ══ CENTER COLUMN : Button → Center Card ══ */}
@@ -206,7 +210,9 @@ const MarketingServices = () => {
           <div className="flex flex-col items-start shrink-0 order-3 self-center lg:self-start">
 
             {/* Logo And Poster Design badge — ABOVE right card */}
-            <div
+            <FloatingBadge
+              delay={0.4}
+              duration={3.4}
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mb-4 self-end"
             >
               <img
@@ -217,7 +223,7 @@ const MarketingServices = () => {
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Logo And Poster Design
               </span>
-            </div>
+            </FloatingBadge>
 
             {/* Right white card */}
             <motion.div
@@ -244,7 +250,9 @@ const MarketingServices = () => {
             </motion.div>
 
             {/* Mobile App Development badge — BELOW right card */}
-            <div
+            <FloatingBadge
+              delay={0.8}
+              duration={3.8}
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] mt-4 self-start"
             >
               <img
@@ -255,7 +263,7 @@ const MarketingServices = () => {
               <span className="text-slate-800 font-poppins font-semibold text-[12.5px] whitespace-nowrap">
                 Mobile App Development
               </span>
-            </div>
+            </FloatingBadge>
           </div>
 
         </motion.div>
@@ -273,48 +281,79 @@ const MarketingServices = () => {
       {/* ── SECTION 2 ── */}
       <section
         id="services-section"
-        className="bg-white pt-[70px] pb-[120px] w-full flex flex-col items-center relative z-10 -mt-20"
+        className="bg-[#eef2f6] pt-[70px] pb-[120px] w-full flex flex-col items-center relative z-10 -mt-20"
       >
         <div className="max-w-[1320px] mx-auto w-full px-6 flex flex-col items-center">
           
           {/* Centered Badge (Lavender/Soft Blue BG and Dark Blue Text/Icon) */}
-          <div className="bg-[#DFE5EE] text-[#0F2C59] font-poppins font-medium text-[14px] px-5 py-1.5 rounded-full inline-flex items-center gap-2 mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-[#DFE5EE] text-[#0F2C59] font-poppins font-medium text-[14px] px-5 py-1.5 rounded-full inline-flex items-center gap-2 mb-6"
+          >
             <svg className="w-4 h-4 text-[#0F2C59]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" />
             </svg>
             Services Designed for Results
-          </div>
+          </motion.div>
 
           {/* Heading with explicit line breaks and wider container to enforce two lines */}
-          <h2 className="font-poppins font-bold text-[32px] sm:text-[40px] md:text-[48px] text-[#050505] leading-tight max-w-[1200px] text-center mb-4 mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-poppins font-bold text-[32px] sm:text-[40px] md:text-[48px] text-[#050505] leading-tight max-w-[1200px] text-center mb-4 mx-auto"
+          >
             Delivering strategic, creative, and data-<br className="hidden md:block" />
             driven services to grow your business.
-          </h2>
+          </motion.h2>
 
           {/* Paragraph with explicit line breaks */}
-          <p className="font-poppins font-normal text-[15px] text-gray-500 max-w-[700px] text-center mb-8 leading-relaxed mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="font-poppins font-normal text-[15px] text-gray-500 max-w-[700px] text-center mb-8 leading-relaxed mx-auto"
+          >
             We offer a comprehensive suite of creative services designed to<br className="hidden md:block" />
             elevate your brand and captivate your audience.
-          </p>
+          </motion.p>
 
           {/* Explore Button */}
-          <button
+          <motion.button
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
             className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[12px] transition-all duration-200 shadow-[0_4px_14px_rgba(24,119,242,0.3)] flex items-center gap-2 cursor-pointer mb-16"
           >
             Explore Azhizen Media <ArrowUpRight />
-          </button>
+          </motion.button>
 
           {/* ── SERVICES GRID ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-4">
+          <motion.div
+            variants={cardsContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-4"
+          >
             {marketingServices.map((service, index) => (
-              <ServiceCard
-                key={index}
-                title={service.title}
-                description={service.description}
-                image={service.image}
-              />
+              <motion.div key={index} variants={cardVariants} className="h-full">
+                <ServiceCard
+                  title={service.title}
+                  description={service.description}
+                  image={service.image}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>

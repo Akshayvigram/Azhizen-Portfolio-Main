@@ -3,6 +3,7 @@ import HeroSection from '../components/HeroSection';
 import Aboutus from '../components/Aboutus';
 import ServicesSection from '../components/ServicesSection';
 import ClientsSection from '../components/ClientsSection';
+import WhyChooseUs from '../components/WhyChooseUs';
 
 const Main = () => {
   return (
@@ -13,6 +14,7 @@ const Main = () => {
           <Aboutus />
         </section>
         <ServicesSection />
+        <WhyChooseUs />
         <ClientsSection />
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { db, realtimeDb } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, push, set } from 'firebase/database';
+import { motion } from 'framer-motion';
 import FooterSection from './FooterSection';
 import Navbar from './Navbar';
 
@@ -38,6 +39,20 @@ const socialLinks = [
 ];
 
 function ContactForm() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -117,7 +132,10 @@ function ContactForm() {
         {/* ═══════════════════════════════════
             FLOATING CARD
         ═══════════════════════════════════ */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 mx-auto px-4 pb-20 w-full"
           style={{ maxWidth: '1160px', marginTop: '-280px' }}
         >
@@ -287,8 +305,13 @@ function ContactForm() {
                 Whether you have a question, enquiry, or project idea, our team is ready to assist you.
               </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
+              <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-6"
+              >
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -301,9 +324,9 @@ function ContactForm() {
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Head Office</h4>
                     <p className="text-sm text-gray-500 leading-relaxed">Tiruchengode, Namakkal,<br />Tamil Nadu.</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -320,9 +343,9 @@ function ContactForm() {
                       </a>
                     </p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -339,10 +362,15 @@ function ContactForm() {
                       </a>
                     </p>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="mt-8 pt-6 border-t border-gray-200"
+              >
                 <h4 className="font-semibold text-sm text-black mb-4">Follow Our Social Media</h4>
                 <div className="flex gap-3">
                   {socialLinks.map((social) => (
@@ -358,11 +386,11 @@ function ContactForm() {
                     </a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ═══════════════════════════════════

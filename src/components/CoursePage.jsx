@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Star, ArrowRight, BookOpen, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DoubleCornerArrow = ({ className = "w-[18px] h-[18px]" }) => (
   <svg
@@ -20,14 +21,14 @@ const DoubleCornerArrow = ({ className = "w-[18px] h-[18px]" }) => (
 const FEATURED_COURSES = [
   {
     id: "f1",
-    title: "Java Course",
+    title: "Java Programming Course",
     image: "/b44633a77cb38d34997b93dc656d52c119367715.png",
     category: "Beginner Level",
     rating: 4.1,
   },
   {
     id: "f2",
-    title: "Web Design",
+    title: "Web Design & Development",
     image: "/cdba1ef077424f1f987781487a1ea96c897a397b.png",
     category: "Beginner Level",
     rating: 4.1,
@@ -41,7 +42,7 @@ const FEATURED_COURSES = [
   },
   {
     id: "f4",
-    title: "Mern Course",
+    title: "Mern Stack Development Course",
     image: "/b6d1fd9f8831b00133d94fe94a7fdf4329ec97f8.png",
     category: "Beginner Level",
     rating: 4.1,
@@ -72,9 +73,9 @@ const MAIN_COURSES = [
   },
   {
     id: "c4",
-    title: "AI Artificial Intelligence Course",
+    title: "CEH (Certified Ethical Hacking) Prep - Bug Bounty & Web",
     image: "/21577a0198e0b3866b3688c799fd718d27783c98.png",
-    categories: ["Trending Course", "Artificial Intelligence AI"],
+    categories: ["Trending Course", "Web Development"],
     price: "₹8,300.00",
     rating: 4.5,
     duration: "12 Weeks",
@@ -82,9 +83,9 @@ const MAIN_COURSES = [
   },
   {
     id: "c3",
-    title: "CEH (Certified Ethical Hacking) Prep - Bug Bounty & Web",
+    title: "AI Artificial Intelligence Course",
     image: "/e248f34a7bfca4bdcb6f77caf7bf1438cdb51911.png",
-    categories: ["Trending Course", "Web Development"],
+    categories: ["Trending Course", "Artificial Intelligence AI"],
     price: "₹8,300.00",
     rating: 4.5,
     duration: "12 Weeks",
@@ -108,8 +109,22 @@ export default function CoursePage() {
     course.categories.includes(activeTab)
   );
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   return (
-    <div className="bg-[#FAFBFD] min-h-screen font-sans">
+    <div className="bg-[#FAFBFD] min-h-screen font-poppins overflow-x-hidden">
       
       {/* ────────────────── HERO SECTION ────────────────── */}
       <div 
@@ -123,27 +138,43 @@ export default function CoursePage() {
         <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] pointer-events-none"></div>
  
         <div className="relative z-10 max-w-[1200px] mx-auto text-center flex flex-col items-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-950 leading-[1.2] tracking-tight max-w-[800px]">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-950 leading-[1.2] tracking-tight max-w-[950px]"
+          >
             Industry-Driven Courses Powered by <br /> Azhizen Academy
-          </h1>
+          </motion.h1>
           
-          <p className="text-sm sm:text-base text-slate-500 max-w-[700px] mt-5 leading-relaxed font-normal">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+            className="text-sm sm:text-base text-slate-500 max-w-[700px] mt-5 leading-relaxed font-normal"
+          >
             Gain real-world skills through expert-led training, hands-on projects, and innovation-focused learning designed for future-ready careers.
-          </p>
+          </motion.p>
  
-          <span 
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
             role="button"
             onClick={() => window.location.href = '#'}
             className="mt-8 px-6 py-[12px] bg-[#1877F2] text-white rounded-full text-[15px] font-semibold flex items-center gap-2 transition-all duration-300 shadow-[0_6px_20px_rgba(24,119,242,0.4)] hover:bg-[#1466d0] hover:scale-[1.03] hover:shadow-[0_8px_24px_rgba(24,119,242,0.5)] cursor-pointer"
           >
             Explore Azhizen Acedemy
             <DoubleCornerArrow className="w-4 h-4" />
-          </span>
+          </motion.span>
         </div>
  
         {/* Overlapping Laptop Mockups */}
-        <div 
-          className="absolute left-1/2 -translate-x-1/2 w-[75%] sm:w-[80%] max-w-[1000px] z-40 transform hover:scale-[1.01] transition-transform duration-500 px-4"
+        <motion.div 
+          initial={{ opacity: 0, y: 60, x: "-50%" }}
+          animate={{ opacity: 1, y: 0, x: "-50%" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="absolute left-1/2 w-[75%] sm:w-[80%] max-w-[1000px] z-40 px-4"
           style={{
             top: 'calc(100% - clamp(180px, 31vw + 25px, 410px) + 25px)'
           }}
@@ -157,7 +188,7 @@ export default function CoursePage() {
             {/* Light smoke gradient overlay to softly fade the cropped bottom edge */}
             <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-24 bg-gradient-to-t from-[#FAFBFD] via-[#FAFBFD]/70 to-transparent pointer-events-none"></div>
           </div>
-        </div>
+        </motion.div>
  
         {/* White Curved Wave Overlay at bottom */}
         <div className="absolute bottom-0 left-0 w-full z-30 pointer-events-none translate-y-[2px]">
@@ -170,7 +201,13 @@ export default function CoursePage() {
       </div>
 
       {/* ────────────────── PARTNER / FEATURED SECTION ────────────────── */}
-      <div className="relative z-30 max-w-[1280px] mx-auto px-4 mt-8 sm:mt-16 md:mt-24 lg:mt-32 xl:mt-40">
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-30 max-w-[1280px] mx-auto px-4 mt-8 sm:mt-16 md:mt-24 lg:mt-32 xl:mt-40"
+      >
         <div 
           className="bg-slate-950 p-8 md:p-10 rounded-[2rem] shadow-[0_25px_60px_rgba(0,0,0,0.3)] border border-white/10 overflow-hidden relative bg-cover bg-center"
           style={{ 
@@ -183,7 +220,13 @@ export default function CoursePage() {
           <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
             
             {/* Left Partner Info Card */}
-            <div className="lg:w-[26%] flex flex-col justify-center text-left py-1">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="lg:w-[24.5%] flex flex-col justify-center text-left py-1"
+            >
               <div>
                 <h3 className="text-[26px] sm:text-[28px] font-bold leading-[1.2] tracking-tight" style={{ color: '#ffffff' }}>
                   Proudly Present By <br />
@@ -196,14 +239,22 @@ export default function CoursePage() {
                 Explore Azhizen Acedemy
                 <DoubleCornerArrow className="w-4.5 h-4.5" />
               </button>
-            </div>
+            </motion.div>
 
             {/* Right Featured Courses Row */}
-            <div className="lg:w-[74%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="lg:w-[75.5%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
+            >
               {FEATURED_COURSES.map((course) => (
-                <div 
+                <motion.div 
                   key={course.id}
-                  className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] hover:-translate-y-1 transition-all duration-300 group text-left shadow-none"
+                  variants={itemVariants}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                  className="bg-white rounded-2xl py-4 px-[12px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
                 >
                   <div>
                     {/* Course Image Wrapper */}
@@ -234,29 +285,40 @@ export default function CoursePage() {
                       <span>{course.rating}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ────────────────── SKILL BASED COURSES SECTION ────────────────── */}
-      <div className="max-w-[1280px] mx-auto px-6 py-20">
+      <div className="max-w-[1320px] mx-auto px-6 py-20">
         
         {/* Section Header */}
-        <div className="text-left mb-10">
-          <h2 className="text-[32px] font-bold text-slate-900 leading-tight">
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-left mb-10"
+        >
+          <h2 className="text-[32px] font-semibold text-slate-900 leading-tight">
             Skill Based Course that transform your career
           </h2>
           <p className="text-[16px] text-slate-500 mt-2 font-normal">
             From Basic topic to Advance topic that hep to bright your Career
           </p>
-        </div>
-
+        </motion.div>
+ 
         {/* Tab Filters */}
-        <div className="flex border-b border-slate-200 mb-10 w-full">
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="flex border-b border-slate-200 mb-10 w-full"
+        >
           <div className="flex overflow-x-auto gap-8 no-scrollbar pb-1.5">
             {TABS.map((tab) => {
               const isActive = activeTab === tab;
@@ -264,70 +326,88 @@ export default function CoursePage() {
                 <span
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`relative whitespace-nowrap text-[16px] font-bold pb-3.5 transition-colors duration-200 cursor-pointer ${
+                  className={`relative whitespace-nowrap text-[16px] font-medium pb-3.5 transition-colors duration-200 cursor-pointer ${
                     isActive ? "text-slate-900" : "text-gray-400 hover:text-slate-600"
                   }`}
                 >
                   {tab}
                   {isActive && (
-                    <span className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-slate-900 rounded-t-sm"></span>
+                    <motion.span 
+                      layoutId="activeTabUnderline"
+                      className="absolute bottom-[-1px] left-0 right-0 h-[3px] bg-slate-900 rounded-t-sm"
+                    ></motion.span>
                   )}
                 </span>
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
         {/* Courses Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] hover:-translate-y-1 transition-all duration-300 group text-left shadow-none"
-            >
-              <div>
-                {/* Image */}
-                <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                  />
+        <motion.div 
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredCourses.map((course) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                key={course.id}
+                className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
+              >
+                <div>
+                  {/* Image */}
+                  <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-semibold text-slate-800 text-[16px] leading-[1.3] mt-4 line-clamp-2 min-h-[48px]">
+                    {course.title === "AI Artificial Intelligence Course" ? (
+                      <>AI Artificial Intelligence <br /> Course</>
+                    ) : (
+                      course.title
+                    )}
+                  </h3>
+
+                  {/* Badges Container */}
+                  <div className="flex items-center gap-1.5 mt-4">
+                    {/* Level Badge */}
+                    <span className="border border-[#E2E8F0] text-gray-500 text-[10px] font-normal px-2 py-0.5 rounded">
+                      {course.level}
+                    </span>
+                    
+                    {/* Rating Badge */}
+                    <span className="border border-[#E2E8F0] text-orange-500 text-[10px] font-normal px-2 py-0.5 rounded flex items-center gap-0.5">
+                      <Star className="w-3 h-3 fill-orange-500 text-orange-500" />
+                      <span>{course.rating}</span>
+                    </span>
+
+                    {/* Duration Badge */}
+                    <span className="bg-[#1877F2] text-white text-[10px] font-normal px-2.5 py-0.5 rounded flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-white" />
+                      <span>{course.duration}</span>
+                    </span>
+                  </div>
                 </div>
 
-                {/* Title */}
-                <h3 className="font-bold text-slate-800 text-[16px] leading-[1.3] mt-4 line-clamp-2 min-h-[48px]">
-                  {course.title}
-                </h3>
-
-                {/* Badges Container */}
-                <div className="flex items-center gap-1.5 mt-4">
-                  {/* Level Badge */}
-                  <span className="border border-[#E2E8F0] text-gray-500 text-[10px] font-bold px-2 py-0.5 rounded">
-                    {course.level}
-                  </span>
-                  
-                  {/* Rating Badge */}
-                  <span className="border border-[#E2E8F0] text-orange-500 text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-0.5">
-                    <Star className="w-3 h-3 fill-orange-500 text-orange-500" />
-                    <span>{course.rating}</span>
-                  </span>
-
-                  {/* Duration Badge */}
-                  <span className="bg-[#1877F2] text-white text-[10px] font-bold px-2.5 py-0.5 rounded flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-white" />
-                    <span>{course.duration}</span>
-                  </span>
+                {/* Price */}
+                <div className="mt-4 block">
+                  <span className="text-[15px] font-semibold text-slate-700 font-sans">{course.price}</span>
                 </div>
-              </div>
-
-              {/* Price */}
-              <div className="mt-4 block">
-                <span className="text-[15px] font-semibold text-slate-700">{course.price}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {/* Empty state when no courses match filter */}
         {filteredCourses.length === 0 && (

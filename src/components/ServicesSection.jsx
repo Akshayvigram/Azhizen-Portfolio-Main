@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SERVICES = [
   {
@@ -51,7 +52,13 @@ const ServicesSection = () => {
       "
     >
       {/* ── Heading Row (Title on Left, Button on Right) ── */}
-      <div className="max-w-[1400px] mx-auto w-full flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-6 px-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="max-w-[1400px] mx-auto w-full flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-6 px-4"
+      >
         {/* Left Side: Title & Subtitle */}
         <div className="text-left">
           <h2
@@ -107,10 +114,17 @@ const ServicesSection = () => {
             Explore All →
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Cards ── */}
-      <div
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.12 } }
+        }}
         className="
           flex
           gap-7
@@ -121,8 +135,13 @@ const ServicesSection = () => {
         "
       >
         {SERVICES.map(({ id, image, title, description }) => (
-          <div
+          <motion.div
             key={id}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+            }}
+            whileHover={{ y: -6, boxShadow: "0 16px 40px rgba(24,119,242,0.20)" }}
             className="
               bg-white
               rounded-[22px]
@@ -137,8 +156,6 @@ const ServicesSection = () => {
               duration-300
               shadow-[0_10px_30px_rgba(0,0,0,0.15)]
               cursor-default
-              hover:-translate-y-[6px]
-              hover:shadow-[0_16px_40px_rgba(24,119,242,0.20)]
             "
           >
             {/* Image */}
@@ -216,9 +233,9 @@ const ServicesSection = () => {
                 Explore
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
 
     </section>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 /* ── Distinct Logos ── */
 const LOGOS = [
@@ -34,9 +35,79 @@ const ClientsSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section style={{ background: "#fff", padding: "72px 0 0" }}>
-      {/* ── Heading ── */}
-      <div
+    <section style={{ background: "#fff", padding: "36px 0 0" }}>
+      {/* ── Heading for Partners ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{
+          textAlign: "center",
+          marginBottom: "20px",
+          padding: "0 20px",
+        }}
+      >
+        <h3
+          style={{
+            fontSize: "clamp(28px, 5vw, 38px)",
+            fontWeight: "800",
+            color: "#111827",
+            fontFamily: "Poppins, sans-serif",
+            marginBottom: "0px",
+          }}
+        >
+          Our <span style={{ color: "#1877F2" }}>Partners</span>
+        </h3>
+      </motion.div>
+
+      {/* ── Marquee Logos ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        style={{
+          marginBottom: "24px",
+          borderBottom: "1px solid #E5E7EB",
+          padding: "0 0 40px",
+          background: "#fff",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          className="logo-ticker"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "max-content",
+            gap: "80px",
+            paddingRight: "80px",
+            animation: "ticker-scroll 35s linear infinite",
+          }}
+        >
+          {TICKER_LOGOS.map(({ src, alt, customHeight }, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={alt}
+              style={{
+                height: customHeight || "44px",
+                width: "auto",
+                objectFit: "contain",
+                opacity: 0.9,
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ── Heading for Testimonials ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         style={{
           textAlign: "center",
           marginBottom: "40px",
@@ -64,14 +135,18 @@ const ClientsSection = () => {
         >
           The Feedback And Reviews That Are Said By The Clients And Customer
         </p>
-      </div>
+      </motion.div>
 
       {/* ── Testimonial card ── */}
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 15 }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
         style={{
           maxWidth: "960px",
           margin: "0 auto",
-          padding: "0 20px",
+          padding: "0 20px 80px",
         }}
       >
         <div
@@ -197,44 +272,7 @@ const ClientsSection = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ── Marquee Logos ── */}
-      <div
-        style={{
-          marginTop: "52px",
-          borderTop: "1px solid #E5E7EB",
-          padding: "40px 0",
-          background: "#fff",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          className="logo-ticker"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "max-content",
-            gap: "80px",
-            paddingRight: "80px",
-            animation: "ticker-scroll 35s linear infinite",
-          }}
-        >
-          {TICKER_LOGOS.map(({ src, alt, customHeight }, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={alt}
-              style={{
-                height: customHeight || "44px",
-                width: "auto",
-                objectFit: "contain",
-                opacity: 0.9,
-              }}
-            />
-          ))}
-        </div>
-      </div>
+      </motion.div>
 
       <style>{`
         @keyframes ticker-scroll {

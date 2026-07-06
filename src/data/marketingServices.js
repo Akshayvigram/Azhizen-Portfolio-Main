@@ -6,7 +6,7 @@ export const marketingServices = [
   },
   {
     title: "Sales",
-    description: "Boost revenue through targeted campaigns, optimized funnels, and customer-focused selling strategies.",
+    description: "Boost revenue through targeted campaigns, optimized funnels, and customer-focused selling.",
     image: "/ChatGPT Image Jul 3, 2026, 09_55_05 PM.png"
   },
   {
