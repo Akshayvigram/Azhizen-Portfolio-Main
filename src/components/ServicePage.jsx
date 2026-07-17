@@ -1,466 +1,339 @@
-// import React from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
-// const services = [
-//   {
-//     id: 1,
-//     image: "/service1.png",
-//     title: "IoT Solutions",
-//     desc: "Cloud-connected smart monitoring systems.",
-//   },
-//   {
-//     id: 2,
-//     image: "/service2.png",
-//     title: "Embedded Systems",
-//     desc: "Custom hardware & firmware development.",
-//   },
-//   {
-//     id: 3,
-//     image: "/service3.png",
-//     title: "AI & Intelligent Automation",
-//     desc: "Intelligent decision-based engineering.",
-//   },
-// ];
+// Standard components for organic floating animation
+const FloatingIcon = ({ src, className, delay = 0, duration = 4, yRange = [-8, 8] }) => (
+  <motion.div
+    className={className}
+    animate={{ y: yRange }}
+    transition={{
+      duration: duration,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut",
+      delay: delay
+    }}
+    whileHover={{ scale: 1.1, rotate: [0, -3, 3, 0], transition: { duration: 0.2 } }}
+  >
+    <img src={src} alt="floating tech icon" className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] object-contain drop-shadow-sm select-none pointer-events-none" />
+  </motion.div>
+);
 
-// export default function ServicePage() {
-//   return (
-//     <div className="page">
-//       <div className="page"
-//           style={{ paddingTop: "63px",
-//             }}
-// ></div>
+const ServicePage = () => {
+  const [showAll, setShowAll] = useState(false);
 
-//       {/* HERO */}
-//       <div className="hero">
-//         <img src="/Frame 1183.png" alt="hero" />
-//       </div>
+  const initialCards = [
+    {
+      id: 1,
+      image: "/Frame 1113.png",
+      title: "IoT Solutions",
+      description: "Cloud-connected smart monitoring systems.",
+    },
+    {
+      id: 2,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+    {
+      id: 3,
+      image: "/Frame 1113 (2).png",
+      title: "AI & Intelligent Automation",
+      description: "Intelligent decision-based engineering.",
+    },
+    {
+      id: 4,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+    {
+      id: 5,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+    {
+      id: 6,
+      image: "/Frame 1113.png",
+      title: "IoT Solutions",
+      description: "Cloud-connected smart monitoring systems.",
+    },
+    {
+      id: 7,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+    {
+      id: 8,
+      image: "/Frame 1113 (2).png",
+      title: "AI & Intelligent Automation",
+      description: "Intelligent decision-based engineering.",
+    },
+  ];
 
-//       {/* SECTION */}
-//       <div className="section">
-//         <h2>
-//           <span className="blue">Service</span> that we provide
-//         </h2>
+  const extraCards = [
+    {
+      id: 9,
+      image: "/Frame 1113.png",
+      title: "IoT Solutions",
+      description: "Cloud-connected smart monitoring systems.",
+    },
+    {
+      id: 10,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+    {
+      id: 11,
+      image: "/Frame 1113 (2).png",
+      title: "AI & Intelligent Automation",
+      description: "Intelligent decision-based engineering.",
+    },
+    {
+      id: 12,
+      image: "/Frame 1113 (1).png",
+      title: "Embedded Systems",
+      description: "Custom hardware & firmware develop....",
+    },
+  ];
 
-//         <p className="subtitle">
-//           We transform innovative ideas into real-world solutions through advanced
-//           technology and intelligent system development, creating scalable and
-//           future-ready innovations.
-//         </p>
+  const allCards = [...initialCards, ...extraCards];
+  const displayedCards = showAll ? allCards : initialCards;
 
-//         {/* GRID */}
-//         <div className="grid">
-//           {[...services, ...services].map((item, i) => (
-//             <div className="card">
-//   <div className="image-wrapper">
-//     <img src={item.image} alt="" />
-//     <div className="badge"> <svg viewBox="0 0 100 100">
+  // Stagger variants for the card grid
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } },
+  };
 
-//     <circle cx="50" cy="50" r="45" fill="#7fb5ff" />
-
-
-//     <circle cx="50" cy="50" r="38" fill="#1e73be" />
-
-
-//     <text
-//       x="50"
-//       y="55"
-//       textAnchor="middle"
-//       fill="white"
-//       fontSize="32"
-//       fontWeight="500"
-//     >
-//       {(i % 3) + 1}
-//     </text>
-
-//   </svg></div>
-//   </div>
-
-//   <h3>{item.title}</h3>
-//   <p>{item.desc}</p>
-//   <button className="read-btn">Read more →</button>
-// </div>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* STYLES */}
-//       <style>{`
-//         .page {
-//           background: #f4f6fb;
-//         }
-
-//         .hero img {
-//           width: 100%;
-//           height: auto;
-//           object-fit: contain;
-//         }
-
-//         .section {
-//           text-align: center;
-//           padding: 60px 20px 80px;
-//         }
-
-//         .section h2 {
-//           font-size: 32px;
-//           font-weight: 700;
-//         }
-
-//         .blue {
-//           color: #1877F2;
-//         }
-
-//         .subtitle {
-//           max-width: 650px;
-//           margin: 15px auto 40px;
-//           color: #555;
-//           line-height: 1.6;
-//         }
-
-//         .grid {
-//           display: grid;
-//           grid-template-columns: repeat(3, 1fr);
-//           gap: 30px;
-//           max-width: 1100px;
-//           margin: auto;
-//         }
-
-//         .card {
-//           background: white;
-//           border-radius: 15px;
-//           padding: 15px;
-//           position: relative;
-//           box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-//           transition: 0.3s;
-//         }
-
-//         .card:hover {
-//           transform: translateY(-6px);
-//         }
-
-//         .card img {
-//           width: 100%;
-//           height: 180px;
-//           border-radius: 12px;
-//           object-fit: cover;
-//         }
-// .image-wrapper {
-//   position: relative;
-// }
-
-// .image-wrapper img {
-//   width: 100%;
-//   height: 180px;
-//   border-radius: 12px;
-//   object-fit: cover;
-//   display: block;
-// }
-
-// .badge {
-//   position: absolute;
-//   bottom: -14px;
-//   right: 12px;
-//   width: 42px;
-//   height: 42px;
-// }
-
-// .badge svg {
-//   width: 100%;
-//   height: 100%;
-//   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
-// }
-//         .card h3 {
-//           text-align: left;
-//           margin-top: 12px;
-//           font-size: 18px;
-//         }
-
-//         .card p {
-//           text-align: left;
-//           color: #666;
-//           font-size: 14px;
-//         }
-
-//         .read-btn {
-//           margin-top: 10px;
-//           margin-right: 220px;
-//           background: none;
-//           border: none;
-//           color: #1877F2;
-//           font-weight: 600;
-//           cursor: pointer;
-//         }
-
-//         /* RESPONSIVE */
-//         @media (max-width: 900px) {
-//           .grid {
-//             grid-template-columns: repeat(2, 1fr);
-//           }
-//         }
-
-//         @media (max-width: 600px) {
-//           .grid {
-//             grid-template-columns: 1fr;
-//           }
-//         }
-//       `}</style>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import "../../src/index.css"
-// import { LuBadge } from "react-icons/lu";
-
-// const services = [
-//   {
-//     id: 1,
-//     image: "/service1.png",
-//     title: "IoT Solutions",
-//     desc: "Cloud-connected smart monitoring systems.",
-//   },
-//   {
-//     id: 2,
-//     image: "/service2.png",
-//     title: "Embedded Systems",
-//     desc: "Custom hardware & firmware development.",
-//   },
-//   {
-//     id: 3,
-//     image: "/service3.png",
-//     title: "AI & Intelligent Automation",
-//     desc: "Intelligent decision-based engineering.",
-//   },
-// ];
-
-// export default function ServicePage() {
-//   return (
-//     <div className="bg-[#f4f6fb] pt-[63px]">
-
-//       {/* HERO */}
-//       <div>
-//         <img
-//           src="/Frame 1183.png"
-//           alt="hero"
-//           className="w-full h-auto object-contain"
-//         />
-//       </div>
-
-//       {/* SECTION */}
-//       <div className="text-center px-5 py-[60px] pb-[80px]">
-
-//         <h2 className="text-[32px] font-bold">
-//           <span className="text-[#1877F2]">Service</span> that we provide
-//         </h2>
-
-//         <p className="max-w-[650px] mx-auto mt-4 mb-10 text-gray-600 leading-relaxed">
-//           We transform innovative ideas into real-world solutions through advanced
-//           technology and intelligent system development, creating scalable and
-//           future-ready innovations.
-//         </p>
-
-//         {/* GRID */}
-//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] max-w-[1100px] mx-auto">
-
-//           {[...services, ...services].map((item, i) => (
-//             <div
-//               key={i}
-//               className="bg-white rounded-[15px] p-4 relative shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:-translate-y-1.5"
-//             >
-
-//               {/* IMAGE */}
-//               <div className="relative">
-//                 <img
-//                   src={item.image}
-//                   alt=""
-//                   className="w-full h-[180px] rounded-[12px] object-cover block"
-//                 />
-
-//                 {/* BADGE */}
-//                 <div className="absolute -bottom-[14px] right-3 w-[42px] h-[42px]">
-//                   <svg
-//   viewBox="0 0 100 100"
-//   className="w-full h-full drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
-// >
-//   <circle cx="50" cy="50" r="45" fill="#7fb5ff" />
-//   <circle cx="50" cy="50" r="38" fill="#1e73be" />
-
-//   <text
-//     x="50"
-//     y="55"
-//     textAnchor="middle"
-//     fill="white"
-//     fontSize="32"
-//     fontWeight="500"
-//   >
-//     {(i % 3) + 1}
-//   </text>
-// </svg>
-//                 </div>
-//               </div>
-
-//               {/* CONTENT */}
-//               <h3 className="text-left mt-3 text-[18px] font-semibold">
-//                 {item.title}
-//               </h3>
-
-//               <p className="text-left text-gray-500 text-sm mt-1">
-//                 {item.desc}
-//               </p>
-
-              // <div className="flex justify-start">
-              //   <button className="mt-2 text-red-600 font-semibold text-sm p-2 rounded bg-blue-10">
-              //     Read more →
-              //   </button>
-              // </div>
-//             </div>
-//           ))}
-
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
-import React from "react";
-import { LuBadge } from "react-icons/lu";
-
-const services = [
-  {
-    id: 1,
-    image: "/service1.webp",
-    title: "IoT Solutions",
-    desc: "Cloud-connected smart monitoring systems.",
-  },
-  {
-    id: 2,
-    image: "/service2.webp",
-    title: "Embedded Systems",
-    desc: "Custom hardware & firmware development.",
-  },
-  {
-    id: 3,
-    image: "/service3.webp",
-    title: "AI & Intelligent Automation",
-    desc: "Intelligent decision-based engineering.",
-  },
-];
-
-export default function ServicePage() {
   return (
-    <div className="bg-[#f4f6fb] pt-[63px]">
-
-      {/* HERO */}
-      <div>
-      <img
-          src="/image1.webp"
-          alt="hero"
-          className="
-          w-full
-          h-[220px]
-          sm:h-[300px]
-          md:h-[420px]
-          lg:h-[520px]
-          object-cover
-          block
-          "
+    <div className="font-poppins bg-[#F4F6FB] min-h-screen pt-16 overflow-x-hidden">
+      
+      {/* ── HERO SECTION ── */}
+      <section
+        className="relative w-full min-h-[460px] sm:min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex items-center justify-center overflow-visible bg-top bg-no-repeat px-6"
+        style={{
+          backgroundImage: "url('/Desktop - 92 (2).png')",
+          backgroundSize: "100% 100%", // Stretches background image so the bottom white wave is always at the bottom of the container
+        }}
+      >
+        {/* Decorative Floating Badges - Left Side */}
+        <div className="absolute inset-0 z-10 pointer-events-none hidden md:block">
+          <FloatingIcon
+            src="/Frame 1549.png"
+            className="absolute top-[18%] left-[4%] lg:left-[10%] pointer-events-auto"
+            delay={0.2}
+            duration={3.5}
+            yRange={[-10, 10]}
           />
-      </div>
-
-      {/* SECTION */}
-      <div className="text-center px-5 py-[60px] pb-[80px]">
-
-        <h2 className="text-[32px] font-bold">
-          <span className="text-[#1877F2]">Service</span> that we provide
-        </h2>
-
-        <p className="max-w-[650px] mx-auto mt-4 mb-10 text-gray-600 leading-relaxed">
-          We transform innovative ideas into real-world solutions through advanced
-          technology and intelligent system development, creating scalable and
-          future-ready innovations.
-        </p>
-
-        {/* GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] max-w-[1100px] mx-auto">
-
-          {[...services, ...services].map((item, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-[15px] p-4 shadow-[0_8px_25px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:-translate-y-1.5"
-            >
-
-              {/* IMAGE */}
-              <div className="relative">
-                <img
-                  src={item.image}
-                  alt=""
-                  className="w-full h-[180px] rounded-[12px] object-cover block"
-                />
-
-                {/* BADGE */}
-                {/* <div className="absolute bottom-2 right-2 w-[48px] h-[48px] flex items-center justify-center">
-
-                  Icon (background look)
-                  <LuBadge className="absolute text-[#1e73be] text-[48px] drop-shadow-md" />
-
-                  Number
-                  <span className="relative text-white text-[14px] font-bold">
-                    {(i % 3) + 1}
-                  </span>
-
-                </div> */}
-              </div>
-
-              {/* CONTENT */}
-              <h3 className="text-left mt-3 text-[18px] font-semibold">
-                {item.title}
-              </h3>
-
-              <p className="text-left text-gray-500 text-sm mt-1">
-                {item.desc}
-              </p>
-
-             <div className="flex justify-start">
-  <button
-  className="
-    mt-3
-    px-8
-    py-[14px]
-    bg-gradient-to-r
-    from-[#2F80ED]
-    to-[#1366D6]
-    text-white
-    rounded-full
-    text-[16px]
-    font-medium
-    leading-none
-    transition-all
-    duration-200
-    shadow-[0_6px_18px_rgba(24,119,242,0.35)]
-    hover:scale-[1.02]
-    hover:shadow-[0_8px_22px_rgba(24,119,242,0.45)]
-  "
->
-  Read more→
-</button>
-              </div>
-
-            </div>
-          ))}
-
+          <FloatingIcon
+            src="/Frame 1550.png"
+            className="absolute top-[32%] left-[2%] lg:left-[7%] pointer-events-auto"
+            delay={0.8}
+            duration={4.2}
+            yRange={[-6, 6]}
+          />
+          <FloatingIcon
+            src="/Frame 1554.png"
+            className="absolute top-[48%] left-[3%] lg:left-[9%] pointer-events-auto"
+            delay={0.4}
+            duration={3.8}
+            yRange={[-9, 9]}
+          />
+          <FloatingIcon
+            src="/Frame 1556.png"
+            className="absolute top-[62%] left-[1%] lg:left-[5%] pointer-events-auto"
+            delay={1.2}
+            duration={4.5}
+            yRange={[-7, 7]}
+          />
+          <FloatingIcon
+            src="/Frame 1557.png"
+            className="absolute top-[76%] left-[4%] lg:left-[8%] pointer-events-auto"
+            delay={0.6}
+            duration={3.9}
+            yRange={[-11, 11]}
+          />
         </div>
-      </div>
+
+        {/* Center Main Content */}
+        <div className="relative z-20 text-center max-w-[850px] mx-auto pt-6 pb-20 md:pb-28 -translate-y-4 sm:-translate-y-8 md:-translate-y-12">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] font-extrabold leading-tight tracking-tight"
+          >
+            <span className="text-[#1877F2]">Innovative Software Solutions</span>
+            <br />
+            <span className="text-slate-900">for Modern Businesses</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            className="text-[14px] sm:text-[16px] text-slate-600 font-normal leading-relaxed max-w-[680px] mx-auto mt-6 px-2"
+          >
+            We build secure, scalable, and high performance software solutions that empower
+            organizations to innovate, optimize operations, and accelerate digital
+            transformation with confidence.
+          </motion.p>
+        </div>
+
+        {/* Decorative Floating Badges - Right Side */}
+        <div className="absolute inset-0 z-10 pointer-events-none hidden md:block">
+          <FloatingIcon
+            src="/Frame 1553.png"
+            className="absolute top-[18%] right-[4%] lg:right-[10%] pointer-events-auto"
+            delay={0.5}
+            duration={3.7}
+            yRange={[-8, 8]}
+          />
+          <FloatingIcon
+            src="/Frame 1551.png"
+            className="absolute top-[32%] right-[2%] lg:right-[7%] pointer-events-auto"
+            delay={1.1}
+            duration={4.4}
+            yRange={[-5, 5]}
+          />
+          <FloatingIcon
+            src="/Frame 1552.png"
+            className="absolute top-[48%] right-[3%] lg:right-[9%] pointer-events-auto"
+            delay={0.3}
+            duration={3.9}
+            yRange={[-10, 10]}
+          />
+          <FloatingIcon
+            src="/Frame 1555.png"
+            className="absolute top-[62%] right-[1%] lg:right-[5%] pointer-events-auto"
+            delay={0.9}
+            duration={4.6}
+            yRange={[-7, 7]}
+          />
+          <FloatingIcon
+            src="/Frame 1558.png"
+            className="absolute top-[76%] right-[4%] lg:right-[8%] pointer-events-auto"
+            delay={0.7}
+            duration={4.1}
+            yRange={[-9, 9]}
+          />
+        </div>
+      </section>
+
+      {/* ── SERVICES LIST SECTION ── */}
+      <section className="relative z-20 max-w-[1320px] mx-auto px-[20px] pb-[40px] mt-12 md:mt-20">
+        
+        {/* Section Header (Matches mockup layout exactly, rendered directly on the page background) */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12 mb-12 sm:mb-16">
+          <div className="md:w-[30%] shrink-0 text-left">
+            <h2 className="text-[32px] sm:text-[38px] md:text-[40px] font-extrabold leading-[1.1] tracking-tight">
+              <span className="text-[#2563EB]">Service</span>
+              <br />
+              <span className="text-slate-900 font-bold">that we provide</span>
+            </h2>
+          </div>
+          <div className="md:w-[70%] md:pt-2 text-left">
+            <p className="text-slate-700 text-[14.5px] sm:text-[16.5px] leading-relaxed font-normal">
+              We transform innovative ideas into real-world solutions through advanced technology
+              <br />
+              and intelligent system development, creating scalable and future-ready innovations.
+            </p>
+          </div>
+        </div>
+
+        {/* Cards Grid (Perfect Responsive Columns matching specifications) */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="services-grid"
+        >
+          <AnimatePresence mode="popLayout">
+            {displayedCards.map((card) => (
+              <motion.div
+                key={card.id}
+                layout
+                variants={cardVariants}
+                initial="hidden"
+                animate="show"
+                exit={{ opacity: 0, scale: 0.9, y: 15 }}
+                className="service-card"
+              >
+                {/* Card Image: height 210px, object-fit cover */}
+                <div className="service-card-image-container">
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="service-card-image"
+                  />
+                </div>
+
+                {/* Content section: padding 18px */}
+                <div className="service-card-content">
+                  <div>
+                    {/* Course Badge (Clean text with dots) */}
+                    <div className="flex items-center text-[11px] text-gray-500 font-medium mb-1">
+                      <span className="text-[#2563EB] font-black mr-1.5 text-xs">•</span>
+                      <span>Begginer Course</span>
+                      <span className="text-[#2563EB] font-black mx-1.5 text-xs">•</span>
+                      <span className="text-[#2563EB] font-semibold">2 week</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-[16px] font-extrabold text-slate-800 tracking-tight leading-tight mb-1">
+                      {card.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-[12.5px] text-slate-400 leading-normal line-clamp-1 mb-2">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  {/* CTA Action (Royal Blue Capsule Button: bg #2563EB) */}
+                  <button className="btn-royal-blue btn-register">
+                    register
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* View More Button (Royal Blue button: Width 170px, Height 50px, bg #2563EB) */}
+        <div className="flex justify-center mt-[30px]">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="btn-royal-blue btn-view-more gap-2"
+          >
+            <span>{showAll ? "View less" : "View more"}</span>
+            <motion.div
+              animate={{ rotate: showAll ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
+          </button>
+        </div>
+
+      </section>
     </div>
   );
-}
+};
+
+export default ServicePage;

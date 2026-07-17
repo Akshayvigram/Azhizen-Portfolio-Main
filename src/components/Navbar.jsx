@@ -190,7 +190,7 @@ const Navbar = () => {
                       }}
                     >
                       <button
-                        onClick={() => triggerToast("Tech Services", "services")}
+                        onClick={() => navigate("/services")}
                         style={{
                           display: "block",
                           width: "100%",
@@ -578,7 +578,7 @@ const Navbar = () => {
                   {mobileServicesOpen && (
                     <div style={{ paddingLeft: "16px", paddingBottom: "8px", backgroundColor: "#f8fafc", borderRadius: "8px" }}>
                       <button
-                        onClick={() => { setIsOpen(false); triggerToast("Tech Services", "mobile-services"); }}
+                        onClick={() => { setIsOpen(false); navigate("/services"); }}
                         style={{
                           display: "block",
                           width: "100%",
