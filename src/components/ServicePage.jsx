@@ -176,9 +176,9 @@ const ServicePage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] font-extrabold leading-tight tracking-tight"
+            className="text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] font-semibold leading-tight tracking-tight"
           >
-            <span className="text-[#1877F2]">Innovative Software Solutions</span>
+            <span className="text-[#0274D4]">Innovative Software Solutions</span>
             <br />
             <span className="text-slate-900">for Modern Businesses</span>
           </motion.h1>
@@ -241,10 +241,10 @@ const ServicePage = () => {
         {/* Section Header (Matches mockup layout exactly, rendered directly on the page background) */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12 mb-12 sm:mb-16">
           <div className="md:w-[30%] shrink-0 text-left">
-            <h2 className="text-[32px] sm:text-[38px] md:text-[40px] font-extrabold leading-[1.1] tracking-tight">
-              <span className="text-[#2563EB]">Service</span>
+            <h2 className="text-[32px] sm:text-[38px] md:text-[40px] font-semibold leading-[1.1] tracking-tight">
+              <span className="text-[#0274D4]">Service</span>
               <br />
-              <span className="text-slate-900 font-bold">that we provide</span>
+              <span className="text-slate-900 font-semibold">that we provide</span>
             </h2>
           </div>
           <div className="md:w-[70%] md:pt-2 text-left">
@@ -288,14 +288,14 @@ const ServicePage = () => {
                   <div>
                     {/* Course Badge (Clean text with dots) */}
                     <div className="flex items-center text-[11px] text-gray-500 font-medium mb-1">
-                      <span className="text-[#2563EB] font-black mr-1.5 text-xs">•</span>
+                      <span className="text-[#0274D4] font-black mr-1.5 text-xs">•</span>
                       <span>Begginer Course</span>
-                      <span className="text-[#2563EB] font-black mx-1.5 text-xs">•</span>
-                      <span className="text-[#2563EB] font-semibold">2 week</span>
+                      <span className="text-[#0274D4] font-black mx-1.5 text-xs">•</span>
+                      <span className="text-[#0274D4] font-semibold">2 week</span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-[16px] font-extrabold text-slate-800 tracking-tight leading-tight mb-1">
+                    <h3 className="text-[16px] font-semibold text-slate-800 tracking-tight leading-tight mb-1">
                       {card.title}
                     </h3>
 

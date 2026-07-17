@@ -174,9 +174,9 @@ button {
   flex-grow: 1;
 }
 
-/* Button Royal Blue styling (#2563EB) */
+/* Button Royal Blue styling (#0274D4) */
 .btn-royal-blue {
-  background-color: #2563EB;
+  background-color: #0274D4;
   color: #ffffff;
   font-weight: 600;
   border: none;
@@ -188,7 +188,7 @@ button {
 }
 
 .btn-royal-blue:hover {
-  background-color: #1D4ED8;
+  background-color: #01559C;
 }
 
 .btn-register {
