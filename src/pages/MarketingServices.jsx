@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Laptop, Palette, Smartphone, Check } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import { marketingServices } from '../data/marketingServicesNew';
@@ -39,6 +39,30 @@ const FloatingBadge = ({ children, className, delay = 0, duration = 3 }) => (
 );
 
 const MarketingServices = () => {
+  const [selectedService, setSelectedService] = useState(null);
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleApplyClick = (service) => {
+    setSelectedService(service);
+    setIsSubmitted(false);
+    setFormData({ name: '', email: '', phone: '', message: '' });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setSelectedService(null);
+      setIsSubmitted(false);
+    }, 2000);
+  };
+
   const handleAcademyClick = () => {
     const el = document.getElementById("services-section");
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -350,6 +374,7 @@ const MarketingServices = () => {
                   title={service.title}
                   description={service.description}
                   image={service.image}
+                  onApply={() => handleApplyClick(service)}
                 />
               </motion.div>
             ))}
@@ -357,6 +382,157 @@ const MarketingServices = () => {
 
         </div>
       </section>
+
+      {/* ── APPLICATION DIALOG MODAL ── */}
+      <AnimatePresence>
+        {selectedService && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedService(null)}
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 sm:p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.95, y: 20, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-[20px] w-full max-w-[640px] shadow-[0_24px_60px_rgba(15,23,42,0.18)] border border-slate-100/80 overflow-hidden font-poppins text-slate-800 relative"
+            >
+              {/* Premium Gradient Top Accent Line */}
+              <div className="h-1.5 w-full bg-gradient-to-r from-[#1877F2] to-[#00A3FF]" />
+
+              {/* Header */}
+              <div className="bg-slate-50/80 border-b border-slate-100 px-6 py-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0">
+                    <img
+                      src={selectedService.image}
+                      alt={selectedService.title}
+                      className="w-7 h-7 object-contain"
+                    />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <h3 className="text-[17px] font-bold text-[#0f172a] leading-tight">
+                      Request Consultation
+                    </h3>
+                    <span className="text-[12px] text-slate-400 font-medium">Azhizen Digital Media</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition-all duration-200"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Form Content */}
+              <div className="p-6 sm:p-7">
+                {isSubmitted ? (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center justify-center py-8 text-center"
+                  >
+                    <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+                      <Check className="w-8 h-8 stroke-[3]" />
+                    </div>
+                    <h4 className="text-[20px] font-bold text-slate-800 mb-2">
+                      Application Submitted!
+                    </h4>
+                    <p className="text-[14px] text-slate-500 max-w-[320px] leading-relaxed">
+                      Thank you for choosing Azhizen. Our marketing experts will reach out to you within 24 hours.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                    {/* Selected Service Badge */}
+                    <div className="flex flex-col text-left gap-1.5">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Selected Service</span>
+                      <div className="flex items-center gap-2 bg-[#1877F2]/5 border border-[#1877F2]/15 px-3.5 py-2 rounded-xl text-[14px] font-semibold text-[#1877F2] w-fit shadow-[0_2px_8px_rgba(24,119,242,0.04)]">
+                        <span className="w-2 h-2 rounded-full bg-[#1877F2] animate-pulse" />
+                        {selectedService.title}
+                      </div>
+                    </div>
+
+                    {/* Two-Column Form Fields */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+                      {/* Left Column: Full Name & Email */}
+                      <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[13px] font-semibold text-slate-600">Full Name</label>
+                          <input
+                            type="text"
+                            name="name"
+                            required
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            placeholder="John Doe"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-[4px] focus:ring-[#1877F2]/10 focus:border-[#1877F2] hover:border-slate-300 text-[14.5px] transition-all bg-slate-50/30 hover:bg-white focus:bg-white text-slate-800"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[13px] font-semibold text-slate-600">Email Address</label>
+                          <input
+                            type="email"
+                            name="email"
+                            required
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="john@example.com"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-[4px] focus:ring-[#1877F2]/10 focus:border-[#1877F2] hover:border-slate-300 text-[14.5px] transition-all bg-slate-50/30 hover:bg-white focus:bg-white text-slate-800"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Right Column: Phone & Project Details */}
+                      <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[13px] font-semibold text-slate-600">Phone Number</label>
+                          <input
+                            type="tel"
+                            name="phone"
+                            required
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            placeholder="+91 98765 43210"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-[4px] focus:ring-[#1877F2]/10 focus:border-[#1877F2] hover:border-slate-300 text-[14.5px] transition-all bg-slate-50/30 hover:bg-white focus:bg-white text-slate-800"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-[13px] font-semibold text-slate-600">Project Details (Optional)</label>
+                          <input
+                            type="text"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            placeholder="Briefly describe your goals..."
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-[4px] focus:ring-[#1877F2]/10 focus:border-[#1877F2] hover:border-slate-300 text-[14.5px] transition-all bg-slate-50/30 hover:bg-white focus:bg-white text-slate-800"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full mt-2 bg-gradient-to-r from-[#1877F2] to-[#0084FF] hover:opacity-95 text-white font-bold text-[15px] py-3.5 rounded-xl shadow-[0_4px_16px_rgba(24,119,242,0.25)] hover:shadow-[0_8px_24px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center"
+                    >
+                      Submit Application
+                    </button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
     </div>
   );

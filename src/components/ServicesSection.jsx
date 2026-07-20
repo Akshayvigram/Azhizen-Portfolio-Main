@@ -42,7 +42,7 @@ const ServicesSection = () => {
       className="
         min-h-screen
         px-8
-        pt-[72px]
+        pt-[60px]
         pb-[80px]
         bg-gradient-to-b
         from-[#081125]

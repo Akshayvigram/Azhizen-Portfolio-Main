@@ -384,13 +384,13 @@ const Navbar = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "8px",
+              gap: "7px",
               background: isTransparentNavbar ? "transparent" : "#1877F2",
               color: "#ffffff",
               border: isTransparentNavbar ? "1px solid rgba(255, 255, 255, 0.6)" : "none",
-              fontSize: "14px",
+              fontSize: "13.5px",
               fontWeight: "600",
-              padding: "10px 24px",
+              padding: "8px 20px",
               borderRadius: "50px",
               cursor: "pointer",
               whiteSpace: "nowrap",
@@ -420,8 +420,8 @@ const Navbar = () => {
           >
             Switch to Diary Tech
             <svg
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -658,18 +658,18 @@ const Navbar = () => {
             );
           })}
 
-          <button
+           <button
             onClick={() => { setIsOpen(false); triggerToast("Diary Tech Portal", "switch-mobile"); }}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
+              gap: "7px",
               marginTop: "16px",
               background: "#1877F2",
               color: "#ffffff",
-              fontSize: "14px",
+              fontSize: "13.5px",
               fontWeight: "600",
-              padding: "10px 24px",
+              padding: "8px 20px",
               borderRadius: "50px",
               border: "none",
               cursor: "pointer",
@@ -680,8 +680,8 @@ const Navbar = () => {
           >
             Switch to Diary Tech
             <svg
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

@@ -58,7 +58,7 @@ const FAQSection = () => {
       <div className="max-w-[1240px] mx-auto">
         {/* Title */}
         <div className="text-center mb-[56px]">
-          <h2 className="text-[32px] sm:text-[38px] font-bold text-[#0f172a] font-[Poppins] tracking-tight">
+          <h2 className="text-[32px] sm:text-[38px] font-semibold text-[#0f172a] font-[Poppins] tracking-tight">
             Frequently Asked Questions
           </h2>
         </div>
@@ -67,7 +67,13 @@ const FAQSection = () => {
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 justify-between items-start">
           
           {/* Left Column: Have a Question Form */}
-          <div className="w-full lg:w-[350px] shrink-0 flex flex-col items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="w-full lg:w-[350px] shrink-0 flex flex-col items-center"
+          >
             {/* Man Thinking Image */}
             <div className="w-[220px] h-[220px] mb-6 flex items-center justify-center">
               <img
@@ -145,10 +151,16 @@ const FAQSection = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
 
           {/* Right Column: Accordion */}
-          <div className="flex-1 w-full flex flex-col gap-4">
+          <motion.div 
+            initial={{ opacity: 0, x: 35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            className="flex-1 w-full flex flex-col gap-4"
+          >
             {FAQ_ITEMS.map((item) => {
               const isOpen = openId === item.id;
               const isHovered = hoveredId === item.id;
@@ -209,7 +221,7 @@ const FAQSection = () => {
                 </div>
               );
             })}
-          </div>
+          </motion.div>
 
         </div>
       </div>

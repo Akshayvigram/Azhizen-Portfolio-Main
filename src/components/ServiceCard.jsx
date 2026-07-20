@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ServiceCard = ({ title, description, image }) => {
+const ServiceCard = ({ title, description, image, onApply }) => {
   const navigate = useNavigate();
   return (
     <div className="bg-white rounded-[12px] shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#EAEFF6] p-6 flex flex-col justify-between items-start hover:-translate-y-1.5 transition-transform duration-300 h-full">
@@ -26,7 +26,7 @@ const ServiceCard = ({ title, description, image }) => {
 
       {/* Royal Blue Apply Button */}
       <button
-        onClick={() => navigate("/JobApplicationForm")}
+        onClick={onApply}
         className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[14px] px-5 py-2.5 rounded-[8px] transition-colors flex items-center gap-1.5 cursor-pointer mt-auto"
       >
         Apply <span className="text-[14px]">→</span>

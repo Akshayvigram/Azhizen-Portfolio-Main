@@ -80,7 +80,7 @@ const DevelopmentCycle = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-[48px]"
         >
-          <h2 className="text-[32px] sm:text-[38px] font-bold text-[#0f172a] font-[Poppins] tracking-tight">
+          <h2 className="text-[32px] sm:text-[38px] font-semibold text-[#0f172a] font-[Poppins] tracking-tight">
             Development Cycle
           </h2>
         </motion.div>
@@ -89,7 +89,7 @@ const DevelopmentCycle = () => {
         <div className="relative">
           {/* Connecting Line for desktop view */}
           <div 
-            className="absolute top-[65px] left-[7%] right-[7%] h-[2px] bg-slate-700 z-0 hidden lg:block"
+            className="absolute top-[50px] left-[7%] right-[7%] h-[1.5px] bg-slate-300 z-0 hidden lg:block"
             style={{ pointerEvents: "none" }}
           />
 
@@ -114,12 +114,12 @@ const DevelopmentCycle = () => {
                     borderColor: "#1877F2" 
                   }}
                   transition={{ duration: 0.2 }}
-                  className="w-[130px] h-[130px] rounded-full bg-white flex items-center justify-center border-2 border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.03)] mb-4 cursor-pointer relative z-10 transition-colors"
+                  className="w-[100px] h-[100px] rounded-full bg-white flex items-center justify-center border-2 border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.03)] mb-4 cursor-pointer relative z-10 transition-colors"
                 >
                   <img
                     src={step.icon}
                     alt={step.title}
-                    className="w-[72px] h-[72px] object-contain transition-transform duration-300 group-hover:scale-105"
+                    className="w-[76px] h-[76px] object-contain transition-transform duration-300 group-hover:scale-105"
                   />
                 </motion.div>
 
