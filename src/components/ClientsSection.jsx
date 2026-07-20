@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Distinct Logos ── */
 const LOGOS = [
@@ -15,7 +15,7 @@ const TICKER_LOGOS = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS
 
 /* ── Stars ── */
 const Stars = ({ count = 5 }) => (
-  <div style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
+  <div style={{ display: "flex", gap: "6px", marginBottom: "16px" }}>
     {Array.from({ length: count }).map((_, i) => (
       <span
         key={i}
@@ -31,11 +31,289 @@ const Stars = ({ count = 5 }) => (
   </div>
 );
 
+const REVIEWS = [
+  {
+    id: 1,
+    name: "Alexander",
+    title: "Coo, Nexa Solutions.",
+    stars: 5,
+    text: "“The Level Of Professionalism And Commitment Shown By Azhizen Is Outstanding. From Planning To Execution, Everything Was Handled Seamlessly.”"
+  },
+  {
+    id: 2,
+    name: "Priya Sharma",
+    title: "Lead R&D, BioTech Solutions.",
+    stars: 5,
+    text: "“Azhizen delivered advanced biomedical prototyping with extreme accuracy. Their firmware integration and technical guidance were crucial to our project's success.”"
+  },
+  {
+    id: 3,
+    name: "Marcus",
+    title: "Director, Apex Academy.",
+    stars: 5,
+    text: "“The cohort programs at Azhizen Academy are incredibly well-structured. We bridge the academic gap and create highly skilled, placement-ready engineers.”"
+  },
+  {
+    id: 4,
+    name: "Emily Watson",
+    title: "Founder, AgroAutomation.",
+    stars: 5,
+    text: "“EaseMilker's smart automated system was refined and brought to production thanks to Azhizen's outstanding IoT and hardware prototyping capabilities.”"
+  },
+  {
+    id: 5,
+    name: "David K.",
+    title: "Creative Head, Vanguard Media.",
+    stars: 5,
+    text: "“From creative storytelling to professional digital branding, Azhizen Media translates complex technical ideas into highly engaging business stories.”"
+  }
+];
+
 const ClientsSection = () => {
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
+  };
 
   return (
     <section style={{ background: "#fff", padding: "36px 0 0" }}>
+      {/* ── Heading for Testimonials ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{
+          textAlign: "center",
+          marginBottom: "40px",
+          padding: "0 20px",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "clamp(28px, 6vw, 40px)",
+            fontWeight: "600",
+            color: "#111827",
+            fontFamily: "Poppins, sans-serif",
+            marginBottom: "10px",
+          }}
+        >
+          What Our Clients Say
+        </h2>
+
+        <p
+          style={{
+            color: "#6B7280",
+            fontSize: "15px",
+            fontFamily: "Poppins, sans-serif",
+            margin: "0",
+          }}
+        >
+          The Feedback And Reviews That Are Said By The Clients And Customer
+        </p>
+      </motion.div>
+
+      {/* ── Testimonial Slider Row ── */}
+      <div 
+        className="slider-container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "24px",
+          maxWidth: "1140px",
+          margin: "0 auto",
+          padding: "0 20px 56px",
+        }}
+      >
+        {/* Left Arrow Button */}
+        <button
+          onClick={prevSlide}
+          className="arrow-btn"
+          style={{
+            width: "48px",
+            height: "48px",
+            borderRadius: "50%",
+            border: "2px solid #475569",
+            backgroundColor: "#ffffff",
+            color: "#475569",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            transition: "all 0.2s ease-in-out",
+            outline: "none",
+            flexShrink: 0,
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        {/* Testimonial Card */}
+        <motion.div
+          key={activeIndex}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            flex: 1,
+            position: "relative",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+            background: "#E8F0FE",
+            maxWidth: "960px",
+          }}
+        >
+          {/* Background image */}
+          <img
+            src="/background.png"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: 0,
+            }}
+          />
+
+          {/* Card content */}
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: "40px",
+              padding: "40px 48px",
+            }}
+          >
+            {/* Left photo */}
+            <div
+              style={{
+                flex: "1 1 320px",
+                minWidth: "260px",
+                maxWidth: "380px",
+                margin: "0 auto",
+              }}
+            >
+              <img
+                src="/What our Clients say.webp"
+                alt={REVIEWS[activeIndex].name}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
+                }}
+              />
+            </div>
+
+            {/* Right content */}
+            <div
+              style={{
+                flex: "1 1 320px",
+                minWidth: "260px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "center",
+              }}
+            >
+              <Stars count={REVIEWS[activeIndex].stars} />
+
+              <p
+                style={{
+                  color: "#1e293b",
+                  fontSize: "clamp(15px, 2.5vw, 17px)",
+                  lineHeight: "1.7",
+                  marginBottom: "28px",
+                  fontStyle: "normal",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: "500",
+                  textAlign: "left",
+                }}
+              >
+                {REVIEWS[activeIndex].text}
+              </p>
+
+              {/* Name Block with thick left black border */}
+              <div
+                style={{
+                  borderLeft: "3px solid #000000",
+                  paddingLeft: "16px",
+                  textAlign: "left",
+                }}
+              >
+                <p
+                  style={{
+                    color: "#1877F2",
+                    fontWeight: "800",
+                    fontSize: "22px",
+                    fontFamily: "Poppins, sans-serif",
+                    margin: "0 0 2px 0",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {REVIEWS[activeIndex].name}
+                </p>
+                <p
+                  style={{
+                    color: "#475569",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    fontFamily: "Poppins, sans-serif",
+                    margin: 0,
+                  }}
+                >
+                  {REVIEWS[activeIndex].title}
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right Arrow Button */}
+        <button
+          onClick={nextSlide}
+          className="arrow-btn"
+          style={{
+            width: "48px",
+            height: "48px",
+            borderRadius: "50%",
+            border: "2px solid #475569",
+            backgroundColor: "#ffffff",
+            color: "#475569",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            transition: "all 0.2s ease-in-out",
+            outline: "none",
+            flexShrink: 0,
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+
       {/* ── Heading for Partners ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -68,9 +346,7 @@ const ClientsSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         style={{
-          marginBottom: "24px",
-          borderBottom: "1px solid #E5E7EB",
-          padding: "0 0 40px",
+          padding: "0 0 64px",
           background: "#fff",
           overflow: "hidden",
         }}
@@ -99,178 +375,6 @@ const ClientsSection = () => {
               }}
             />
           ))}
-        </div>
-      </motion.div>
-
-      {/* ── Heading for Testimonials ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        style={{
-          textAlign: "center",
-          marginBottom: "40px",
-          padding: "0 20px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "clamp(28px, 6vw, 40px)",
-            fontWeight: "800",
-            color: "#111827",
-            fontFamily: "Poppins, sans-serif",
-            marginBottom: "10px",
-          }}
-        >
-          What Our Clients Say
-        </h2>
-
-        <p
-          style={{
-            color: "#6B7280",
-            fontSize: "15px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          The Feedback And Reviews That Are Said By The Clients And Customer
-        </p>
-      </motion.div>
-
-      {/* ── Testimonial card ── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 15 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        style={{
-          maxWidth: "960px",
-          margin: "0 auto",
-          padding: "0 20px 80px",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            borderRadius: "6px",
-            overflow: "hidden",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-            background: "#E8F0FE",
-          }}
-        >
-          {/* Background */}
-          <img
-            src="/background.png"
-            alt=""
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              zIndex: 0,
-            }}
-          />
-
-          {/* Card content */}
-          <div
-            style={{
-              position: "relative",
-              zIndex: 1,
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              gap: "32px",
-              padding: "24px",
-            }}
-          >
-            {/* Left photo */}
-            <div
-              style={{
-                flex: "1 1 320px",
-                minWidth: "260px",
-                maxWidth: "360px",
-                margin: "0 auto",
-              }}
-            >
-              <img
-                src="/What our Clients say.webp"
-                alt="Gladson — client"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                  borderRadius: "6px",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                }}
-              />
-            </div>
-
-            {/* Right content */}
-            <div
-              style={{
-                flex: "1 1 320px",
-                minWidth: "260px",
-              }}
-            >
-              <Stars count={5} />
-
-              <p
-                style={{
-                  color: "#1877F2",
-                  fontWeight: "700",
-                  fontSize: "clamp(26px, 5vw, 32px)",
-                  marginBottom: "16px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                Gladson
-              </p>
-
-              <p
-                style={{
-                  color: "#111827",
-                  fontSize: "clamp(15px, 3vw, 20px)",
-                  lineHeight: "1.7",
-                  marginBottom: "28px",
-                  fontStyle: "normal",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: "500",
-                }}
-              >
-                “The Level Of Professionalism And Commitment Shown By Azhizen
-                Is Outstanding. From Planning To Execution, Everything Was
-                Handled Seamlessly.”
-              </p>
-
-              <button
-                onClick={() => navigate("/about")}
-                style={{
-                  background: "#F97316",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "2px",
-                  padding: "12px 32px",
-                  fontSize: "18px",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                  transition: "background 0.2s",
-                  letterSpacing: "0.02em",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#EA580C")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#F97316")
-                }
-              >
-                Learn About Us
-              </button>
-            </div>
-          </div>
         </div>
       </motion.div>
 
