@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Star, ArrowRight, BookOpen, Clock } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Star, ArrowRight, BookOpen, Clock, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DoubleCornerArrow = ({ className = "w-[18px] h-[18px]" }) => (
@@ -55,7 +55,7 @@ const MAIN_COURSES = [
     id: "c1",
     title: "ROS2 With Python / C++ - Arduino + Sensors & Actuators",
     image: "/fee65732d062a4d091f6d379fb64ec6cbda7d0aa.png",
-    categories: ["Trending Course", "Robatics", "Automation"],
+    categories: ["Trending Course", "Robotics", "Automation"],
     price: "₹8,300.00",
     rating: 4.5,
     duration: "12 Weeks",
@@ -97,12 +97,30 @@ const TABS = [
   "Trending Course",
   "Artificial Intelligence AI",
   "Web Development",
-  "Robatics",
+  "Robotics",
   "Automation",
 ];
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("Trending Course");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastAnchor, setToastAnchor] = useState("");
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast, toastAnchor]);
+
+  const triggerToast = (message, anchor) => {
+    setToastMessage(message);
+    setToastAnchor(anchor);
+    setShowToast(true);
+  };
 
   // Filter courses based on active tab
   const filteredCourses = MAIN_COURSES.filter((course) =>
@@ -156,17 +174,33 @@ export default function CoursePage() {
             Gain real-world skills through expert-led training, hands-on projects, and innovation-focused learning designed for future-ready careers.
           </motion.p>
  
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            role="button"
-            onClick={() => window.location.href = '#'}
-            className="mt-8 px-6 py-[12px] bg-[#1877F2] text-white rounded-full text-[15px] font-semibold flex items-center gap-2 transition-all duration-300 shadow-[0_6px_20px_rgba(24,119,242,0.4)] hover:bg-[#1466d0] hover:scale-[1.03] hover:shadow-[0_8px_24px_rgba(24,119,242,0.5)] cursor-pointer"
-          >
-            Explore Azhizen Acedemy
-            <DoubleCornerArrow className="w-4 h-4" />
-          </motion.span>
+          <div className="relative mt-8">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              role="button"
+              onClick={() => triggerToast("Azhizen Academy is Coming Soon!", "explore-hero")}
+              className="px-6 py-[12px] bg-[#1877F2] text-white rounded-full text-[15px] font-semibold flex items-center gap-2 transition-all duration-300 shadow-[0_6px_20px_rgba(24,119,242,0.4)] hover:bg-[#1466d0] hover:scale-[1.03] hover:shadow-[0_8px_24px_rgba(24,119,242,0.5)] cursor-pointer"
+            >
+              Explore Azhizen Acedemy
+              <DoubleCornerArrow className="w-4 h-4" />
+            </motion.span>
+
+            <AnimatePresence>
+              {showToast && toastAnchor === "explore-hero" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, x: "-50%" }}
+                  animate={{ opacity: 1, y: 0, x: "-50%" }}
+                  exit={{ opacity: 0, y: -8, x: "-50%" }}
+                  className="absolute top-[125%] left-1/2 z-50 bg-slate-900 text-white text-[12.5px] px-4.5 py-2 rounded-xl shadow-2xl border border-white/10 font-medium font-poppins whitespace-nowrap"
+                >
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45 border-l border-t border-white/10" />
+                  {toastMessage}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
  
         {/* Overlapping Laptop Mockups */}
@@ -235,10 +269,29 @@ export default function CoursePage() {
                 </h3>
               </div>
 
-              <button className="mt-7 px-6 py-[12px] bg-gradient-to-r from-[#FF8E00] to-[#B62C00] text-white font-bold rounded-[8px] text-[14px] flex items-center justify-center gap-2 self-start hover:brightness-105 hover:scale-[1.01] transition-all cursor-pointer shadow-none">
-                Explore Azhizen Acedemy
-                <DoubleCornerArrow className="w-4.5 h-4.5" />
-              </button>
+              <div className="relative mt-7 self-start">
+                <button 
+                  onClick={() => triggerToast("Azhizen Academy is Coming Soon!", "explore-partner")}
+                  className="px-6 py-[12px] bg-gradient-to-r from-[#FF8E00] to-[#B62C00] text-white font-bold rounded-[8px] text-[14px] flex items-center justify-center gap-2 hover:brightness-105 hover:scale-[1.01] transition-all cursor-pointer shadow-none"
+                >
+                  Explore Azhizen Acedemy
+                  <DoubleCornerArrow className="w-4.5 h-4.5" />
+                </button>
+
+                <AnimatePresence>
+                  {showToast && toastAnchor === "explore-partner" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, x: "-50%" }}
+                      animate={{ opacity: 1, y: 0, x: "-50%" }}
+                      exit={{ opacity: 0, y: -8, x: "-50%" }}
+                      className="absolute top-[125%] left-1/2 z-50 bg-slate-900 text-white text-[12.5px] px-4.5 py-2 rounded-xl shadow-2xl border border-white/10 font-medium font-poppins whitespace-nowrap"
+                    >
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-900 rotate-45 border-l border-t border-white/10" />
+                      {toastMessage}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </motion.div>
 
             {/* Right Featured Courses Row */}
@@ -250,42 +303,59 @@ export default function CoursePage() {
               className="lg:w-[75.5%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
             >
               {FEATURED_COURSES.map((course) => (
-                <motion.div 
-                  key={course.id}
-                  variants={itemVariants}
-                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                  className="bg-white rounded-2xl py-4 px-[12px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
-                >
-                  <div>
-                    {/* Course Image Wrapper */}
-                    <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
-                      <img 
-                        src={course.image} 
-                        alt={course.title}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                      />
+                <div key={course.id} className="relative h-full">
+                  <motion.div 
+                    key={course.id}
+                    variants={itemVariants}
+                    whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                    onClick={() => triggerToast("Coming Soon!", course.id)}
+                    className="bg-white rounded-2xl py-4 px-[12px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer h-full"
+                  >
+                    <div>
+                      {/* Course Image Wrapper */}
+                      <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
+                        <img 
+                          src={course.image} 
+                          alt={course.title}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                        />
+                      </div>
+
+                      {/* Tag & Title */}
+                      <div className="mt-4">
+                        <span className="text-[12px] font-bold text-[#1877F2] tracking-wide block">
+                          {course.category}
+                        </span>
+                        <h4 className="text-[16px] font-bold text-slate-800 mt-1 line-clamp-2 min-h-[48px] leading-[1.3]">
+                          {course.title}
+                        </h4>
+                      </div>
                     </div>
 
-                    {/* Tag & Title */}
-                    <div className="mt-4">
-                      <span className="text-[12px] font-bold text-[#1877F2] tracking-wide block">
-                        {course.category}
-                      </span>
-                      <h4 className="text-[16px] font-bold text-slate-800 mt-1 line-clamp-2 min-h-[48px] leading-[1.3]">
-                        {course.title}
-                      </h4>
+                    {/* Specialization & Rating */}
+                    <div className="mt-5">
+                      <span className="text-[12px] text-gray-400 block font-medium">specialization</span>
+                      <div className="flex items-center gap-1 mt-0.5 text-[12px] font-bold text-[#FF8C00]">
+                        <Star className="w-3.5 h-3.5 fill-[#FF8C00] text-[#FF8C00]" />
+                        <span>{course.rating}</span>
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  {/* Specialization & Rating */}
-                  <div className="mt-5">
-                    <span className="text-[12px] text-gray-400 block font-medium">specialization</span>
-                    <div className="flex items-center gap-1 mt-0.5 text-[12px] font-bold text-[#FF8C00]">
-                      <Star className="w-3.5 h-3.5 fill-[#FF8C00] text-[#FF8C00]" />
-                      <span>{course.rating}</span>
-                    </div>
-                  </div>
-                </motion.div>
+                  <AnimatePresence>
+                    {showToast && toastAnchor === course.id && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, x: "-50%" }}
+                        animate={{ opacity: 1, y: 0, x: "-50%" }}
+                        exit={{ opacity: 0, y: -8, x: "-50%" }}
+                        className="absolute top-[102%] left-1/2 z-50 bg-slate-900 text-white text-[12.5px] px-4.5 py-2 rounded-xl shadow-2xl border border-white/10 font-medium font-poppins whitespace-nowrap"
+                      >
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45 border-l border-t border-white/10" />
+                        {toastMessage}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ))}
             </motion.div>
           </div>
@@ -350,61 +420,78 @@ export default function CoursePage() {
         >
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                key={course.id}
-                className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer"
-              >
-                <div>
-                  {/* Image */}
-                  <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
-                    <img
-                      src={course.image}
-                      alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    />
+              <div key={course.id} className="relative h-full">
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                  key={course.id}
+                  onClick={() => triggerToast("Coming Soon!", course.id)}
+                  className="bg-white rounded-2xl p-[16px] flex flex-col justify-between border border-[#E2E8F0] transition-all duration-300 group text-left shadow-[0_8px_30px_rgba(0,0,0,0.08)] cursor-pointer h-full"
+                >
+                  <div>
+                    {/* Image */}
+                    <div className="rounded-xl overflow-hidden bg-slate-50 relative aspect-[1.5] flex items-center justify-center border border-slate-100">
+                      <img
+                        src={course.image}
+                        alt={course.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-semibold text-slate-800 text-[16px] leading-[1.3] mt-4 line-clamp-2 min-h-[48px]">
+                      {course.title === "AI Artificial Intelligence Course" ? (
+                        <>AI Artificial Intelligence <br /> Course</>
+                      ) : (
+                        course.title
+                      )}
+                    </h3>
+
+                    {/* Badges Container */}
+                    <div className="flex items-center gap-1.5 mt-4">
+                      {/* Level Badge */}
+                      <span className="border border-[#E2E8F0] text-gray-500 text-[10px] font-normal px-2 py-0.5 rounded">
+                        {course.level}
+                      </span>
+                      
+                      {/* Rating Badge */}
+                      <span className="border border-[#E2E8F0] text-orange-500 text-[10px] font-normal px-2 py-0.5 rounded flex items-center gap-0.5">
+                        <Star className="w-3.5 h-3.5 fill-orange-500 text-orange-500" />
+                        <span>{course.rating}</span>
+                      </span>
+
+                      {/* Duration Badge */}
+                      <span className="bg-[#1877F2] text-white text-[10px] font-normal px-2.5 py-0.5 rounded flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5 text-white" />
+                        <span>{course.duration}</span>
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-semibold text-slate-800 text-[16px] leading-[1.3] mt-4 line-clamp-2 min-h-[48px]">
-                    {course.title === "AI Artificial Intelligence Course" ? (
-                      <>AI Artificial Intelligence <br /> Course</>
-                    ) : (
-                      course.title
-                    )}
-                  </h3>
-
-                  {/* Badges Container */}
-                  <div className="flex items-center gap-1.5 mt-4">
-                    {/* Level Badge */}
-                    <span className="border border-[#E2E8F0] text-gray-500 text-[10px] font-normal px-2 py-0.5 rounded">
-                      {course.level}
-                    </span>
-                    
-                    {/* Rating Badge */}
-                    <span className="border border-[#E2E8F0] text-orange-500 text-[10px] font-normal px-2 py-0.5 rounded flex items-center gap-0.5">
-                      <Star className="w-3 h-3 fill-orange-500 text-orange-500" />
-                      <span>{course.rating}</span>
-                    </span>
-
-                    {/* Duration Badge */}
-                    <span className="bg-[#1877F2] text-white text-[10px] font-normal px-2.5 py-0.5 rounded flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-white" />
-                      <span>{course.duration}</span>
-                    </span>
+                  {/* Price */}
+                  <div className="mt-4 block">
+                    <span className="text-[15px] font-semibold text-slate-700 font-sans">{course.price}</span>
                   </div>
-                </div>
+                </motion.div>
 
-                {/* Price */}
-                <div className="mt-4 block">
-                  <span className="text-[15px] font-semibold text-slate-700 font-sans">{course.price}</span>
-                </div>
-              </motion.div>
+                <AnimatePresence>
+                  {showToast && toastAnchor === course.id && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, x: "-50%" }}
+                      animate={{ opacity: 1, y: 0, x: "-50%" }}
+                      exit={{ opacity: 0, y: -8, x: "-50%" }}
+                      className="absolute top-[102%] left-1/2 z-50 bg-slate-900 text-white text-[12.5px] px-4.5 py-2 rounded-xl shadow-2xl border border-white/10 font-medium font-poppins whitespace-nowrap"
+                    >
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45 border-l border-t border-white/10" />
+                      {toastMessage}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
           </AnimatePresence>
         </motion.div>
@@ -418,6 +505,8 @@ export default function CoursePage() {
           </div>
         )}
       </div>
+
+
 
     </div>
   );
