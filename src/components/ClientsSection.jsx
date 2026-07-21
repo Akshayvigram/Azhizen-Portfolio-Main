@@ -37,35 +37,40 @@ const REVIEWS = [
     name: "Alexander",
     title: "Coo, Nexa Solutions.",
     stars: 5,
-    text: "“The Level Of Professionalism And Commitment Shown By Azhizen Is Outstanding. From Planning To Execution, Everything Was Handled Seamlessly.”"
+    text: "“The Level Of Professionalism And Commitment Shown By Azhizen Is Outstanding. From Planning To Execution, Everything Was Handled Seamlessly.”",
+    image: "/What our Clients say.webp"
   },
   {
     id: 2,
     name: "Priya Sharma",
     title: "Lead R&D, BioTech Solutions.",
     stars: 5,
-    text: "“Azhizen delivered advanced biomedical prototyping with extreme accuracy. Their firmware integration and technical guidance were crucial to our project's success.”"
+    text: "“Azhizen delivered advanced biomedical prototyping with extreme accuracy. Their firmware integration and technical guidance were crucial to our project's success.”",
+    image: "/client_priya_sharma.png"
   },
   {
     id: 3,
     name: "Marcus",
     title: "Director, Apex Academy.",
     stars: 5,
-    text: "“The cohort programs at Azhizen Academy are incredibly well-structured. We bridge the academic gap and create highly skilled, placement-ready engineers.”"
+    text: "“The cohort programs at Azhizen Academy are incredibly well-structured. We bridge the academic gap and create highly skilled, placement-ready engineers.”",
+    image: "/client_marcus.png"
   },
   {
     id: 4,
     name: "Emily Watson",
     title: "Founder, AgroAutomation.",
     stars: 5,
-    text: "“EaseMilker's smart automated system was refined and brought to production thanks to Azhizen's outstanding IoT and hardware prototyping capabilities.”"
+    text: "“EaseMilker's smart automated system was refined and brought to production thanks to Azhizen's outstanding IoT and hardware prototyping capabilities.”",
+    image: "/client_emily_watson.png"
   },
   {
     id: 5,
     name: "David K.",
     title: "Creative Head, Vanguard Media.",
     stars: 5,
-    text: "“From creative storytelling to professional digital branding, Azhizen Media translates complex technical ideas into highly engaging business stories.”"
+    text: "“From creative storytelling to professional digital branding, Azhizen Media translates complex technical ideas into highly engaging business stories.”",
+    image: "/client_david_k.png"
   }
 ];
 
@@ -224,7 +229,7 @@ const ClientsSection = () => {
               }}
             >
               <img
-                src="/What our Clients say.webp"
+                src={REVIEWS[activeIndex].image}
                 alt={REVIEWS[activeIndex].name}
                 style={{
                   width: "100%",
@@ -343,7 +348,8 @@ const ClientsSection = () => {
         transition={{ duration: 0.6 }}
         style={{
           textAlign: "center",
-          marginBottom: "20px",
+          marginBottom: "36px",
+          marginTop: "48px",
           padding: "0 20px",
         }}
       >
@@ -367,9 +373,11 @@ const ClientsSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
         style={{
-          padding: "0 0 64px",
-          background: "#fff",
+          padding: "24px 0",
+          background: "#f8fafc",
           overflow: "hidden",
+          borderTop: "1px solid #f1f5f9",
+          borderBottom: "1px solid #f1f5f9",
         }}
       >
         <div

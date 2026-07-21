@@ -10,6 +10,7 @@ import AboutUsPage from "./components/AboutUsPage";
 import ServicePage from "./components/ServicePage";
 import TrainingSupport from "./components/TrainingSupport";
 import CoursePage from "./components/CoursePage";
+import { WhatsAppButton } from "./components/WhatsAppButton";
 
 // Lazy load the new Marketing Services page
 const MarketingServices = lazy(() => import("./pages/MarketingServices"));
@@ -43,6 +44,9 @@ const App = () => {
 
       {/* Contact page renders its own footer */}
       {!isContactPage && <FooterSection />}
+
+      {/* Floating WhatsApp Chat Button on bottom left */}
+      <WhatsAppButton phoneNumber="919952132492" />
     </div>
   );
 };
