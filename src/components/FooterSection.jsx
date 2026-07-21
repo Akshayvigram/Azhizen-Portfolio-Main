@@ -75,23 +75,18 @@ const FooterSection = () => {
           <h4 className="text-[18px] font-bold text-white mb-6">Our Services</h4>
           <ul className="space-y-4 text-[15px] font-medium">
             <li>
+              <Link to="/services" className="hover:text-[#1877F2] transition-colors">
+                Tech Services
+              </Link>
+            </li>
+            <li>
               <Link to="/marketing-services" className="hover:text-[#1877F2] transition-colors">
                 Marketing Services
               </Link>
             </li>
             <li>
-              <Link to="/services" className="hover:text-[#1877F2] transition-colors">
-                Custom Hardware Design
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="hover:text-[#1877F2] transition-colors">
-                AI/ML & Firmware
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="hover:text-[#1877F2] transition-colors">
-                IoT & Smart Automation
+              <Link to="/training-support" className="hover:text-[#1877F2] transition-colors">
+                Training Support
               </Link>
             </li>
           </ul>
