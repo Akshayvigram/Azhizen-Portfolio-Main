@@ -488,7 +488,9 @@ const TrainingSupport = () => {
             From Scratch to Upskilled — Explore the Courses That Empower Your Growth.
           </p>
           <a
-            href="#services"
+            href="https://academy.azhizen.com/courses"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               fontSize: "13px",
               fontWeight: 600,

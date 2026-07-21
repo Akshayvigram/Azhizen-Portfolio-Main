@@ -5,28 +5,28 @@ import { motion } from "framer-motion";
 const SERVICES = [
   {
     id: 1,
-    image: "/service1.webp",
+    image: "/Custom Hardware Design.jpg",
     title: "Custom Hardware Design",
     description:
       "We Deliver Advanced Hardware Prototyping With Custom PCB Design, Tailored Solution For Embedded Systems And IoT Innovation.",
   },
   {
     id: 2,
-    image: "/service2.webp",
+    image: "/AIML & Firmware Integration.jpg",
     title: "AI/ML & Firmware Integration",
     description:
       "We Integrate AI/ML Capabilities And Firmware Updates. Smart, Adaptable Systems Built For The Future",
   },
   {
     id: 3,
-    image: "/service3.webp",
+    image: "/Research & Development.jpg",
     title: "Research & Development",
     description:
       "Experts In Research And Development Employ Rigorous Methodologies And Validation Processes.",
   },
   {
     id: 4,
-    image: "/service4.webp",
+    image: "/IoT & Smart Automation.jpg",
     title: "IoT & Smart Automation",
     description:
       "We Design And Deploy Scalable IoT Architectures, Smart Sensors, And Cloud-Connected Automation Systems For Industrial And Consumer Needs.",
@@ -211,6 +211,13 @@ const ServicesSection = () => {
 
               {/* Explore Button */}
               <button
+                onClick={() => {
+                  let targetCardId = null;
+                  if (id === 1) targetCardId = 2;
+                  else if (id === 2) targetCardId = 4;
+                  else if (id === 4) targetCardId = 1;
+                  navigate("/services", { state: { selectCardId: targetCardId } });
+                }}
                 className="
                   mt-[14px]
                   w-full

@@ -243,13 +243,13 @@ export default function CoursePage() {
         className="relative z-30 max-w-[1280px] mx-auto px-4 mt-8 sm:mt-16 md:mt-24 lg:mt-32 xl:mt-40"
       >
         <div 
-          className="bg-slate-950 p-8 md:p-10 rounded-[2rem] shadow-[0_25px_60px_rgba(0,0,0,0.3)] border border-white/10 overflow-hidden relative bg-cover bg-center"
+          className="bg-slate-950 pl-6 pr-4 py-5 md:pl-10 md:pr-4 md:py-6 rounded-[2rem] shadow-[0_25px_60px_rgba(0,0,0,0.3)] border border-white/10 relative bg-cover bg-center"
           style={{ 
             backgroundImage: `url('/0993ac0efcfb23291ba8a4ac6b66a79589b7d0dc.png')` 
           }}
         >
           {/* Deep Overlay for contrast */}
-          <div className="absolute inset-0 bg-slate-950/60 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-slate-950/60 pointer-events-none rounded-[2rem]"></div>
 
           <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
             
@@ -259,7 +259,7 @@ export default function CoursePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="lg:w-[24.5%] flex flex-col justify-center text-left py-1"
+              className="lg:w-[23%] shrink-0 flex flex-col justify-center text-left py-1"
             >
               <div>
                 <h3 className="text-[26px] sm:text-[28px] font-bold leading-[1.2] tracking-tight" style={{ color: '#ffffff' }}>
@@ -300,7 +300,7 @@ export default function CoursePage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="lg:w-[75.5%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
+              className="flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
             >
               {FEATURED_COURSES.map((course) => (
                 <div key={course.id} className="relative h-full">
