@@ -1,27 +1,35 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SERVICES = [
   {
     id: 1,
-    image: "/service1.png",
-    title: "CUSTOM HARDWARE DESIGN",
+    image: "/Custom Hardware Design.jpg",
+    title: "Custom Hardware Design",
     description:
       "We Deliver Advanced Hardware Prototyping With Custom PCB Design, Tailored Solution For Embedded Systems And IoT Innovation.",
   },
   {
     id: 2,
-    image: "/service2.png",
-    title: "AI/ML & FIRMWARE INTEGRATION",
+    image: "/AIML & Firmware Integration.jpg",
+    title: "AI/ML & Firmware Integration",
     description:
       "We Integrate AI/ML Capabilities And Firmware Updates. Smart, Adaptable Systems Built For The Future",
   },
   {
     id: 3,
-    image: "/service3.png",
-    title: "RESEARCH & DEVELOPMENT",
+    image: "/Research & Development.jpg",
+    title: "Research & Development",
     description:
       "Experts In Research And Development Employ Rigorous Methodologies And Validation Processes.",
+  },
+  {
+    id: 4,
+    image: "/IoT & Smart Automation.jpg",
+    title: "IoT & Smart Automation",
+    description:
+      "We Design And Deploy Scalable IoT Architectures, Smart Sensors, And Cloud-Connected Automation Systems For Industrial And Consumer Needs.",
   },
 ];
 
@@ -34,57 +42,108 @@ const ServicesSection = () => {
       className="
         min-h-screen
         px-8
-        pt-[72px]
+        pt-[60px]
         pb-[80px]
         bg-gradient-to-b
-        from-[#1976D2]
-        via-[#8BB8F2]
-        to-[#F4F8FF]
+        from-[#081125]
+        via-[#122247]
+        to-[#081125]
         font-[Poppins]
       "
     >
-      {/* ── Heading ── */}
-      <div className="text-center mb-[52px]">
-        <h2
-          className="
-            text-[#0F172A]
-            text-[38px]
-            font-bold
-            mb-3
-            font-[Poppins]
-          "
-        >
-          Our Service
-        </h2>
+      {/* ── Heading Row (Title on Left, Button on Right) ── */}
+      <motion.div 
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="max-w-[1400px] mx-auto w-full flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-6 px-4"
+      >
+        {/* Left Side: Title & Subtitle */}
+        <div className="text-left">
+          <h2
+            className="
+              !text-white
+              text-[38px]
+              font-bold
+              mb-1
+              font-[Poppins]
+            "
+          >
+            Our Service
+          </h2>
 
-        <p
-          className="
-            text-[#4B5D79]
-            text-[15px]
-            font-medium
-            font-[Poppins]
-          "
-        >
-          These are the core service that we provide to you
-        </p>
-      </div>
+          <p
+            className="
+              text-[#FFFFFF]
+              text-[16px]
+              font-light
+              font-[Poppins]
+            "
+          >
+            These are the core service that we provide to you
+          </p>
+        </div>
+
+        {/* Right Side: Explore All Button */}
+        <div>
+          <button
+            onClick={() => navigate("/services")}
+            className="
+              px-8
+              py-[14px]
+              bg-gradient-to-r
+              from-[#1877F2]
+              to-[#00B4D9]
+              text-white
+              border-none
+              rounded-[10px]
+              text-[16px]
+              font-semibold
+              tracking-[0.02em]
+              transition-all
+              duration-300
+              shadow-[0_6px_18px_rgba(24,119,242,0.25)]
+              hover:-translate-y-[2px]
+              hover:shadow-[0_14px_34px_rgba(24,119,242,0.35)]
+              hover:brightness-110
+              font-[Poppins]
+              whitespace-nowrap
+            "
+          >
+            Explore All →
+          </button>
+        </div>
+      </motion.div>
 
       {/* ── Cards ── */}
-      <div
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.12 } }
+        }}
         className="
           flex
           gap-7
           justify-center
           flex-wrap
-          max-w-[1180px]
+          max-w-[1400px]
           mx-auto
         "
       >
         {SERVICES.map(({ id, image, title, description }) => (
-          <div
+          <motion.div
             key={id}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+            }}
+            whileHover={{ y: -6, boxShadow: "0 16px 40px rgba(24,119,242,0.20)" }}
             className="
-              bg-[#EEF4FF]
+              bg-white
               rounded-[22px]
               overflow-hidden
               w-[320px]
@@ -92,13 +151,11 @@ const ServicesSection = () => {
               flex
               flex-col
               border
-              border-[#D7E6FF]
+              border-slate-200
               transition-all
               duration-300
-              shadow-[0_10px_30px_rgba(59,130,246,0.10)]
+              shadow-[0_10px_30px_rgba(0,0,0,0.15)]
               cursor-default
-              hover:-translate-y-[6px]
-              hover:shadow-[0_16px_40px_rgba(37,99,235,0.18)]
             "
           >
             {/* Image */}
@@ -127,11 +184,10 @@ const ServicesSection = () => {
             >
               <h3
                 className="
-                  text-[#183B78]
-                  text-[14px]
+                  !text-black
+                  text-[15px]
                   font-bold
                   tracking-[0.06em]
-                  uppercase
                   m-0
                   font-[Poppins]
                 "
@@ -141,12 +197,12 @@ const ServicesSection = () => {
 
               <p
                 className="
-                  text-[#5B6B88]
+                  !text-[#4B5563]
                   text-[13px]
                   leading-[1.65]
                   m-0
                   flex-1
-                  text-center
+                  text-left
                   font-[Poppins]
                 "
               >
@@ -155,11 +211,20 @@ const ServicesSection = () => {
 
               {/* Explore Button */}
               <button
+                onClick={() => {
+                  let targetCardId = null;
+                  if (id === 1) targetCardId = 2;
+                  else if (id === 2) targetCardId = 4;
+                  else if (id === 4) targetCardId = 1;
+                  navigate("/services", { state: { selectCardId: targetCardId } });
+                }}
                 className="
                   mt-[14px]
                   w-full
                   py-[12px]
-                  bg-[#2563EB]
+                  bg-gradient-to-r
+                  from-[#1877F2]
+                  to-[#00B4D9]
                   text-white
                   rounded-[10px]
                   text-[15px]
@@ -167,42 +232,19 @@ const ServicesSection = () => {
                   tracking-[0.01em]
                   transition-all
                   duration-300
-                  hover:bg-[#1D4ED8]
+                  hover:brightness-110
+                  shadow-[0_4px_12px_rgba(24,119,242,0.25)]
                   font-[Poppins]
                 "
               >
                 Explore
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* ── Bottom Redirect Button ── */}
-      <div className="text-center mt-10">
-        <button
-          onClick={() => navigate("/services")}
-          className="
-            px-8
-            py-[14px]
-            bg-[#2563EB]
-            text-white
-            border-none
-            rounded-[10px]
-            text-[16px]
-            font-semibold
-            tracking-[0.02em]
-            transition-all
-            duration-300
-            shadow-[0_6px_18px_rgba(37,99,235,0.20)]
-            hover:-translate-y-[2px]
-            hover:shadow-[0_14px_34px_rgba(37,99,235,0.28)]
-            font-[Poppins]
-          "
-        >
-          Explore All →
-        </button>
-      </div>
+
     </section>
   );
 };

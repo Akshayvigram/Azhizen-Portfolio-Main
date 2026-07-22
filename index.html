@@ -13,9 +13,432 @@
     <link href="https://fonts.googleapis.com/css2?family=Kameron:wght@400..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
 
     <title>Azhizen</title>
+    
+    <style>
+      /* Floating Chatbot Launcher */
+      #azhizen-chat-launcher {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 84px;
+        height: 84px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.16));
+      }
+      #azhizen-chat-launcher:hover {
+        transform: scale(1.1) translateY(-4px);
+        filter: drop-shadow(0 10px 24px rgba(24, 119, 242, 0.35));
+      }
+      #azhizen-chat-launcher:active {
+        transform: scale(0.95);
+      }
+      #azhizen-chat-launcher img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      /* Chatbot Container Styles */
+      #azhizen-chat-container {
+        position: fixed;
+        bottom: 116px;
+        right: 24px;
+        width: 390px;
+        max-width: calc(100vw - 48px);
+        height: 580px;
+        max-height: calc(100vh - 160px);
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: 'Outfit', sans-serif;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      #azhizen-chat-container.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: all;
+      }
+
+      /* Header */
+      .azhizen-chat-header {
+        background: linear-gradient(135deg, #1877F2, #00A3FF);
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .azhizen-chat-header-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .azhizen-chat-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        object-fit: cover;
+        background-color: #ffffff;
+      }
+      .azhizen-chat-title-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .azhizen-chat-title {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        margin: 0;
+        line-height: 1.2;
+      }
+      .azhizen-chat-status {
+        font-size: 11px;
+        opacity: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 2px;
+      }
+      .azhizen-chat-pulse {
+        width: 6px;
+        height: 6px;
+        background-color: #4ade80;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 8px #4ade80;
+        animation: pulse-animation 1.5s infinite;
+      }
+      @keyframes pulse-animation {
+        0% { transform: scale(0.95); opacity: 0.5; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.5; }
+      }
+      .azhizen-chat-close {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+        line-height: 1;
+        padding: 4px;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
+      .azhizen-chat-close:hover {
+        opacity: 1;
+      }
+
+      /* Messages */
+      .azhizen-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        background-color: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        scroll-behavior: smooth;
+      }
+      .azhizen-chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+      .azhizen-chat-messages::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .azhizen-chat-messages::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 20px;
+      }
+      .azhizen-msg-row {
+        display: flex;
+        width: 100%;
+      }
+      .azhizen-msg-row.user {
+        justify-content: flex-end;
+      }
+      .azhizen-msg-row.bot {
+        justify-content: flex-start;
+      }
+      .azhizen-msg-bubble {
+        max-width: 80%;
+        padding: 10px 14px;
+        font-size: 13.5px;
+        line-height: 1.5;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        animation: bubble-fade-in 0.25s ease-out forwards;
+        white-space: pre-line;
+      }
+      @keyframes bubble-fade-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .azhizen-msg-row.user .azhizen-msg-bubble {
+        background-color: #1877F2;
+        color: #ffffff;
+        border-bottom-right-radius: 2px;
+      }
+      .azhizen-msg-row.bot .azhizen-msg-bubble {
+        background-color: #ffffff;
+        color: #0f172a;
+        border-bottom-left-radius: 2px;
+        border: 1px solid rgba(226, 232, 240, 0.6);
+      }
+      .azhizen-msg-bubble a {
+        color: #1877F2;
+        text-decoration: underline;
+        font-weight: 600;
+      }
+      .azhizen-msg-row.user .azhizen-msg-bubble a {
+        color: #ffffff;
+      }
+
+      /* Typing Indicator */
+      .azhizen-typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 6px;
+      }
+      .azhizen-typing-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #64748b;
+        border-radius: 50%;
+        animation: typing-bounce 1.4s infinite ease-in-out both;
+      }
+      .azhizen-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+      .azhizen-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+      @keyframes typing-bounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
+      }
+
+      /* Quick Questions */
+      .azhizen-quick-qs {
+        padding: 12px;
+        background-color: #ffffff;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow-x: hidden;
+      }
+      .azhizen-quick-qs-title {
+        font-size: 11px;
+        color: #64748b;
+        font-weight: 700;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding-left: 4px;
+      }
+      .azhizen-quick-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .azhizen-q-chip {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #334155;
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 5px 11px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        outline: none;
+      }
+      .azhizen-q-chip:hover {
+        border-color: #1877F2;
+        color: #1877F2;
+        background-color: #f0f7ff;
+      }
+      .azhizen-q-chip:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        background-color: #f1f5f9;
+        border-color: #e2e8f0;
+        color: #94a3b8;
+      }
+
+      /* Footer input */
+      .azhizen-chat-footer {
+        padding: 10px 14px;
+        background-color: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin: 0;
+      }
+      .azhizen-chat-input {
+        flex: 1;
+        border: 1px solid #cbd5e1;
+        border-radius: 20px;
+        padding: 8px 14px;
+        font-size: 13px;
+        outline: none;
+        font-family: inherit;
+        transition: border-color 0.2s;
+      }
+      .azhizen-chat-input:focus {
+        border-color: #1877F2;
+      }
+      .azhizen-chat-send {
+        background-color: #1877F2;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+        flex-shrink: 0;
+        padding: 0;
+      }
+      .azhizen-chat-send:hover {
+        background-color: #1565C0;
+      }
+      .azhizen-chat-send:active {
+        transform: scale(0.92);
+      }
+
+      /* Floating Chatbot Hint Bubble */
+      #azhizen-chat-hint {
+        position: fixed;
+        bottom: 44px;
+        right: 112px;
+        background-color: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 30px;
+        padding: 10px 18px;
+        font-family: 'Outfit', sans-serif;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #0f172a;
+        z-index: 9998;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        pointer-events: all;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateX(10px);
+        animation: hint-float 3s ease-in-out infinite alternate, hint-fade-in 0.8s 1s ease-out forwards;
+      }
+      #azhizen-chat-hint:hover {
+        border-color: #1877F2;
+        color: #1877F2;
+        box-shadow: 0 8px 24px rgba(24, 119, 242, 0.15);
+        transform: scale(1.03) translateY(-2px);
+      }
+      #azhizen-chat-hint.hidden {
+        opacity: 0 !important;
+        transform: translateX(10px) !important;
+        pointer-events: none !important;
+      }
+      .azhizen-cursor {
+        color: #1877F2;
+        font-weight: 700;
+        margin-left: 2px;
+        animation: cursor-blink 0.8s infinite;
+      }
+      @keyframes cursor-blink {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+      @keyframes hint-float {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-4px); }
+      }
+      @keyframes hint-fade-in {
+        to { opacity: 1; transform: translateX(0); }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Floating Chatbot Launcher Hint -->
+    <div id="azhizen-chat-hint" onclick="toggleAzhizenChat()">
+      <span id="azhizen-chat-hint-text"></span><span class="azhizen-cursor">|</span>
+    </div>
+
+    <!-- Floating Chatbot Launcher -->
+    <div id="azhizen-chat-launcher" onclick="toggleAzhizenChat()">
+      <img src="/chatbot.png" alt="Azhizen Chatbot" />
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="azhizen-chat-container">
+      <!-- Header -->
+      <div class="azhizen-chat-header">
+        <div class="azhizen-chat-header-info">
+          <img src="/chatbot.png" alt="Bot Avatar" class="azhizen-chat-avatar" />
+          <div class="azhizen-chat-title-container">
+            <span class="azhizen-chat-title">Azhizen Assistant</span>
+            <span class="azhizen-chat-status">
+              <span class="azhizen-chat-pulse"></span>
+              Online
+            </span>
+          </div>
+        </div>
+        <button class="azhizen-chat-close" onclick="toggleAzhizenChat()">&times;</button>
+      </div>
+
+      <!-- Messages Area -->
+      <div class="azhizen-chat-messages" id="azhizen-messages-box">
+        <div class="azhizen-msg-row bot">
+          <div class="azhizen-msg-bubble">Hello! Welcome to Azhizen Solutions. How can I help you today? Feel free to ask a question below.</div>
+        </div>
+      </div>
+
+      <!-- Quick Questions chips -->
+      <div class="azhizen-quick-qs">
+        <span class="azhizen-quick-qs-title">Suggested Questions</span>
+        <div class="azhizen-quick-chips">
+          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('services', 'What services do you offer?')">Our Services</button>
+          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('contact', 'How can I contact Azhizen?')">Contact Info</button>
+          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('courses', 'Do you offer courses or training?')">Academy & Training</button>
+          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('location', 'Where is Azhizen located?')">Office Location</button>
+          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('careers', 'Are you hiring right now?')">Open Careers</button>
+        </div>
+      </div>
+
+      <!-- Input Footer -->
+      <form class="azhizen-chat-footer" id="azhizen-chat-form">
+        <input type="text" id="azhizen-chat-input-field" class="azhizen-chat-input" placeholder="Type your message..." autocomplete="off" />
+        <button type="submit" class="azhizen-chat-send">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </form>
+    </div>
 
     <script type="module" src="/src/main.jsx"></script>
 
@@ -35,6 +458,409 @@
 
       // Update favicon if the user switches theme
       window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateFavicon);
+    </script>
+
+    <!-- Azhizen Chatbot Script -->
+    <script>
+      function toggleAzhizenChat() {
+        const container = document.getElementById("azhizen-chat-container");
+        const hint = document.getElementById("azhizen-chat-hint");
+        container.classList.toggle("active");
+        
+        // Auto scroll to bottom when opening
+        if (container.classList.contains("active")) {
+          hint.classList.add("hidden");
+          const messagesBox = document.getElementById("azhizen-messages-box");
+          messagesBox.scrollTop = messagesBox.scrollHeight;
+        } else {
+          hint.classList.remove("hidden");
+        }
+      }
+
+      // Hide chatbot if user clicks outside of chatbot container and launcher
+      document.addEventListener("click", function(event) {
+        const container = document.getElementById("azhizen-chat-container");
+        const launcher = document.getElementById("azhizen-chat-launcher");
+        const hint = document.getElementById("azhizen-chat-hint");
+        
+        if (container && launcher && container.classList.contains("active")) {
+          if (!container.contains(event.target) && !launcher.contains(event.target) && !hint.contains(event.target)) {
+            container.classList.remove("active");
+            hint.classList.remove("hidden");
+          }
+        }
+      });
+
+      // Typewriter Animation for Chat Hint
+      const HINT_MESSAGES = [
+        "Hi! How can I help you? 👋",
+        "Ask about our smart IoT! ⚡",
+        "Have a project idea? Ask here! 💡",
+        "Learn about Azhizen Academy! 🎓"
+      ];
+      let msgIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      const typingSpeed = 80;
+      const deletingSpeed = 40;
+      const pauseDuration = 2000;
+
+      function typeHintText() {
+        const textSpan = document.getElementById("azhizen-chat-hint-text");
+        if (!textSpan) return;
+
+        const currentMessage = HINT_MESSAGES[msgIndex];
+        
+        if (isDeleting) {
+          textSpan.innerHTML = currentMessage.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          textSpan.innerHTML = currentMessage.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let delay = isDeleting ? deletingSpeed : typingSpeed;
+
+        if (!isDeleting && charIndex === currentMessage.length) {
+          isDeleting = true;
+          delay = pauseDuration;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          msgIndex = (msgIndex + 1) % HINT_MESSAGES.length;
+          delay = 500;
+        }
+
+        setTimeout(typeHintText, delay);
+      }
+
+      const AZHIZEN_QAS = {
+        company: {
+          reply: "Azhizen Solutions is a product-driven technology company engineering custom software, hardware, and IoT systems to solve real-world challenges with precision. We are dedicated to bridging the academic gap through Azhizen Academy and building next-generation digital solutions.",
+          suggestions: [
+            { key: "services", label: "Our Services" },
+            { key: "courses", label: "Academy & Training" },
+            { key: "careers", label: "Open Careers" }
+          ]
+        },
+        services: {
+          reply: "We design and build complete end-to-end technology stacks:\n\n• <b>Custom Hardware Design</b>: Embedded systems schematics, multilayer PCB layout, and industrial prototyping.\n• <b>AI/ML & Firmware Integration</b>: Microcontroller logic (STM32, ESP32, Arduino), DSP, and edge computer vision.\n• <b>IoT & Smart Automation</b>: Secure sensor telemetry, cloud database dashboards, and remote controls.\n• <b>Marketing Services</b>: Strategic branding, search engine optimization (SEO), and digital analytics.",
+          suggestions: [
+            { key: "contact", label: "Contact Info" },
+            { key: "location", label: "Office Location" },
+            { key: "careers", label: "Open Careers" }
+          ]
+        },
+        contact: {
+          reply: "You can easily reach our team of engineers and consultants:\n\n• <b>Phone/WhatsApp</b>: <a href='tel:+919750603988'>+91 9750603988</a>\n• <b>Email</b>: <a href='mailto:azhizensolutions@gmail.com'>azhizensolutions@gmail.com</a>\n• <b>Office Address</b>: R-NO:309, Mercury Block, KSRCE, Tiruchengode, Namakkal, Tamil Nadu.\n\nOr submit a consultation query on our contact page.",
+          suggestions: [
+            { key: "location", label: "Office Location" },
+            { key: "services", label: "Our Services" },
+            { key: "courses", label: "Academy & Training" }
+          ]
+        },
+        courses: {
+          reply: "Through <b>Azhizen Academy</b>, we offer hands-on engineering training and labs:\n\n• <b>Core Electronics</b>: PCB design, schematic reading, and hardware debugging.\n• <b>Embedded Systems</b>: Firmware programming, sensor protocols, and IoT nodes.\n• <b>Software Development</b>: Full stack programming, React, and mobile app design.\n\nAll courses include dedicated placement assistance and mentorship from working professionals.",
+          suggestions: [
+            { key: "careers", label: "Open Careers" },
+            { key: "contact", label: "Contact Info" },
+            { key: "services", label: "Our Services" }
+          ]
+        },
+        location: {
+          reply: "Our main laboratory and corporate office is located inside the college campus:\n\n<b>R-NO: 309, Mercury Block</b>\nK.S.R. College of Engineering (KSRCE) Campus,\nTiruchengode, Namakkal,\nTamil Nadu - 637215, India.\n\nVisitors are welcome by appointment!",
+          suggestions: [
+            { key: "contact", label: "Contact Info" },
+            { key: "services", label: "Our Services" }
+          ]
+        },
+        careers: {
+          reply: "Azhizen is always looking for innovators! Current openings at our Tiruchengode office:\n\n• <b>Full Stack Developer</b> (React, Node.js)\n• <b>IoT & Embedded Engineer</b> (PCB Design, Firmware)\n• <b>UI/UX Designer</b> (Figma, Prototyping)\n• <b>Data Scientist / ML Intern</b>\n\nCandidates can apply directly on our Careers page or email resumes to <a href='mailto:azhizensolutions@gmail.com'>azhizensolutions@gmail.com</a>.",
+          suggestions: [
+            { key: "contact", label: "Contact Info" },
+            { key: "services", label: "Our Services" },
+            { key: "courses", label: "Academy & Training" }
+          ]
+        },
+        default: {
+          reply: "I want to make sure I give you the best information. I can assist you with:\n\n• Details about our <b>Company</b> and <b>Services</b>\n• Contact details and <b>Office Location</b>\n• Azhizen <b>Academy</b> courses and engineering training\n• Open <b>Careers</b> and job applications\n\nWhat would you like to explore next?",
+          suggestions: [
+            { key: "company", label: "About the Company" },
+            { key: "services", label: "Our Services" },
+            { key: "contact", label: "Contact Info" }
+          ]
+        }
+      };
+
+      function showBotTypingIndicator() {
+        const messagesBox = document.getElementById("azhizen-messages-box");
+        const typingRow = document.createElement("div");
+        typingRow.className = "azhizen-msg-row bot";
+        typingRow.id = "azhizen-temp-typing";
+        typingRow.innerHTML = `
+          <div class="azhizen-msg-bubble">
+            <div class="azhizen-typing-indicator">
+              <span class="azhizen-typing-dot"></span>
+              <span class="azhizen-typing-dot"></span>
+              <span class="azhizen-typing-dot"></span>
+            </div>
+          </div>
+        `;
+        messagesBox.appendChild(typingRow);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+      }
+
+      function hideBotTypingIndicator() {
+        const tempTyping = document.getElementById("azhizen-temp-typing");
+        if (tempTyping) tempTyping.remove();
+      }
+
+      function renderBotResponseWithSuggestions(replyText, suggestions) {
+        const messagesBox = document.getElementById("azhizen-messages-box");
+        
+        // Add Bot Message Bubble
+        const botRow = document.createElement("div");
+        botRow.className = "azhizen-msg-row bot";
+        botRow.innerHTML = `<div class="azhizen-msg-bubble">${replyText}</div>`;
+        messagesBox.appendChild(botRow);
+        
+        // Add Suggestions Row (if any)
+        if (suggestions && suggestions.length > 0) {
+          const suggestionsRow = document.createElement("div");
+          suggestionsRow.className = "azhizen-msg-row bot azhizen-dynamic-suggestions-row";
+          suggestionsRow.style.paddingLeft = "16px";
+          suggestionsRow.style.marginTop = "-6px";
+          suggestionsRow.style.marginBottom = "8px";
+          
+          let chipsHTML = `<div class="azhizen-quick-chips" style="gap: 6px; display: flex; flex-wrap: wrap;">`;
+          suggestions.forEach(item => {
+            chipsHTML += `
+              <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('${item.key}', '${escapeHTML(item.label)}')">
+                ${escapeHTML(item.label)}
+              </button>
+            `;
+          });
+          chipsHTML += `</div>`;
+          suggestionsRow.innerHTML = chipsHTML;
+          messagesBox.appendChild(suggestionsRow);
+        }
+        
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+      }
+
+      function handleDynamicSuggestionClick(key, label) {
+        // Disable previous dynamic suggestion chips to prevent repeated clicks
+        const rows = document.querySelectorAll(".azhizen-dynamic-suggestions-row");
+        rows.forEach(row => {
+          const buttons = row.querySelectorAll("button");
+          buttons.forEach(btn => btn.disabled = true);
+        });
+
+        // Add User Message Bubble
+        const messagesBox = document.getElementById("azhizen-messages-box");
+        const userRow = document.createElement("div");
+        userRow.className = "azhizen-msg-row user";
+        userRow.innerHTML = `<div class="azhizen-msg-bubble">${escapeHTML(label)}</div>`;
+        messagesBox.appendChild(userRow);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+
+        // Show Typing Indicator
+        showBotTypingIndicator();
+
+        // Process Answer
+        setTimeout(() => {
+          hideBotTypingIndicator();
+          const qa = AZHIZEN_QAS[key] || AZHIZEN_QAS.default;
+          renderBotResponseWithSuggestions(qa.reply, qa.suggestions);
+        }, 600);
+      }
+
+      function levenshteinDistance(a, b) {
+        const matrix = [];
+        for (let i = 0; i <= b.length; i++) {
+          matrix[i] = [i];
+        }
+        for (let j = 0; j <= a.length; j++) {
+          matrix[0][j] = j;
+        }
+        for (let i = 1; i <= b.length; i++) {
+          for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+              matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+              matrix[i][j] = Math.min(
+                matrix[i - 1][j - 1] + 1, // substitution
+                matrix[i][j - 1] + 1,     // insertion
+                matrix[i - 1][j] + 1      // deletion
+              );
+            }
+          }
+        }
+        return matrix[b.length][a.length];
+      }
+
+      function getQADataByQuery(text) {
+        const cleanText = text.toLowerCase().replace(/[^\w\s]/g, "").trim();
+        const words = cleanText.split(/\s+/).filter(w => w.length >= 3);
+        
+        // 1. Direct conversational replies
+        const greetings = ["hi", "hello", "hey", "hola", "greetings", "hii", "heyy", "yo"];
+        const greetsMatch = cleanText.split(/\s+/).some(w => greetings.includes(w)) || cleanText === "hi" || cleanText === "yo";
+        if (greetsMatch) {
+          return {
+            reply: "Hello! I am the Azhizen Assistant. How can I help you today? You can ask about our company, services, courses, or career opportunities!",
+            suggestions: [
+              { key: "company", label: "About the Company" },
+              { key: "services", label: "Our Services" },
+              { key: "contact", label: "Contact Info" }
+            ]
+          };
+        }
+        
+        const thanks = ["thanks", "thank", "ty", "awesome", "perfect", "good", "great"];
+        const thanksMatch = cleanText.split(/\s+/).some(w => thanks.includes(w));
+        if (thanksMatch) {
+          return {
+            reply: "You're very welcome! Let me know if there's anything else I can do for you.",
+            suggestions: [
+              { key: "services", label: "Our Services" },
+              { key: "careers", label: "Open Careers" }
+            ]
+          };
+        }
+
+        const goodbye = ["bye", "goodbye", "exit", "quit", "tata", "see ya"];
+        const goodbyeMatch = cleanText.split(/\s+/).some(w => goodbye.includes(w));
+        if (goodbyeMatch) {
+          return {
+            reply: "Goodbye! Thank you for chatting. Feel free to open this window again if you ever need help. Have a wonderful day!",
+            suggestions: [
+              { key: "company", label: "About the Company" },
+              { key: "contact", label: "Contact Info" }
+            ]
+          };
+        }
+
+        // 2. Fuzzy Keyword Matcher
+        const KEYWORD_MAP = {
+          company: ["company", "about", "azhizen", "who", "what", "profile", "mission", "vision"],
+          services: ["services", "hardware", "software", "pcb", "iot", "firmware", "automation", "design", "marketing"],
+          contact: ["contact", "phone", "number", "email", "whatsapp", "call", "support", "reach"],
+          courses: ["courses", "academy", "training", "learn", "classes", "placement", "skills"],
+          location: ["location", "address", "where", "office", "campus", "place", "namakkal", "tiruchengode"],
+          careers: ["careers", "jobs", "hiring", "apply", "developer", "designer", "intern", "openings"]
+        };
+
+        // Score map keys based on word matches
+        let scores = {
+          company: 0,
+          services: 0,
+          contact: 0,
+          courses: 0,
+          location: 0,
+          careers: 0
+        };
+
+        words.forEach(word => {
+          Object.keys(KEYWORD_MAP).forEach(key => {
+            const variants = KEYWORD_MAP[key];
+            variants.forEach(variant => {
+              if (word === variant) {
+                scores[key] += 3; // Exact match
+              } else {
+                const dist = levenshteinDistance(word, variant);
+                const maxLen = Math.max(word.length, variant.length);
+                if (dist <= 2 && (dist / maxLen) <= 0.35) {
+                  scores[key] += 2; // Fuzzy spelling match
+                }
+              }
+            });
+          });
+        });
+
+        // Find the key with the highest score
+        let bestKey = null;
+        let maxScore = 0;
+        Object.keys(scores).forEach(key => {
+          if (scores[key] > maxScore) {
+            maxScore = scores[key];
+            bestKey = key;
+          }
+        });
+
+        if (bestKey && maxScore >= 2) {
+          return AZHIZEN_QAS[bestKey];
+        }
+
+        // Fallback simple substring matches
+        const query = cleanText;
+        if (query.includes("serv") || query.includes("pcb") || query.includes("iot")) return AZHIZEN_QAS.services;
+        if (query.includes("job") || query.includes("work")) return AZHIZEN_QAS.careers;
+        if (query.includes("course") || query.includes("class")) return AZHIZEN_QAS.courses;
+        if (query.includes("call") || query.includes("mail")) return AZHIZEN_QAS.contact;
+
+        return AZHIZEN_QAS.default;
+      }
+
+      function sendAzhizenUserMessage(text) {
+        if (!text || text.trim() === "") return;
+        
+        const messagesBox = document.getElementById("azhizen-messages-box");
+        
+        // Add User Message Bubble
+        const userRow = document.createElement("div");
+        userRow.className = "azhizen-msg-row user";
+        userRow.innerHTML = `<div class="azhizen-msg-bubble">${escapeHTML(text)}</div>`;
+        messagesBox.appendChild(userRow);
+        
+        // Auto Scroll
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+        
+        // Disable previous dynamic suggestion chips
+        const rows = document.querySelectorAll(".azhizen-dynamic-suggestions-row");
+        rows.forEach(row => {
+          const buttons = row.querySelectorAll("button");
+          buttons.forEach(btn => btn.disabled = true);
+        });
+
+        // Show Typing Indicator
+        showBotTypingIndicator();
+        
+        // Process Answer
+        setTimeout(() => {
+          hideBotTypingIndicator();
+          const qa = getQADataByQuery(text);
+          renderBotResponseWithSuggestions(qa.reply, qa.suggestions);
+        }, 650);
+      }
+
+      function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+          tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+          }[tag] || tag)
+        );
+      }
+
+      // Add submit listener and start typewriter
+      window.addEventListener("load", () => {
+        const form = document.getElementById("azhizen-chat-form");
+        const input = document.getElementById("azhizen-chat-input-field");
+        
+        if (form && input) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const text = input.value;
+            sendAzhizenUserMessage(text);
+            input.value = "";
+          });
+        }
+
+        setTimeout(typeHintText, 1500);
+      });
     </script>
   </body>
 </html>

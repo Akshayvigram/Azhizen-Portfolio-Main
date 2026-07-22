@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Distinct Logos ── */
 const LOGOS = [
@@ -20,7 +21,7 @@ const Stars = ({ count = 5 }) => (
         key={i}
         style={{
           color: "#FF8A00",
-          fontSize: "28px",
+          fontSize: "30px",
           lineHeight: 1,
         }}
       >
@@ -30,13 +31,69 @@ const Stars = ({ count = 5 }) => (
   </div>
 );
 
+const REVIEWS = [
+  {
+    id: 1,
+    name: "Alexander",
+    title: "Coo, Nexa Solutions.",
+    stars: 5,
+    text: "“The Level Of Professionalism And Commitment Shown By Azhizen Is Outstanding. From Planning To Execution, Everything Was Handled Seamlessly.”",
+    image: "/What our Clients say.webp"
+  },
+  {
+    id: 2,
+    name: "Priya Sharma",
+    title: "Lead R&D, BioTech Solutions.",
+    stars: 5,
+    text: "“Azhizen delivered advanced biomedical prototyping with extreme accuracy. Their firmware integration and technical guidance were crucial to our project's success.”",
+    image: "/client_priya_sharma.png"
+  },
+  {
+    id: 3,
+    name: "Marcus",
+    title: "Director, Apex Academy.",
+    stars: 5,
+    text: "“The cohort programs at Azhizen Academy are incredibly well-structured. We bridge the academic gap and create highly skilled, placement-ready engineers.”",
+    image: "/client_marcus.png"
+  },
+  {
+    id: 4,
+    name: "Emily Watson",
+    title: "Founder, AgroAutomation.",
+    stars: 5,
+    text: "“EaseMilker's smart automated system was refined and brought to production thanks to Azhizen's outstanding IoT and hardware prototyping capabilities.”",
+    image: "/client_emily_watson.png"
+  },
+  {
+    id: 5,
+    name: "David K.",
+    title: "Creative Head, Vanguard Media.",
+    stars: 5,
+    text: "“From creative storytelling to professional digital branding, Azhizen Media translates complex technical ideas into highly engaging business stories.”",
+    image: "/client_david_k.png"
+  }
+];
+
 const ClientsSection = () => {
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % REVIEWS.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
+  };
 
   return (
-    <section style={{ background: "#fff", padding: "72px 0 0" }}>
-      {/* ── Heading ── */}
-      <div
+    <section style={{ background: "#fff", padding: "36px 0 0" }}>
+      {/* ── Heading for Testimonials ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         style={{
           textAlign: "center",
           marginBottom: "40px",
@@ -46,7 +103,7 @@ const ClientsSection = () => {
         <h2
           style={{
             fontSize: "clamp(28px, 6vw, 40px)",
-            fontWeight: "800",
+            fontWeight: "600",
             color: "#111827",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",
@@ -60,30 +117,81 @@ const ClientsSection = () => {
             color: "#6B7280",
             fontSize: "15px",
             fontFamily: "Poppins, sans-serif",
+            margin: "0",
           }}
         >
           The Feedback And Reviews That Are Said By The Clients And Customer
         </p>
-      </div>
+      </motion.div>
 
-      {/* ── Testimonial card ── */}
-      <div
+      {/* ── Testimonial Slider Row ── */}
+      <motion.div 
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="slider-container"
         style={{
-          maxWidth: "960px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "24px",
+          maxWidth: "1160px",
           margin: "0 auto",
-          padding: "0 20px",
+          padding: "0 20px 56px",
         }}
       >
-        <div
+        {/* Left Arrow Button */}
+        <motion.button
+          onClick={prevSlide}
+          whileHover={{ 
+            scale: 1.1,
+            backgroundColor: "#111827",
+            borderColor: "#111827",
+            color: "#ffffff",
+            boxShadow: "0 6px 16px rgba(17, 24, 39, 0.25)"
+          }}
+          whileTap={{ scale: 0.95 }}
+          className="arrow-btn"
           style={{
-            position: "relative",
-            borderRadius: "6px",
-            overflow: "hidden",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-            background: "#E8F0FE",
+            width: "48px",
+            height: "48px",
+            borderRadius: "50%",
+            border: "2px solid #475569",
+            backgroundColor: "#ffffff",
+            color: "#475569",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            outline: "none",
+            flexShrink: 0,
           }}
         >
-          {/* Background */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </motion.button>
+
+        {/* Testimonial Card */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.4 }}
+            style={{
+              flex: 1,
+              position: "relative",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+              background: "#E8F0FE",
+              maxWidth: "980px",
+            }}
+          >
+          {/* Background image */}
           <img
             src="/background.png"
             alt=""
@@ -94,6 +202,7 @@ const ClientsSection = () => {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: "center 30%",
               zIndex: 0,
             }}
           />
@@ -106,29 +215,29 @@ const ClientsSection = () => {
               display: "flex",
               flexWrap: "wrap",
               alignItems: "center",
-              gap: "32px",
-              padding: "24px",
+              gap: "40px",
+              padding: "42px 40px",
             }}
           >
             {/* Left photo */}
             <div
               style={{
-                flex: "1 1 320px",
-                minWidth: "260px",
-                maxWidth: "360px",
-                margin: "0 auto",
+                flex: "1 1 290px",
+                minWidth: "250px",
+                maxWidth: "290px",
+                margin: "0",
               }}
             >
               <img
-                src="/What our Clients say.png"
-                alt="Gladson — client"
+                src={REVIEWS[activeIndex].image}
+                alt={REVIEWS[activeIndex].name}
                 style={{
                   width: "100%",
-                  height: "100%",
+                  height: "260px",
                   objectFit: "cover",
                   display: "block",
-                  borderRadius: "6px",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
                 }}
               />
             </div>
@@ -138,75 +247,137 @@ const ClientsSection = () => {
               style={{
                 flex: "1 1 320px",
                 minWidth: "260px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "center",
               }}
             >
-              <Stars count={5} />
+              <Stars count={REVIEWS[activeIndex].stars} />
 
               <p
                 style={{
-                  color: "#1877F2",
-                  fontWeight: "700",
-                  fontSize: "clamp(26px, 5vw, 32px)",
-                  marginBottom: "16px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                Gladson
-              </p>
-
-              <p
-                style={{
-                  color: "#111827",
-                  fontSize: "clamp(15px, 3vw, 20px)",
+                  color: "#1e293b",
+                  fontSize: "clamp(14.5px, 2vw, 16px)",
                   lineHeight: "1.7",
-                  marginBottom: "28px",
+                  marginBottom: "20px",
                   fontStyle: "normal",
                   fontFamily: "Poppins, sans-serif",
                   fontWeight: "500",
+                  textAlign: "left",
                 }}
               >
-                “The Level Of Professionalism And Commitment Shown By Azhizen
-                Is Outstanding. From Planning To Execution, Everything Was
-                Handled Seamlessly.”
+                {REVIEWS[activeIndex].text}
               </p>
 
-              <button
-                onClick={() => navigate("/about")}
+              {/* Name Block with thick left black border */}
+              <div
                 style={{
-                  background: "#F97316",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "2px",
-                  padding: "12px 32px",
-                  fontSize: "18px",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                  transition: "background 0.2s",
-                  letterSpacing: "0.02em",
-                  fontFamily: "Poppins, sans-serif",
+                  borderLeft: "8px solid #000000",
+                  paddingLeft: "16px",
+                  textAlign: "left",
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#EA580C")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "#F97316")
-                }
               >
-                Learn About Us
-              </button>
+                <p
+                  style={{
+                    color: "#1877F2",
+                    fontWeight: "800",
+                    fontSize: "22px",
+                    fontFamily: "Poppins, sans-serif",
+                    margin: "0 0 2px 0",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {REVIEWS[activeIndex].name}
+                </p>
+                <p
+                  style={{
+                    color: "#475569",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    fontFamily: "Poppins, sans-serif",
+                    margin: 0,
+                  }}
+                >
+                  {REVIEWS[activeIndex].title}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Right Arrow Button */}
+      <motion.button
+        onClick={nextSlide}
+        whileHover={{ 
+          scale: 1.1,
+          backgroundColor: "#111827",
+          borderColor: "#111827",
+          color: "#ffffff",
+          boxShadow: "0 6px 16px rgba(17, 24, 39, 0.25)"
+        }}
+        whileTap={{ scale: 0.95 }}
+        className="arrow-btn"
+        style={{
+          width: "48px",
+          height: "48px",
+          borderRadius: "50%",
+          border: "2px solid #475569",
+          backgroundColor: "#ffffff",
+          color: "#475569",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          outline: "none",
+          flexShrink: 0,
+        }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </motion.button>
+    </motion.div>
+
+      {/* ── Heading for Partners ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        style={{
+          textAlign: "center",
+          marginBottom: "36px",
+          marginTop: "48px",
+          padding: "0 20px",
+        }}
+      >
+        <h3
+          style={{
+            fontSize: "clamp(28px, 5vw, 38px)",
+            fontWeight: "600",
+            color: "#111827",
+            fontFamily: "Poppins, sans-serif",
+            marginBottom: "0px",
+          }}
+        >
+          Our <span style={{ color: "#1877F2" }}>Partners</span>
+        </h3>
+      </motion.div>
 
       {/* ── Marquee Logos ── */}
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
         style={{
-          marginTop: "52px",
-          borderTop: "1px solid #E5E7EB",
-          padding: "40px 0",
-          background: "#fff",
+          padding: "24px 0",
+          background: "#f8fafc",
           overflow: "hidden",
+          borderTop: "1px solid #f1f5f9",
+          borderBottom: "1px solid #f1f5f9",
         }}
       >
         <div
@@ -234,7 +405,7 @@ const ClientsSection = () => {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <style>{`
         @keyframes ticker-scroll {

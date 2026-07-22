@@ -1,39 +1,21 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 /* ─── Icons ──────────────────────────────────────────────── */
 const AwardIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="36" height="36" rx="8" fill="#EFF6FF" />
-    <path
-      d="M18 8L20.5 14.5H27L22 18.5L24 25L18 21L12 25L14 18.5L9 14.5H15.5L18 8Z"
-      stroke="#1877F2"
-      strokeWidth="1.8"
-      strokeLinejoin="round"
-      fill="none"
-    />
-    <rect x="14" y="25" width="8" height="2" rx="1" fill="#1877F2" />
-    <rect x="16" y="27" width="4" height="2" rx="1" fill="#1877F2" />
-  </svg>
+  <img 
+    src="/streamline-pixel_social-rewards-certified-diploma (1).png" 
+    alt="Award Ceremony" 
+    className="w-9 h-9 object-contain"
+  />
 );
 
 const CertifiedIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="36" height="36" rx="8" fill="#EFF6FF" />
-    <circle cx="18" cy="17" r="8" stroke="#1877F2" strokeWidth="1.8" fill="none" />
-    <path
-      d="M14 17L17 20L22 14"
-      stroke="#1877F2"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M13 23L11 27M23 23L25 27"
-      stroke="#1877F2"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    />
-  </svg>
+  <img 
+    src="/streamline-ultimate_award-medal-4-bold.png" 
+    alt="Certified Company" 
+    className="w-9 h-9 object-contain"
+  />
 );
 
 /* ─── About Us Page ───────────────────────────────────────── */
@@ -82,20 +64,28 @@ const Aboutus = () => {
           className="
             relative
             z-[1]
-            max-w-[1180px]
+            max-w-7xl
             mx-auto
-            px-5
-            md:px-10
+            px-6
+            lg:px-8
+            w-full
             flex
             flex-col
             lg:flex-row
             items-center
-            gap-[70px]
+            justify-center
+            gap-12
+            lg:gap-32
+            xl:gap-36
           "
         >
 
           {/* ── LEFT: Image Section ── */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="
               relative
               w-full
@@ -106,7 +96,7 @@ const Aboutus = () => {
 
             {/* Main image */}
             <img
-              src="/image 649.png"
+              src="/image 649.webp"
               alt="Azhizen Team"
               className="
                 w-full
@@ -144,28 +134,17 @@ const Aboutus = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/* ── RIGHT: Content ── */}
-          <div className="flex-1 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex-1 w-full"
+          >
 
-            {/* Badge */}
-            <span
-              className="
-                inline-block
-                bg-[#1877F2]
-                text-white
-                text-[13px]
-                font-semibold
-                px-[14px]
-                py-[4px]
-                rounded-[4px]
-                mb-[18px]
-                tracking-[0.02em]
-              "
-            >
-              About us
-            </span>
 
             {/* Heading */}
             <h1
@@ -179,19 +158,19 @@ const Aboutus = () => {
                 mb-4
               "
             >
-              Scaling{" "}
+              Why you{" "}
               <span className="text-[#1877F2]">
-                Engineering Teams
+                choose us?
               </span>
-              <br />
-              for Growing IT Companies
             </h1>
 
             {/* Subtext */}
             <p
               className="
                 text-[#4B5563]
-                text-[15px]
+                text-sm
+                lg:text-base
+                2xl:text-lg
                 leading-[1.75]
                 mb-[22px]
                 max-w-[100%]
@@ -225,7 +204,9 @@ const Aboutus = () => {
                     items-center
                     gap-[10px]
                     text-[#374151]
-                    text-[15px]
+                    text-sm
+                    lg:text-base
+                    2xl:text-lg
                   "
                 >
                   <span
@@ -243,7 +224,14 @@ const Aboutus = () => {
             </ul>
 
             {/* Feature cards */}
-            <div
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.15 } }
+              }}
               className="
                 flex
                 flex-col
@@ -254,7 +242,11 @@ const Aboutus = () => {
             >
 
               {/* Award Ceremony */}
-              <div
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
                 className="
                   flex
                   gap-3
@@ -289,10 +281,14 @@ const Aboutus = () => {
                     It Service
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Certified Company */}
-              <div
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
                 className="
                   flex
                   gap-3
@@ -326,10 +322,10 @@ const Aboutus = () => {
                     Trusted and Certified for delivering quality IT Solutions.
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
         </div>
       </section>

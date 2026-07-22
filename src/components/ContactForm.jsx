@@ -1,191 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { db, realtimeDb } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, push, set } from 'firebase/database';
+import { motion } from 'framer-motion';
 import FooterSection from './FooterSection';
 import Navbar from './Navbar';
 
-const NAV_LINKS = [
-  { name: 'Home',     path: '/' },
-  { name: 'Service',  path: '/', scrollTo: 'services' },
-  { name: 'Course',   path: '/course' },
-  { name: 'About us', path: '/', scrollTo: 'about-us' },
-  { name: 'Contact',  path: '/contact-us' },
-  { name: 'Career',   path: '/carrer' },
-];
 
-function ContactNavbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  const handleNavClick = ({ path, scrollTo }) => {
-    setIsOpen(false);
-    if (scrollTo) {
-      navigate('/');
-      setTimeout(() => {
-        const el = document.getElementById(scrollTo);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 350);
-    } else {
-      navigate(path);
-    }
-  };
-
-  return (
-    <>
-      {/* ── Desktop Navbar ── */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 20,
-          height: '64px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 40px',
-          maxWidth: '1280px',
-          margin: '0 auto',
-          width: '100%',
-          //left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-        className="cn-desktop-bar"
-      >
-        {/* Logo */}
-        <a
-          href="/"
-          onClick={(e) => { e.preventDefault(); navigate('/'); }}
-          style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}
-        >
-          <img
-            src="/logo1.png"
-            alt="Azhizen"
-            style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
-          />
-        </a>
-
-        {/* Nav Links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="cn-links">
-          {NAV_LINKS.map(({ name, path, scrollTo }) => {
-            const active = !scrollTo && currentPath === path;
-            return (
-              <button
-                key={name}
-                onClick={() => handleNavClick({ path, scrollTo })}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '4px 0',
-                  fontSize: '15px',
-                  fontWeight: active ? '700' : '400',
-                  color: active ? '#1877F2' : 'rgba(255,255,255,0.92)',
-                  letterSpacing: '0.01em',
-                  transition: 'color 0.2s',
-                  fontFamily: 'inherit',
-                  position: 'relative',
-                }}
-                onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = '#ffffff'; }}
-                onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.92)'; }}
-              >
-                {name}
-                {active && (
-                  <span style={{
-                    position: 'absolute', bottom: '-2px', left: '50%',
-                    transform: 'translateX(-50%)', width: '100%',
-                    height: '2px', borderRadius: '2px', background: '#1877F2',
-                  }} />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Switch to Diary Tech — solid blue matching global navbar */}
-        <a
-          href="https://diarytech.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cn-switch"
-          style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
-            background: 'linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)',
-            color: '#ffffff',
-            fontSize: '13px', fontWeight: '600',
-            padding: '8px 16px', borderRadius: '50px',
-            textDecoration: 'none', whiteSpace: 'nowrap',
-            boxShadow: '0 3px 10px rgba(24,119,242,0.45)',
-            transition: 'filter 0.2s, transform 0.15s',
-            letterSpacing: '0.01em',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.transform = 'scale(1.03)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.transform = 'scale(1)'; }}
-        >
-          Switch to Diary Tech
-          <span style={{ fontSize: '16px', lineHeight: 1, fontWeight: '700' }}>⇄</span>
-        </a>
-
-        {/* Mobile hamburger */}
-        <button
-          className="cn-hamburger"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
-          style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: '#fff' }}
-        >
-          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            {isOpen
-              ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
-              : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>}
-          </svg>
-        </button>
-      </div>
-
-      {/* ── Mobile Dropdown ── */}
-      {isOpen && (
-        <div style={{
-          position: 'absolute', top: '64px', left: 0, right: 0, zIndex: 30,
-          background: 'rgba(5,15,40,0.97)',
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          padding: '12px 24px 20px',
-        }}>
-          {NAV_LINKS.map(({ name, path, scrollTo }) => (
-            <button
-              key={name}
-              onClick={() => handleNavClick({ path, scrollTo })}
-              style={{
-                display: 'block', width: '100%', textAlign: 'left',
-                background: 'none', border: 'none', cursor: 'pointer',
-                padding: '10px 0', fontSize: '15px',
-                color: !scrollTo && currentPath === path ? '#1877F2' : 'rgba(255,255,255,0.88)',
-                borderBottom: '1px solid rgba(255,255,255,0.08)',
-                fontFamily: 'inherit',
-              }}
-            >
-              {name}
-            </button>
-          ))}
-        </div>
-      )}
-
-      <style>{`
-        @media (max-width: 768px) {
-          .cn-links    { display: none !important; }
-          .cn-switch   { display: none !important; }
-          .cn-hamburger { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .cn-hamburger { display: none !important; }
-        }
-      `}</style>
-    </>
-  );
-}
 
 const socialLinks = [
   {
@@ -218,6 +39,20 @@ const socialLinks = [
 ];
 
 function ContactForm() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -266,7 +101,7 @@ function ContactForm() {
 
           {/* Full-cover banner photo */}
           <img
-            src="/image 476.png"
+            src="/image 476.webp"
             alt="Contact banner"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -281,7 +116,6 @@ function ContactForm() {
           />
 
           {/* ── NAVBAR sits over the photo ── */}
-          {/* <ContactNavbar /> */}
           <Navbar />
 
           {/* White diagonal cut at bottom */}
@@ -298,7 +132,10 @@ function ContactForm() {
         {/* ═══════════════════════════════════
             FLOATING CARD
         ═══════════════════════════════════ */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 mx-auto px-4 pb-20 w-full"
           style={{ maxWidth: '1160px', marginTop: '-280px' }}
         >
@@ -468,8 +305,13 @@ function ContactForm() {
                 Whether you have a question, enquiry, or project idea, our team is ready to assist you.
               </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
+              <motion.div 
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-6"
+              >
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -482,9 +324,9 @@ function ContactForm() {
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Head Office</h4>
                     <p className="text-sm text-gray-500 leading-relaxed">Tiruchengode, Namakkal,<br />Tamil Nadu.</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -495,11 +337,15 @@ function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Email Us</h4>
-                    <p className="text-sm text-gray-500">Azhizen@Azhizen.Com</p>
+                    <p className="text-sm text-gray-500">
+                      <a href="mailto:azhizensolutions@gmail.com" className="hover:underline">
+                        azhizensolutions@gmail.com
+                      </a>
+                    </p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
+                <motion.div variants={itemVariants} className="flex items-start gap-4">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: '#1877F2', boxShadow: '0 4px 14px rgba(24,119,242,0.35)' }}
@@ -510,12 +356,21 @@ function ContactForm() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-black text-[15px] mb-0.5">Call Us</h4>
-                    <p className="text-sm text-gray-500">Phone: +91 9685741230</p>
+                    <p className="text-sm text-gray-500">
+                      <a href="tel:+919750603988" className="hover:underline">
+                        Phone: +91 9750603988
+                      </a>
+                    </p>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="mt-8 pt-6 border-t border-gray-200"
+              >
                 <h4 className="font-semibold text-sm text-black mb-4">Follow Our Social Media</h4>
                 <div className="flex gap-3">
                   {socialLinks.map((social) => (
@@ -531,11 +386,11 @@ function ContactForm() {
                     </a>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ═══════════════════════════════════
@@ -544,10 +399,12 @@ function ContactForm() {
       <section className="w-full">
         <div className="w-full" style={{ height: '480px' }}>
           <iframe
-            src="https://www.google.com/maps?q=319%20Mercury%20Block%20KSRCE%20Neo%20Tiruchengode%20637215&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3911.6738395570555!2d77.82916837509707!3d11.358516788827906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba965003111cd9d%3A0xade9181c8a953dcf!2sAzhizen%20Solutions!5e0!3m2!1sen!2sin!4v1782457656042!5m2!1sen!2sin"
             className="w-full h-full border-0"
             loading="lazy"
             title="Azhizen Location Map"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
           />
         </div>
       </section>
