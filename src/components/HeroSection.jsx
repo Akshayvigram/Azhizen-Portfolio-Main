@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { db } from './firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import '../App.css';
@@ -12,6 +12,163 @@ const HeroSection = () => {
 
   const handleCareerClick = () => {
     window.location.href = "/carrer";
+  };
+
+  const banners = [
+    {
+      id: 1,
+      bg: "/Frame 1598.png",
+      tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
+      taglineColor: "#8592A6",
+      titleContent: (
+        <div className="mb-2">
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold text-[#030A24] leading-[1.08] tracking-tight"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+          >
+            Building
+          </h1>
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1877F2" }}
+          >
+            Intelligent Solutions
+          </h1>
+          <h2 
+            className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-[#030A24] leading-[1.2] tracking-tight mt-2.5 whitespace-nowrap"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
+          >
+            for a Smarter Tomorrow
+          </h2>
+          <div className="w-20 sm:w-22 lg:w-[90px] h-[5px] rounded-full mt-2.5 mb-7" style={{ backgroundColor: "#1877F2" }}></div>
+        </div>
+      ),
+      subtitle: (
+        <>
+          We design, develop and deliver high-performance software and <br className="hidden sm:inline" />
+          reliable hardware solutions that drive your business forward
+        </>
+      ),
+      buttonText: "Enquire now",
+      buttonBg: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)",
+      buttonShadow: "rgba(24, 119, 242, 0.35)",
+    },
+    {
+      id: 2,
+      bg: "/Frame 1595.png",
+      tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
+      taglineColor: "#8592A6",
+      titleContent: (
+        <div className="mb-4">
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold text-[#030A24] leading-[1.08] tracking-tight"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+          >
+            Technology that works
+          </h1>
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+          >
+            <span style={{ color: "#030A24" }}>with nature. </span>
+            <span style={{ color: "#719E37" }}>Automate.</span>
+          </h1>
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#719E37" }}
+          >
+            Optimize. Grow.
+          </h1>
+        </div>
+      ),
+      subtitle: (
+        <>
+          Complete farm automation and <br className="hidden sm:inline" />
+          construction solutions for a better <br className="hidden sm:inline" />
+          tomorrow.
+        </>
+      ),
+      buttonText: "Enquire now",
+      buttonBg: "linear-gradient(135deg, #719E37 0%, #5B8C2A 100%)",
+      buttonShadow: "rgba(113, 158, 55, 0.35)",
+    },
+    {
+      id: 3,
+      bg: "/Frame 1596 (1).png",
+      tagline: "",
+      taglineColor: "transparent",
+      titleContent: null,
+      subtitle: null,
+      buttonText: null,
+    },
+    {
+      id: 4,
+      bg: "/Frame 1597.png",
+      tagline: "bright your future with azhizen academy",
+      taglineColor: "#8A9CC0",
+      titleContent: (
+        <div className="mb-4">
+          <h2
+            className="text-lg sm:text-xl lg:text-2xl xl:text-[26px] font-semibold tracking-wide uppercase"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
+          >
+            SHAPE YOUR FUTURE
+          </h2>
+          <h1
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.05] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
+          >
+            LEARN TODAY
+          </h1>
+          <h1
+            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.05] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
+          >
+            LEAD TOMORROW
+          </h1>
+        </div>
+      ),
+      subtitle: (
+        <>
+          Industry-focused courses to build skills, boost <br className="hidden sm:inline" />
+          knowledge and accelerate your career
+        </>
+      ),
+      buttonText: "Enquire now",
+      buttonBg: "linear-gradient(135deg, #F5A500 0%, #E08C00 100%)",
+      buttonShadow: "rgba(245, 165, 0, 0.40)",
+    }
+  ];
+
+  const [[page, direction], setPage] = useState([0, 0]);
+  const slideIndex = Math.abs(page % banners.length);
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      paginate(1);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [page]);
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? '100%' : '-100%',
+      opacity: 0,
+    }),
   };
 
   const [selected, setSelected] = useState('');
@@ -69,6 +226,123 @@ const HeroSection = () => {
 
   return (
     <div className="bg-white w-full overflow-x-hidden">
+      {/* Top Banner Carousel Section */}
+      <div className="w-full relative overflow-hidden bg-white">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={page}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.3 }
+            }}
+            className="w-full bg-no-repeat relative flex items-center"
+            style={{ 
+              backgroundImage: `url('${banners[slideIndex].bg}')`,
+              backgroundSize: "100% 100%",
+              backgroundPosition: "center",
+              aspectRatio: "1440 / 620",
+              minHeight: "220px",
+            }}
+          >
+            <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-6 sm:py-8">
+              {banners[slideIndex].titleContent && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                  className="max-w-xl lg:max-w-3xl text-left font-poppins"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  <p 
+                    className="font-medium text-xs sm:text-sm tracking-[0.15em] uppercase mb-4"
+                    style={{ fontFamily: "Poppins, sans-serif", color: banners[slideIndex].taglineColor }}
+                  >
+                    {banners[slideIndex].tagline}
+                  </p>
+
+                  {banners[slideIndex].titleContent}
+
+                  <p 
+                    className="text-[#1E293B] text-sm sm:text-base lg:text-[18px] max-w-xl lg:max-w-2xl mb-8 leading-[1.65] font-normal"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    {banners[slideIndex].subtitle}
+                  </p>
+
+                  {banners[slideIndex].buttonText && (
+                    <motion.button
+                      whileHover={{ 
+                        scale: 1.05, 
+                        boxShadow: `0 10px 20px ${banners[slideIndex].buttonShadow}`,
+                        filter: "brightness(1.08)"
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                      className="text-white font-semibold px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-sm sm:text-base cursor-pointer border-none transition-all shadow-md"
+                      style={{ 
+                        background: banners[slideIndex].buttonBg,
+                        fontFamily: "Poppins, sans-serif" 
+                      }}
+                      onClick={handleContactClick}
+                    >
+                      {banners[slideIndex].buttonText}
+                    </motion.button>
+                  )}
+                </motion.div>
+              )}
+              {banners[slideIndex].id === 3 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="absolute bottom-20 sm:bottom-24 lg:bottom-28 right-8 sm:right-16 lg:right-28 z-10 flex flex-col items-end"
+                >
+                  <span 
+                    className="text-black font-bold text-sm sm:text-base lg:text-lg mb-2 tracking-tight"
+                    style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#000000" }}
+                  >
+                    Azhizen Media
+                  </span>
+                  <motion.a
+                    href="tel:9874563210"
+                    whileHover={{ 
+                      scale: 1.05, 
+                      boxShadow: "0 10px 20px rgba(229, 57, 0, 0.4)",
+                      filter: "brightness(1.08)"
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    className="bg-[#E53900] text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm lg:text-base no-underline shadow-md inline-block cursor-pointer transition-all border-none"
+                    style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#E53900" }}
+                  >
+                    Call now: 9874563210
+                  </motion.a>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Floating Dots Navigator — no background capsule */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center space-x-2.5">
+          {banners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setPage([index, index > slideIndex ? 1 : -1])}
+              className={`transition-all duration-300 border-none cursor-pointer ${
+                slideIndex === index
+                  ? 'w-8 sm:w-9 h-3 rounded-full bg-[#1E293B]'
+                  : 'w-3 h-3 rounded-full bg-[#1E293B]/40 hover:bg-[#1E293B]/70'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* Mobile View */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -132,39 +406,7 @@ const HeroSection = () => {
               Step in, stand out, and shape the future with us.
             </motion.p>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-              className="flex space-x-4"
-            >
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 20px rgba(24, 119, 242, 0.35)",
-                  filter: "brightness(1.08)"
-                }}
-                whileTap={{ scale: 0.97 }}
-                className="text-white px-4 sm:px-5 lg:px-6 2xl:px-8 py-2 sm:py-2.5 lg:py-3 2xl:py-4 rounded-full w-28 sm:w-32 lg:w-40 2xl:w-48 text-xs sm:text-sm lg:text-base 2xl:text-lg cursor-pointer border-none transition-shadow"
-                style={{ background: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)" }}
-                onClick={handleContactClick}
-              >
-                Contact us
-              </motion.button>
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
-                  filter: "brightness(1.12)"
-                }}
-                whileTap={{ scale: 0.97 }}
-                className="text-white px-4 sm:px-5 lg:px-6 2xl:px-8 py-2 sm:py-2.5 lg:py-3 2xl:py-4 rounded-full w-28 sm:w-32 lg:w-40 2xl:w-48 text-xs sm:text-sm lg:text-base 2xl:text-lg cursor-pointer border-none transition-shadow"
-                style={{ backgroundColor: "#2A2A2A" }}
-                onClick={handleCareerClick}
-              >
-                Join us
-              </motion.button>
-            </motion.div>
+
           </div>
 
           {/* Right Image Container */}
