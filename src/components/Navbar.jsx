@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
   { name: "Home", path: "/" },
-  { name: "Service", path: "/", scrollTo: "services" },
+  { name: "Service", path: "/services" },
   { name: "Course", path: "/course" },
   { name: "Career", path: "/career" },
   { name: "About us", path: "/about" },
@@ -136,7 +136,10 @@ const Navbar = () => {
                   style={{ position: "relative", display: "inline-block" }}
                 >
                   <button
-                    onClick={() => handleNavClick({ path, scrollTo })}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setServicesHovered(!servicesHovered);
+                    }}
                     style={{
                       background: "none",
                       border: "none",
