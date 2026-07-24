@@ -23,24 +23,24 @@ const HeroSection = () => {
       titleContent: (
         <div className="mb-2">
           <h1 
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold text-[#030A24] leading-[1.08] tracking-tight"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             Building
           </h1>
           <h1 
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1877F2" }}
           >
             Intelligent Solutions
           </h1>
           <h2 
-            className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-[#030A24] leading-[1.2] tracking-tight mt-2.5 whitespace-nowrap"
+            className="text-lg sm:text-xl lg:text-[24px] xl:text-[28px] font-bold text-[#030A24] leading-[1.2] tracking-tight mt-2 whitespace-nowrap"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
           >
             for a Smarter Tomorrow
           </h2>
-          <div className="w-20 sm:w-22 lg:w-[90px] h-[5px] rounded-full mt-2.5 mb-7" style={{ backgroundColor: "#1877F2" }}></div>
+          <div className="w-20 sm:w-22 lg:w-[90px] h-[5px] rounded-full mt-2 mb-5" style={{ backgroundColor: "#1877F2" }}></div>
         </div>
       ),
       subtitle: (
@@ -61,20 +61,20 @@ const HeroSection = () => {
       titleContent: (
         <div className="mb-4">
           <h1 
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold text-[#030A24] leading-[1.08] tracking-tight"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             Technology that works
           </h1>
           <h1 
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             <span style={{ color: "#030A24" }}>with nature. </span>
             <span style={{ color: "#719E37" }}>Automate.</span>
           </h1>
           <h1 
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-extrabold leading-[1.08] tracking-tight mt-1"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#719E37" }}
           >
             Optimize. Grow.
@@ -109,19 +109,19 @@ const HeroSection = () => {
       titleContent: (
         <div className="mb-4">
           <h2
-            className="text-lg sm:text-xl lg:text-2xl xl:text-[26px] font-semibold tracking-wide uppercase"
+            className="text-sm sm:text-base lg:text-lg xl:text-[20px] font-semibold tracking-wide uppercase"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
           >
             SHAPE YOUR FUTURE
           </h2>
           <h1
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.05] tracking-tight mt-1"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
           >
             LEARN TODAY
           </h1>
           <h1
-            className="text-4xl sm:text-5xl lg:text-[58px] xl:text-[66px] font-extrabold leading-[1.05] tracking-tight mt-1"
+            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
           >
             LEAD TOMORROW
@@ -150,7 +150,7 @@ const HeroSection = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       paginate(1);
-    }, 6000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [page]);
 
@@ -240,13 +240,26 @@ const HeroSection = () => {
               x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.3 }
             }}
-            className="w-full bg-no-repeat relative flex items-center"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e, info) => {
+              const swipeThreshold = 50;
+              if (info.offset.x < -swipeThreshold) {
+                paginate(1);
+              } else if (info.offset.x > swipeThreshold) {
+                paginate(-1);
+              }
+            }}
+            whileTap={{ cursor: "grabbing" }}
+            className="w-full bg-no-repeat relative flex items-center select-none"
             style={{ 
               backgroundImage: `url('${banners[slideIndex].bg}')`,
-              backgroundSize: "100% 100%",
+              backgroundSize: "cover",
               backgroundPosition: "center",
-              aspectRatio: "1440 / 620",
+              aspectRatio: "1900 / 680",
               minHeight: "220px",
+              cursor: "grab",
             }}
           >
             <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-6 sm:py-8">
@@ -255,7 +268,7 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-                  className="max-w-xl lg:max-w-3xl text-left font-poppins"
+                  className="max-w-lg lg:max-w-2xl text-left font-poppins"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
                   <p 
@@ -268,7 +281,7 @@ const HeroSection = () => {
                   {banners[slideIndex].titleContent}
 
                   <p 
-                    className="text-[#1E293B] text-sm sm:text-base lg:text-[18px] max-w-xl lg:max-w-2xl mb-8 leading-[1.65] font-normal"
+                    className="text-[#1E293B] text-xs sm:text-sm lg:text-[16px] max-w-md lg:max-w-xl mb-6 leading-[1.6] font-normal"
                     style={{ fontFamily: "Poppins, sans-serif" }}
                   >
                     {banners[slideIndex].subtitle}
@@ -294,35 +307,35 @@ const HeroSection = () => {
                   )}
                 </motion.div>
               )}
-              {banners[slideIndex].id === 3 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="absolute bottom-20 sm:bottom-24 lg:bottom-28 right-8 sm:right-16 lg:right-28 z-10 flex flex-col items-end"
-                >
-                  <span 
-                    className="text-black font-bold text-sm sm:text-base lg:text-lg mb-2 tracking-tight"
-                    style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#000000" }}
-                  >
-                    Azhizen Media
-                  </span>
-                  <motion.a
-                    href="tel:9874563210"
-                    whileHover={{ 
-                      scale: 1.05, 
-                      boxShadow: "0 10px 20px rgba(229, 57, 0, 0.4)",
-                      filter: "brightness(1.08)"
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    className="bg-[#E53900] text-white font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm lg:text-base no-underline shadow-md inline-block cursor-pointer transition-all border-none"
-                    style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#E53900" }}
-                  >
-                    Call now: 9874563210
-                  </motion.a>
-                </motion.div>
-              )}
             </div>
+            {banners[slideIndex].id === 3 && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="absolute bottom-6 sm:bottom-8 lg:bottom-10 right-4 sm:right-8 lg:right-12 z-10 flex flex-col items-end"
+              >
+                <span 
+                  className="text-black font-bold text-xs sm:text-sm lg:text-base mb-1.5 tracking-tight"
+                  style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#000000" }}
+                >
+                  Azhizen Media
+                </span>
+                <motion.a
+                  href="tel:9874563210"
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 10px 20px rgba(229, 57, 0, 0.4)",
+                    filter: "brightness(1.08)"
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-[#E53900] text-white font-bold px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs lg:text-sm no-underline shadow-md inline-block cursor-pointer transition-all border-none"
+                  style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#E53900" }}
+                >
+                  Call now: 9874563210
+                </motion.a>
+              </motion.div>
+            )}
           </motion.div>
         </AnimatePresence>
 
