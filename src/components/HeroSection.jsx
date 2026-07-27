@@ -150,7 +150,7 @@ const HeroSection = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       paginate(1);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(timer);
   }, [page]);
 
