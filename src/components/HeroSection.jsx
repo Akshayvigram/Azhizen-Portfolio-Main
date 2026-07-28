@@ -56,7 +56,7 @@ const HeroSection = () => {
     {
       id: 1,
       bg: "/Frame 1598.png",
-      bgPosition: "right 45% center",
+      bgPosition: "left 20% center",
       contentPosition: "right",
       textColor: "text-white",
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
