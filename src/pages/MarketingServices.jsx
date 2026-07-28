@@ -42,6 +42,7 @@ const MarketingServices = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activeCard, setActiveCard] = useState(1);
 
   const handleApplyClick = (service) => {
     setSelectedService(service);
@@ -93,11 +94,9 @@ const MarketingServices = () => {
       
       {/* ── HERO SECTION ── */}
       <div
-        className="relative w-full bg-cover bg-center bg-no-repeat overflow-visible"
+        className="relative w-full bg-cover bg-center bg-no-repeat overflow-visible pt-[96px] pb-[100px] lg:pb-[230px]"
         style={{
           backgroundImage: "url('/093d9e168be8563656ac2661688920c1fda133cf.png')",
-          paddingTop: "96px",
-          paddingBottom: "230px",
         }}
       >
         {/* ── Title — centered, white ── */}
@@ -121,11 +120,12 @@ const MarketingServices = () => {
             CENTER col: [button] then [center white card below]
             RIGHT  col: [Logo badge] then [right white card below] then [Mobile badge]
         */}
+        {/* Desktop View (Three Columns) */}
         <motion.div
           variants={cardsContainerVariants}
           initial="hidden"
           animate="visible"
-          className="relative z-20 w-full max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-10 pb-4"
+          className="hidden lg:flex lg:flex-row items-start justify-center gap-10 pb-4 z-20 relative w-full max-w-[1200px] mx-auto px-6"
         >
 
           {/* ══ LEFT COLUMN : Image Card + badges below ══ */}
@@ -292,8 +292,141 @@ const MarketingServices = () => {
 
         </motion.div>
 
+        {/* Mobile/Tablet View (Hand of Cards Fan layout) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex lg:hidden flex-col items-center w-full px-4 overflow-visible pb-4 relative z-20"
+        >
+          {/* Explore Button — sits above center card */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleAcademyClick}
+            className="bg-[#1877F2] hover:bg-[#1565C0] text-white font-poppins font-semibold text-[15px] px-6 py-3 rounded-md transition-all duration-200 flex items-center gap-2 cursor-pointer border-none mb-6 shadow-[0_4px_14px_rgba(24,119,242,0.35)]"
+            style={{ color: '#ffffff', backgroundColor: '#1877F2' }}
+          >
+            Explore Azhizen Acedemy <ArrowUpRight />
+          </motion.button>
+
+          {/* Interactive Hand of Cards Container */}
+          <div className="relative w-full h-[320px] xs:h-[350px] sm:h-[400px] flex items-center justify-center overflow-visible select-none mt-2">
+            {/* Card 0: Left Card (Image card) */}
+            <motion.div
+              animate={{
+                rotate: activeCard === 0 ? 0 : -15,
+                y: activeCard === 0 ? 0 : 20,
+                x: activeCard === 0 ? 15 : -35,
+                scale: activeCard === 0 ? 1 : 0.8,
+                zIndex: activeCard === 0 ? 40 : 10,
+              }}
+              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              onClick={() => setActiveCard(0)}
+              className="absolute left-[8%] sm:left-[18%] top-[10%] w-[190px] h-[190px] xs:w-[210px] xs:h-[210px] shrink-0 cursor-pointer"
+            >
+              <img
+                src="/63f3b2d49cbe4d045aafdb6f4177d911f7ed72ff.png"
+                alt="What We Do — Azhizen"
+                className="w-full h-full object-cover rounded-[20px] shadow-[6px_8px_20px_rgba(0,0,0,0.25)]"
+              />
+            </motion.div>
+
+            {/* Card 1: Center Card (Marketing Service) */}
+            <motion.div
+              animate={{
+                rotate: activeCard === 1 ? 0 : (activeCard === 0 ? 6 : -6),
+                y: activeCard === 1 ? -15 : 15,
+                scale: activeCard === 1 ? 1 : 0.84,
+                zIndex: activeCard === 1 ? 40 : 20,
+              }}
+              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              onClick={() => setActiveCard(1)}
+              className="absolute w-[220px] xs:w-[245px] bg-gradient-to-b from-slate-100 to-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] p-4 flex flex-col cursor-pointer"
+              style={{ minHeight: '290px' }}
+            >
+              <div
+                className="self-center flex items-center bg-white px-4 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.06)] mb-2"
+              >
+                <span style={{ color: '#050505' }} className="font-poppins font-semibold text-[11px]">
+                  Azhizen Media
+                </span>
+              </div>
+
+              <h3 style={{ color: '#000000' }} className="font-poppins font-semibold text-[17px] mt-1 leading-tight text-left">
+                Providing 10+<br />Marketing Service
+              </h3>
+
+              <div className="flex items-start gap-2 mt-2 mb-3 text-left">
+                <Check className="w-5 h-5 text-[#1877F2] shrink-0 mt-0.5 stroke-[3]" />
+                <span className="text-[12.5px] text-[#000000] font-poppins font-medium leading-normal">
+                  grow your business through Digital platform to get Sucess
+                </span>
+              </div>
+
+              <div className="w-full mt-auto">
+                <img
+                  src="/Frame 1268.png"
+                  alt="Digital Marketing Preview"
+                  className="w-full h-[95px] object-cover rounded-xl"
+                />
+              </div>
+            </motion.div>
+
+            {/* Card 2: Right Card (Billing System) */}
+            <motion.div
+              animate={{
+                rotate: activeCard === 2 ? 0 : 15,
+                y: activeCard === 2 ? 0 : 20,
+                x: activeCard === 2 ? -15 : 35,
+                scale: activeCard === 2 ? 1 : 0.8,
+                zIndex: activeCard === 2 ? 40 : 10,
+              }}
+              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              onClick={() => setActiveCard(2)}
+              className="absolute right-[8%] sm:right-[18%] top-[10%] w-[190px] h-[180px] xs:w-[210px] xs:h-[200px] bg-white rounded-[20px] shadow-[-6px_8px_20px_rgba(0,0,0,0.20)] p-4 flex flex-col items-center justify-between cursor-pointer"
+            >
+              <h3 style={{ color: '#050505' }} className="font-poppins font-medium text-[12px] leading-snug text-center w-full mb-1">
+                Advanced Billing System<br />for Modern Businesses
+              </h3>
+
+              <div className="w-full flex justify-center my-1">
+                <img
+                  src="/64e37823845fcd721b630868cf1244cdfca89c9d.png"
+                  alt="Billing Dashboard"
+                  className="w-[85px] h-[85px] object-contain"
+                />
+              </div>
+
+              <div style={{ color: '#050505' }} className="font-poppins font-medium text-[12px] text-center mt-auto">
+                Grow your Business
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Floating Badges 2x2 Grid */}
+          <div className="grid grid-cols-2 gap-3.5 px-4 w-full max-w-[480px] mt-8 z-10">
+            <FloatingBadge delay={0.1} duration={3} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] justify-center">
+              <img src="/a0ca5728adf4f3483881e71386b34061c9289922.png" className="w-6 h-6 object-contain shrink-0" />
+              <span className="text-slate-800 font-poppins font-medium text-[11px] whitespace-nowrap">Website Dev</span>
+            </FloatingBadge>
+            <FloatingBadge delay={0.3} duration={3.2} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] justify-center">
+              <img src="/9795a08d13bc8ef72ac67ba281e7618cf4319f00.png" className="w-6 h-6 object-contain shrink-0" />
+              <span className="text-slate-800 font-poppins font-medium text-[11px] whitespace-nowrap">UI/UX Design</span>
+            </FloatingBadge>
+            <FloatingBadge delay={0.5} duration={3.4} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] justify-center">
+              <img src="/f56ccd0b935ef7dfbcda12e105db5f6c6c1db522.png" className="w-6 h-6 object-contain shrink-0" />
+              <span className="text-slate-800 font-poppins font-medium text-[11px] whitespace-nowrap">Logo & Poster</span>
+            </FloatingBadge>
+            <FloatingBadge delay={0.7} duration={3.6} className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] justify-center">
+              <img src="/3f80251d3161d5439bee3d41bea64dbc4b3c2600.png" className="w-6 h-6 object-contain shrink-0" />
+              <span className="text-slate-800 font-poppins font-medium text-[11px] whitespace-nowrap">Mobile App Dev</span>
+            </FloatingBadge>
+          </div>
+        </motion.div>
+
         {/* White Vector path bridging into next section */}
-        <div className="absolute -bottom-[100px] left-1/2 -translate-x-1/2 w-[450px] md:w-[650px] lg:w-[1300px] xl:w-[1400px] h-[350px] z-[5] pointer-events-none">
+        <div className="absolute -bottom-[80px] lg:-bottom-[100px] left-1/2 -translate-x-1/2 w-[850px] lg:w-[1300px] xl:w-[1400px] h-[390px] lg:h-[350px] z-[5] pointer-events-none">
           <img
             src="/Vector 131 (1).png"
             alt="White Centre Path"

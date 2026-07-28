@@ -287,18 +287,17 @@ const TrainingSupport = () => {
           fontFamily: "'Poppins', sans-serif",
         }}
       >
+        <style>{`
+          .stats-scroll::-webkit-scrollbar {
+            display: none;
+          }
+          .stats-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
         <div
-          style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            padding: "24px 24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            gap: "0px",
-            width: "100%",
-            boxSizing: "border-box",
-          }}
+          className="max-w-[1280px] mx-auto px-6 py-5 md:py-8 flex flex-row items-center justify-start w-full box-border overflow-hidden"
         >
         {/* Left label */}
         <motion.div
@@ -306,63 +305,36 @@ const TrainingSupport = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{
-            color: "#fff",
-            fontSize: "13px",
-            fontWeight: 400,
-            lineHeight: 1.7,
-            flexShrink: 0,
-            width: "160px",
-            marginRight: "24px",
-          }}
+          className="text-white text-[13px] leading-[1.5] shrink-0 w-[125px] md:w-[160px] mr-4 md:mr-6 text-left"
         >
-          <span style={{ display: "block" }}>Outcome's of</span>
+          <span style={{ display: "block", opacity: 0.9 }}>Outcome's of</span>
           <span style={{ display: "block", fontWeight: 700, fontSize: "14px" }}>Azhizen Acedamy</span>
         </motion.div>
 
-        {/* 4 equal-width cards in a grid */}
+        {/* 4 equal-width cards in a grid/row */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "12px",
-            flex: 1,
-          }}
+          className="flex flex-row md:grid md:grid-cols-4 gap-2.5 sm:gap-3 w-full flex-1 overflow-x-auto stats-scroll pb-1.5 md:pb-0"
         >
           {STATS.map((s) => (
             <motion.div
               key={s.label}
               variants={itemVariants}
+              className="bg-white px-3 py-3 sm:px-4 sm:py-3.5 text-center font-poppins shrink-0 w-[95px] xs:w-[110px] md:w-auto"
               style={{
-                backgroundColor: "#fff",
-                clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)",
-                padding: "14px 18px",
-                textAlign: "center",
-                fontFamily: "'Poppins', sans-serif",
+                clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
               }}
             >
               <div
-                style={{
-                  fontSize: "26px",
-                  fontWeight: 700,
-                  color: "#0d1b2a",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.5px",
-                }}
+                className="text-[17px] sm:text-[26px] font-bold text-[#0d1b2a] leading-none tracking-tight"
               >
                 {s.value}
               </div>
               <div
-                style={{
-                  fontSize: "12px",
-                  color: "#374151",
-                  marginTop: "4px",
-                  fontWeight: 500,
-                }}
+                className="text-[10px] sm:text-[12px] text-gray-700 mt-1 sm:mt-1.5 font-medium leading-tight whitespace-nowrap md:whitespace-normal"
               >
                 {s.label}
               </div>

@@ -100,6 +100,11 @@ export const WhatsAppButton = ({
         .wa-pill-btn:hover .wa-svg-icon {
           animation: wa-wiggle 0.5s ease-in-out infinite;
         }
+        @media (max-width: 767px) {
+          .wa-drawer {
+            display: none !important;
+          }
+        }
       `}</style>
       <a
         href={whatsappUrl}
