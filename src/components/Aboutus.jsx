@@ -131,7 +131,7 @@ const Aboutus = () => {
               <img
                 src="/Group 407.png"
                 alt="100% Overall client satisfaction"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
           </motion.div>

@@ -477,6 +477,7 @@ const ClientsSection = () => {
             height: 180px !important;
             width: 100% !important;
             max-width: 280px !important;
+            object-fit: cover !important;
           }
 
           .testimonial-text-wrapper {
