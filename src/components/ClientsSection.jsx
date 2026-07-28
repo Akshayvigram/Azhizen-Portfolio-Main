@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 /* ── Distinct Logos ── */
 const LOGOS = [
   { src: "/Frame 1098.png",                                                          alt: "Azhizen Media" },
-  { src: "/logo.jpg",                                                                 alt: "Azhizen" },
+  { src: "/logo1.png",                                                                 alt: "Azhizen" },
   { src: "/Group 22.png",                                                             alt: "Ease Milker" },
   { src: "/ChatGPT_Image_Feb_14__2026__11_46_43_AM-removebg-preview 2 (1).png",      alt: "Azhizen Academy", customHeight: "72px" },
 ];
@@ -15,7 +15,7 @@ const TICKER_LOGOS = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS
 
 /* ── Stars ── */
 const Stars = ({ count = 5 }) => (
-  <div style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
+  <div className="testimonial-stars" style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
     {Array.from({ length: count }).map((_, i) => (
       <span
         key={i}
@@ -181,6 +181,7 @@ const ClientsSection = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.4 }}
+            className="testimonial-card"
             style={{
               flex: 1,
               position: "relative",
@@ -209,6 +210,7 @@ const ClientsSection = () => {
 
           {/* Card content */}
           <div
+            className="testimonial-content"
             style={{
               position: "relative",
               zIndex: 1,
@@ -221,6 +223,7 @@ const ClientsSection = () => {
           >
             {/* Left photo */}
             <div
+              className="testimonial-photo-wrapper"
               style={{
                 flex: "1 1 290px",
                 minWidth: "250px",
@@ -231,6 +234,7 @@ const ClientsSection = () => {
               <img
                 src={REVIEWS[activeIndex].image}
                 alt={REVIEWS[activeIndex].name}
+                className="testimonial-photo"
                 style={{
                   width: "100%",
                   height: "260px",
@@ -244,6 +248,7 @@ const ClientsSection = () => {
 
             {/* Right content */}
             <div
+              className="testimonial-text-wrapper"
               style={{
                 flex: "1 1 320px",
                 minWidth: "260px",
@@ -256,6 +261,7 @@ const ClientsSection = () => {
               <Stars count={REVIEWS[activeIndex].stars} />
 
               <p
+                className="testimonial-text"
                 style={{
                   color: "#1e293b",
                   fontSize: "clamp(14.5px, 2vw, 16px)",
@@ -272,6 +278,7 @@ const ClientsSection = () => {
 
               {/* Name Block with thick left black border */}
               <div
+                className="testimonial-name-block"
                 style={{
                   borderLeft: "8px solid #000000",
                   paddingLeft: "16px",
@@ -279,6 +286,7 @@ const ClientsSection = () => {
                 }}
               >
                 <p
+                  className="testimonial-name"
                   style={{
                     color: "#1877F2",
                     fontWeight: "800",
@@ -291,6 +299,7 @@ const ClientsSection = () => {
                   {REVIEWS[activeIndex].name}
                 </p>
                 <p
+                  className="testimonial-title"
                   style={{
                     color: "#475569",
                     fontSize: "14px",
@@ -418,12 +427,97 @@ const ClientsSection = () => {
         }
 
         @media (max-width: 768px) {
-
           .logo-ticker {
             gap: 40px !important;
             padding-right: 40px !important;
           }
 
+          .slider-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-rows: auto auto !important;
+            gap: 16px !important;
+            padding: 0 16px 36px !important;
+          }
+          
+          .testimonial-card {
+            grid-column: 1 / span 2 !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+          }
+          
+          .arrow-btn:nth-of-type(1) {
+            grid-column: 1 !important;
+            grid-row: 2 !important;
+            justify-self: end !important;
+            margin-right: 12px !important;
+          }
+          
+          .arrow-btn:nth-of-type(2) {
+            grid-column: 2 !important;
+            grid-row: 2 !important;
+            justify-self: start !important;
+            margin-left: 12px !important;
+          }
+
+          .testimonial-content {
+            padding: 24px 20px !important;
+            gap: 20px !important;
+          }
+
+          .testimonial-photo-wrapper {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+          }
+
+          .testimonial-photo {
+            height: 180px !important;
+            width: 100% !important;
+            max-width: 280px !important;
+          }
+
+          .testimonial-text-wrapper {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            align-items: center !important;
+            text-align: center !important;
+          }
+
+          .testimonial-stars {
+            justify-content: center !important;
+            margin-bottom: 8px !important;
+          }
+
+          .testimonial-stars span {
+            font-size: 22px !important;
+          }
+
+          .testimonial-text {
+            text-align: center !important;
+            font-size: 14px !important;
+            margin-bottom: 16px !important;
+            line-height: 1.5 !important;
+          }
+
+          .testimonial-name-block {
+            border-left: none !important;
+            padding-left: 0 !important;
+            text-align: center !important;
+            width: 100% !important;
+          }
+
+          .testimonial-name {
+            text-align: center !important;
+            font-size: 18px !important;
+          }
+
+          .testimonial-title {
+            text-align: center !important;
+            font-size: 13px !important;
+          }
         }
       `}</style>
     </section>

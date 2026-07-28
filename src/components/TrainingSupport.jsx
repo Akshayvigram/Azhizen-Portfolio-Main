@@ -474,10 +474,10 @@ const TrainingSupport = () => {
       >
         {/* Left */}
         <div>
-          <p style={{ fontSize: "22px", fontWeight: 700, color: "#0a1931", lineHeight: 1.25 }}>
+          <p style={{ fontSize: "26px", fontWeight: 700, color: "#0a1931", lineHeight: 1.25 }}>
             Transforming Skills Into
           </p>
-          <p style={{ fontSize: "22px", fontWeight: 700, color: "#2563EB", lineHeight: 1.25 }}>
+          <p style={{ fontSize: "26px", fontWeight: 700, color: "#2563EB", lineHeight: 1.25 }}>
             Career Opportunities
           </p>
         </div>
