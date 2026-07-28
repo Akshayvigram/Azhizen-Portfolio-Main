@@ -347,8 +347,8 @@ const HeroSection = () => {
               onClick={() => setPage([index, index > slideIndex ? 1 : -1])}
               className={`transition-all duration-300 border-none cursor-pointer ${
                 slideIndex === index
-                  ? 'w-8 sm:w-9 h-3 rounded-full bg-[#1E293B]'
-                  : 'w-3 h-3 rounded-full bg-[#1E293B]/40 hover:bg-[#1E293B]/70'
+                  ? 'w-6 sm:w-7 h-2 rounded-full !bg-[#1877F2]'
+                  : 'w-2 h-2 rounded-full !bg-white'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
