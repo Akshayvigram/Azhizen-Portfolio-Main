@@ -16,7 +16,7 @@ const CommunityPartner = () => {
         <img
           src="https://portfolio-assest.s3.us-east-1.amazonaws.com/gfg.jpeg"
           alt="Community Partner Logo"
-          className="w-28 h-2 sm:w-42 sm:h-22 object-contain mb-4"
+          className="w-28 h-16 sm:w-42 sm:h-22 object-contain mb-4"
         />
         <h2 className="text-lg font-semibold text-gray-700">GFG Student Chapter</h2>
         <p className="text-sm text-gray-500">K.S.R.I.E.T</p>

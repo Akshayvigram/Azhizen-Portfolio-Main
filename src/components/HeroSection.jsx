@@ -18,18 +18,19 @@ const HeroSection = () => {
     {
       id: 1,
       bg: "/Frame 1598.png",
+      bgPosition: "right 45% center",
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
       taglineColor: "#8592A6",
       titleContent: (
         <div className="mb-2">
           <h1 
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             Building
           </h1>
           <h1 
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1877F2" }}
           >
             Intelligent Solutions
@@ -56,25 +57,26 @@ const HeroSection = () => {
     {
       id: 2,
       bg: "/Frame 1595.png",
+      bgPosition: "right 35% center",
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
       taglineColor: "#8592A6",
       titleContent: (
         <div className="mb-4">
           <h1 
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             Technology that works
           </h1>
           <h1 
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
           >
             <span style={{ color: "#030A24" }}>with nature. </span>
             <span style={{ color: "#719E37" }}>Automate.</span>
           </h1>
           <h1 
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#719E37" }}
           >
             Optimize. Grow.
@@ -95,6 +97,7 @@ const HeroSection = () => {
     {
       id: 3,
       bg: "/Frame 1596 (1).png",
+      bgPosition: "right 35% center",
       tagline: "",
       taglineColor: "transparent",
       titleContent: null,
@@ -104,6 +107,7 @@ const HeroSection = () => {
     {
       id: 4,
       bg: "/Frame 1597.png",
+      bgPosition: "right 30% center",
       tagline: "bright your future with azhizen academy",
       taglineColor: "#8A9CC0",
       titleContent: (
@@ -115,13 +119,13 @@ const HeroSection = () => {
             SHAPE YOUR FUTURE
           </h2>
           <h1
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
           >
             LEARN TODAY
           </h1>
           <h1
-            className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
             style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
           >
             LEAD TOMORROW
@@ -256,13 +260,13 @@ const HeroSection = () => {
             style={{ 
               backgroundImage: `url('${banners[slideIndex].bg}')`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: banners[slideIndex].bgPosition || "center",
               aspectRatio: "1900 / 680",
-              minHeight: "220px",
+              minHeight: "180px",
               cursor: "grab",
             }}
           >
-            <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-6 sm:py-8">
+            <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-4 sm:py-8">
               {banners[slideIndex].titleContent && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

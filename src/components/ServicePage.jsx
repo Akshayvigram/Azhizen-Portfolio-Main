@@ -179,7 +179,8 @@ const ServicePage = () => {
         className="relative w-full min-h-[460px] sm:min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex items-center justify-center overflow-visible bg-top bg-no-repeat px-6"
         style={{
           backgroundImage: "url('/Desktop - 92 (2).png')",
-          backgroundSize: "100% 100%", // Stretches background image so the bottom white wave is always at the bottom of the container
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
         }}
       >
         {/* Decorative Floating Badges - Left Side */}
