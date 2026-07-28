@@ -16,16 +16,56 @@ const HeroSection = () => {
 
   const banners = [
     {
+      id: 4,
+      bg: "/Frame 1597.png",
+      bgPosition: "right 30% center",
+      tagline: "bright your future with azhizen academy",
+      taglineColor: "#8A9CC0",
+      titleContent: (
+        <div className="mb-4">
+          <h2
+            className="text-sm sm:text-base lg:text-lg xl:text-[20px] font-semibold tracking-wide uppercase"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
+          >
+            SHAPE YOUR FUTURE
+          </h2>
+          <h1
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
+          >
+            LEARN TODAY
+          </h1>
+          <h1
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
+          >
+            LEAD TOMORROW
+          </h1>
+        </div>
+      ),
+      subtitle: (
+        <>
+          Industry-focused courses to build skills, boost <br className="hidden sm:inline" />
+          knowledge and accelerate your career
+        </>
+      ),
+      buttonText: "Enquire now",
+      buttonBg: "linear-gradient(135deg, #F5A500 0%, #E08C00 100%)",
+      buttonShadow: "rgba(245, 165, 0, 0.40)",
+    },
+    {
       id: 1,
       bg: "/Frame 1598.png",
       bgPosition: "right 45% center",
+      contentPosition: "right",
+      textColor: "text-white",
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
       taglineColor: "#8592A6",
       titleContent: (
         <div className="mb-2">
           <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-white leading-[1.1] tracking-tight"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#ffffff" }}
           >
             Building
           </h1>
@@ -36,8 +76,8 @@ const HeroSection = () => {
             Intelligent Solutions
           </h1>
           <h2 
-            className="text-lg sm:text-xl lg:text-[24px] xl:text-[28px] font-bold text-[#030A24] leading-[1.2] tracking-tight mt-2 whitespace-nowrap"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
+            className="text-lg sm:text-xl lg:text-[24px] xl:text-[28px] font-bold text-white leading-[1.2] tracking-tight mt-2 whitespace-nowrap"
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#ffffff" }}
           >
             for a Smarter Tomorrow
           </h2>
@@ -64,7 +104,7 @@ const HeroSection = () => {
         <div className="mb-4">
           <h1 
             className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#030A24" }}
           >
             Technology that works
           </h1>
@@ -103,44 +143,6 @@ const HeroSection = () => {
       titleContent: null,
       subtitle: null,
       buttonText: null,
-    },
-    {
-      id: 4,
-      bg: "/Frame 1597.png",
-      bgPosition: "right 30% center",
-      tagline: "bright your future with azhizen academy",
-      taglineColor: "#8A9CC0",
-      titleContent: (
-        <div className="mb-4">
-          <h2
-            className="text-sm sm:text-base lg:text-lg xl:text-[20px] font-semibold tracking-wide uppercase"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
-          >
-            SHAPE YOUR FUTURE
-          </h2>
-          <h1
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
-          >
-            LEARN TODAY
-          </h1>
-          <h1
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
-          >
-            LEAD TOMORROW
-          </h1>
-        </div>
-      ),
-      subtitle: (
-        <>
-          Industry-focused courses to build skills, boost <br className="hidden sm:inline" />
-          knowledge and accelerate your career
-        </>
-      ),
-      buttonText: "Enquire now",
-      buttonBg: "linear-gradient(135deg, #F5A500 0%, #E08C00 100%)",
-      buttonShadow: "rgba(245, 165, 0, 0.40)",
     }
   ];
 
@@ -272,7 +274,7 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-                  className="max-w-lg lg:max-w-2xl text-left font-poppins"
+                  className={`max-w-lg lg:max-w-2xl text-left font-poppins ${banners[slideIndex].contentPosition === "right" ? "sm:ml-auto" : ""}`}
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
                   <p 
@@ -285,7 +287,7 @@ const HeroSection = () => {
                   {banners[slideIndex].titleContent}
 
                   <p 
-                    className="text-[#1E293B] text-xs sm:text-sm lg:text-[16px] max-w-md lg:max-w-xl mb-6 leading-[1.6] font-normal"
+                    className={`${banners[slideIndex].textColor || "text-[#1E293B]"} text-xs sm:text-sm lg:text-[16px] max-w-md lg:max-w-xl mb-6 leading-[1.6] font-normal`}
                     style={{ fontFamily: "Poppins, sans-serif" }}
                   >
                     {banners[slideIndex].subtitle}
