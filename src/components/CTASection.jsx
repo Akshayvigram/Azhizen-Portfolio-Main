@@ -104,10 +104,10 @@ const CTASection = () => {
                 Mail
               </span>
               <a 
-                href="mailto:Azhizensolutions@azhizen.com"
+                href="mailto:azhizensolutions@azhizen.com"
                 className="text-[#cbd5e1] text-[12px] font-[Poppins] leading-tight hover:text-[#00A3FF] transition-colors"
               >
-                Azhizensolutions<br />@azhizen.com
+                azhizensolutions<br />@azhizen.com
               </a>
             </div>
           </motion.div>
@@ -126,10 +126,10 @@ const CTASection = () => {
                 Phone
               </span>
               <a 
-                href="tel:+919632587410"
+                href="tel:+918300233988"
                 className="text-[#cbd5e1] text-[12px] font-[Poppins] leading-tight hover:text-[#00A3FF] transition-colors"
               >
-                +91 9632587410
+                +91 83002 33988
               </a>
             </div>
           </motion.div>
@@ -148,7 +148,7 @@ const CTASection = () => {
                 Location
               </span>
               <span className="text-[#cbd5e1] text-[12px] font-[Poppins] leading-tight">
-                Thiruchengodu
+                Tiruchengode
               </span>
             </div>
           </motion.div>

@@ -271,9 +271,10 @@ const HeroSection = () => {
             <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-4 sm:py-8">
               {banners[slideIndex].titleContent && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  key={slideIndex}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                  transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
                   className={`max-w-lg lg:max-w-2xl text-left font-poppins ${banners[slideIndex].contentPosition === "right" ? "sm:ml-auto" : ""}`}
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
@@ -328,7 +329,7 @@ const HeroSection = () => {
                   Azhizen Media
                 </span>
                 <motion.a
-                  href="tel:9874563210"
+                  href="tel:+918300233988"
                   whileHover={{ 
                     scale: 1.05, 
                     boxShadow: "0 10px 20px rgba(229, 57, 0, 0.4)",
@@ -338,7 +339,7 @@ const HeroSection = () => {
                   className="bg-[#E53900] text-white font-bold px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs lg:text-sm no-underline shadow-md inline-block cursor-pointer transition-all border-none"
                   style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#E53900" }}
                 >
-                  Call now: 9874563210
+                  Call now: +91 83002 33988
                 </motion.a>
               </motion.div>
             )}
@@ -364,9 +365,10 @@ const HeroSection = () => {
 
       {/* Mobile View */}
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="block sm:hidden px-4 py-4 mt-2 text-center"
       >
         <div className="max-w-md mx-auto">
@@ -401,9 +403,10 @@ const HeroSection = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-8 relative z-10">
           <div className="flex-1 max-w-2xl relative z-10 text-left">
             <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-black leading-tight mb-6"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
@@ -413,9 +416,10 @@ const HeroSection = () => {
             </motion.h1>
 
             <motion.p 
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
               className="text-gray-600 mb-8 max-w-sm sm:max-w-md lg:max-w-lg 2xl:max-w-xl text-sm lg:text-base 2xl:text-lg font-normal"
             >
               Innovate with Azhizen
@@ -430,8 +434,9 @@ const HeroSection = () => {
 
           {/* Right Image Container */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex-1 w-full lg:max-w-[500px] xl:max-w-[600px] flex justify-end relative z-10 lg:left-12 xl:left-20 2xl:left-28"
           >

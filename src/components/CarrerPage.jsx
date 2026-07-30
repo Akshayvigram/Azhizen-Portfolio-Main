@@ -17,13 +17,13 @@ const CareerPage = () => {
           </p>
           <div className="flex justify-center">
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=azhizensolutions@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=azhizensolutions@azhizen.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-gradient-to-br from-[#0078B4] to-[#00B4D9] text-white font-semibold px-6 sm:px-8 lg:px-8 2xl:px-10 py-2 sm:py-3 lg:py-3 2xl:py-4 rounded-lg transform transition-all duration-300 text-sm sm:text-base lg:text-base 2xl:text-lg"
               aria-label="Send your resume to Azhizen Solutions"
             >
-              Send Your Resume: azhizensolutions@gmail.com
+              Send Your Resume: azhizensolutions@azhizen.com
             </a>
           </div>
           <p className="text-center text-sm sm:text-sm lg:text-sm 2xl:text-base text-gray-500 mt-4 2xl:mt-6 italic">

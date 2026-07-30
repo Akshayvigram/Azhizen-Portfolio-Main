@@ -1,7 +1,7 @@
 import React from "react";
 
 export const WhatsAppButton = ({
-  phoneNumber = "919952132492", // Country code + 9952132492
+  phoneNumber = "918300233988", // Country code + 83002 33988
   message = "Hello! I would like to know more about Azhizen Solutions and your technology services.",
 }) => {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

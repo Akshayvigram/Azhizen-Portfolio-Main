@@ -46,7 +46,7 @@ const App = () => {
       {!isContactPage && <FooterSection />}
 
       {/* Floating WhatsApp Chat Button on bottom left */}
-      <WhatsAppButton phoneNumber="919952132492" />
+      <WhatsAppButton phoneNumber="918300233988" />
     </div>
   );
 };

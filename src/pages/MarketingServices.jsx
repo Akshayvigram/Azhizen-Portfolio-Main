@@ -481,17 +481,20 @@ const MarketingServices = () => {
           </motion.p>
 
           {/* Explore Button */}
-          <motion.button
+          <motion.a
+            href="https://media.azhizen.com/#services"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[12px] transition-all duration-200 shadow-[0_4px_14px_rgba(24,119,242,0.3)] flex items-center gap-2 cursor-pointer mb-16"
+            className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[12px] transition-all duration-200 shadow-[0_4px_14px_rgba(24,119,242,0.3)] flex items-center gap-2 cursor-pointer mb-16 no-underline"
           >
             Explore Azhizen Media <ArrowUpRight />
-          </motion.button>
+          </motion.a>
 
           {/* ── SERVICES GRID ── */}
           <motion.div
