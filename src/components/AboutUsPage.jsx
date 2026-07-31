@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const AboutUsPage = () => {
+    const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     const containerVariants = {
         hidden: {},
         visible: {
@@ -15,6 +26,61 @@ const AboutUsPage = () => {
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    };
+
+    /* ─── Rolling Number Component for stats ─────────────────────── */
+    const RollingNumber = ({ value }) => {
+      const [count, setCount] = useState(0);
+      const [hasAnimated, setHasAnimated] = useState(false);
+
+      const parsed = useMemo(() => {
+        const num = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
+        const suffix = value.replace(/[0-9]/g, "");
+        const hasLeadingZero = value.startsWith("0") && value.length > 1;
+        return { num, suffix, hasLeadingZero };
+      }, [value]);
+
+      const handleEnter = () => {
+        if (hasAnimated) return;
+        setHasAnimated(true);
+
+        let start = 0;
+        const end = parsed.num;
+        if (start === end) return;
+
+        const duration = 1500; // 1.5 seconds
+        const startTime = performance.now();
+
+        const updateNumber = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          const easeProgress = progress * (2 - progress);
+          const current = Math.floor(easeProgress * (end - start) + start);
+
+          setCount(current);
+
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          }
+        };
+
+        requestAnimationFrame(updateNumber);
+      };
+
+      const displayVal = parsed.hasLeadingZero
+        ? String(count).padStart(2, "0")
+        : count;
+
+      return (
+        <motion.span
+          onViewportEnter={handleEnter}
+          viewport={{ once: true, margin: "-30px" }}
+        >
+          {displayVal}
+          {parsed.suffix}
+        </motion.span>
+      );
     };
 
     return (
@@ -30,14 +96,22 @@ const AboutUsPage = () => {
                     className="flex-1 max-w-2xl"
                 >
                     <motion.h1 
-                        variants={itemVariants}
+                        initial={isMobile ? { opacity: 0, x: -60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut" } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
                         className="text-3xl lg:text-4xl font-semibold capitalize text-black leading-tight mb-6"
                     >
                         Where innovation meets excellence and{" "}
                         <span className="text-blue-500" style={{ color: "#1877F2" }}>ideas evolve into impactful solutions.</span>
                     </motion.h1>
                     <motion.p 
-                        variants={itemVariants}
+                        initial={isMobile ? { opacity: 0, x: 60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut", delay: 0.15 } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
                         className="text-neutral-600 text-lg leading-relaxed mb-12 capitalize"
                     >
                         Azhizen drives innovation through advanced R&amp;D, precision manufacturing, and smart product development across biomedical, AI/ML, edutech, and green tech—transforming ideas into scalable, real-world solutions.
@@ -49,15 +123,21 @@ const AboutUsPage = () => {
                         className="flex flex-wrap gap-12"
                     >
                         <motion.div variants={itemVariants}>
-                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>15+</div>
+                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>
+                                <RollingNumber value="15+" />
+                            </div>
                             <div className="text-neutral-400 text-xl font-semibold capitalize">Team Members</div>
                         </motion.div>
                         <motion.div variants={itemVariants}>
-                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>10+</div>
+                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>
+                                <RollingNumber value="10+" />
+                            </div>
                             <div className="text-neutral-400 text-xl font-semibold capitalize">Happy Clients</div>
                         </motion.div>
                         <motion.div variants={itemVariants}>
-                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>99%</div>
+                            <div className="text-blue-500 text-4xl font-bold capitalize mb-2" style={{ color: "#1877F2" }}>
+                                <RollingNumber value="99%" />
+                            </div>
                             <div className="text-neutral-400 text-xl font-semibold capitalize">Client Satisfaction</div>
                         </motion.div>
                     </motion.div>
@@ -65,8 +145,9 @@ const AboutUsPage = () => {
 
                 {/* Right Image */}
                 <motion.div 
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: 60 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="flex-1 w-full lg:max-w-[500px] xl:max-w-[600px] flex justify-end"
                 >
@@ -109,20 +190,50 @@ const AboutUsPage = () => {
 
                 {/* Right Text */}
                 <motion.div 
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
+                    variants={isMobile ? undefined : containerVariants}
+                    initial={isMobile ? undefined : "hidden"}
+                    whileInView={isMobile ? undefined : "visible"}
                     viewport={{ once: true }}
                     className="flex-1 mt-12 lg:mt-0 pl-0 lg:pl-12"
                 >
-                    <motion.h3 variants={itemVariants} className="text-blue-500 text-base font-bold uppercase tracking-wider mb-3" style={{ color: "#1877F2" }}>Our Mission</motion.h3>
-                    <motion.h2 variants={itemVariants} className="text-4xl lg:text-5xl font-bold text-black mb-6 leading-tight">
+                    <motion.h3 
+                        initial={isMobile ? { opacity: 0, x: 60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut" } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
+                        className="text-blue-500 text-base font-bold uppercase tracking-wider mb-3" 
+                        style={{ color: "#1877F2" }}
+                    >
+                        Our Mission
+                    </motion.h3>
+                    <motion.h2 
+                        initial={isMobile ? { opacity: 0, x: 60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut", delay: 0.1 } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
+                        className="text-4xl lg:text-5xl font-bold text-black mb-6 leading-tight"
+                    >
                         Solutions that stick with you <span className="text-blue-500" style={{ color: "#1877F2" }}>always</span>
                     </motion.h2>
-                    <motion.p variants={itemVariants} className="text-gray-600 text-lg leading-relaxed mb-8">
+                    <motion.p 
+                        initial={isMobile ? { opacity: 0, x: 60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut", delay: 0.18 } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
+                        className="text-gray-600 text-lg leading-relaxed mb-8"
+                    >
                         At Azhizen, we transform bold ideas into groundbreaking realities with creativity, integrity, and a passion for quality. We exceed expectations, delivering innovative biomedical, engineering, and tech solutions that shape a smarter, sustainable future—one project at a time.
                     </motion.p>
-                    <motion.div variants={itemVariants}>
+                    <motion.div 
+                        initial={isMobile ? { opacity: 0, x: 60 } : "hidden"}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : "visible"}
+                        viewport={{ once: true }}
+                        transition={isMobile ? { duration: 0.8, ease: "easeOut", delay: 0.25 } : undefined}
+                        variants={isMobile ? undefined : itemVariants}
+                    >
                         <Link
                             to="/career"
                             className="inline-block text-white font-semibold py-3 px-8 rounded-full transition-all hover:brightness-110"

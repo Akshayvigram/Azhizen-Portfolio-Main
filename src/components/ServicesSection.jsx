@@ -40,10 +40,14 @@ const ServicesSection = () => {
     <section
       id="services"
       className="
-        min-h-screen
-        px-8
-        pt-[60px]
-        pb-[80px]
+        min-h-0
+        sm:min-h-screen
+        px-4
+        xs:px-8
+        pt-[24px]
+        sm:pt-[60px]
+        pb-[16px]
+        sm:pb-[80px]
         bg-gradient-to-b
         from-[#081125]
         via-[#122247]
@@ -57,66 +61,124 @@ const ServicesSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-[1400px] mx-auto w-full flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-6 px-4"
+        className="max-w-[1400px] mx-auto w-full mb-[32px] sm:mb-[52px] px-4 text-left"
       >
-        {/* Left Side: Title & Subtitle */}
-        <div className="text-left">
+        {/* Top Row: Title on Left, Button on Right */}
+        <div className="flex flex-row justify-between items-center w-full mb-1">
           <h2
             className="
               !text-white
-              text-[38px]
+              text-[28px]
+              sm:text-[38px]
               font-bold
-              mb-1
+              m-0
               font-[Poppins]
             "
           >
             Our Service
           </h2>
 
-          <p
-            className="
-              text-[#FFFFFF]
-              text-[16px]
-              font-light
-              font-[Poppins]
-            "
-          >
-            These are the core service that we provide to you
-          </p>
+          <div className="shrink-0 flex items-center justify-end -translate-y-[4px] sm:translate-y-0">
+            {/* Large Button for Desktop */}
+            <button
+              onClick={() => navigate("/services")}
+              className="
+                hidden
+                sm:block
+                px-8
+                py-[14px]
+                bg-gradient-to-r
+                from-[#1877F2]
+                to-[#00B4D9]
+                text-white
+                border-none
+                rounded-[10px]
+                text-[16px]
+                font-semibold
+                tracking-[0.02em]
+                transition-all
+                duration-300
+                shadow-[0_6px_18px_rgba(24,119,242,0.25)]
+                hover:-translate-y-[2px]
+                hover:shadow-[0_14px_34px_rgba(24,119,242,0.35)]
+                hover:brightness-110
+                font-[Poppins]
+                whitespace-nowrap
+                cursor-pointer
+              "
+            >
+              Explore All →
+            </button>
+
+            {/* Small Icon Button for Mobile */}
+            <button
+              onClick={() => navigate("/services")}
+              className="
+                block
+                sm:hidden
+                w-10
+                h-10
+                rounded-full
+                bg-gradient-to-r
+                from-[#1877F2]
+                to-[#00B4D9]
+                text-white
+                border-none
+                flex
+                items-center
+                justify-center
+                shadow-[0_4px_12px_rgba(24,119,242,0.3)]
+                active:scale-95
+                transition-all
+                cursor-pointer
+              "
+              aria-label="Explore all services"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Right Side: Explore All Button */}
-        <div>
-          <button
-            onClick={() => navigate("/services")}
-            className="
-              px-8
-              py-[14px]
-              bg-gradient-to-r
-              from-[#1877F2]
-              to-[#00B4D9]
-              text-white
-              border-none
-              rounded-[10px]
-              text-[16px]
-              font-semibold
-              tracking-[0.02em]
-              transition-all
-              duration-300
-              shadow-[0_6px_18px_rgba(24,119,242,0.25)]
-              hover:-translate-y-[2px]
-              hover:shadow-[0_14px_34px_rgba(24,119,242,0.35)]
-              hover:brightness-110
-              font-[Poppins]
-              whitespace-nowrap
-            "
-          >
-            Explore All →
-          </button>
-        </div>
+        {/* Bottom Row: Subtitle */}
+        <p
+          className="
+            text-[#FFFFFF]
+            text-[12.5px]
+            xs:text-[13px]
+            sm:text-[14.5px]
+            md:text-[16px]
+            font-light
+            font-[Poppins]
+            whitespace-nowrap
+            m-0
+          "
+        >
+          These are the core service that we provide to you
+        </p>
       </motion.div>
 
       {/* ── Cards ── */}
+      <style>{`
+        .services-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        .services-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -127,9 +189,20 @@ const ServicesSection = () => {
         }}
         className="
           flex
-          gap-7
-          justify-center
-          flex-wrap
+          flex-row
+          md:flex-wrap
+          gap-4
+          md:gap-7
+          justify-start
+          md:justify-center
+          w-full
+          overflow-x-auto
+          md:overflow-x-visible
+          services-scroll
+          px-6
+          md:px-0
+          pb-4
+          md:pb-0
           max-w-[1400px]
           mx-auto
         "
@@ -144,9 +217,11 @@ const ServicesSection = () => {
             whileHover={{ y: -6, boxShadow: "0 16px 40px rgba(24,119,242,0.20)" }}
             className="
               bg-white
-              rounded-[22px]
+              rounded-[18px]
+              md:rounded-[22px]
               overflow-hidden
-              w-[320px]
+              w-[260px]
+              md:w-[320px]
               shrink-0
               flex
               flex-col
@@ -154,12 +229,12 @@ const ServicesSection = () => {
               border-slate-200
               transition-all
               duration-300
-              shadow-[0_10px_30px_rgba(0,0,0,0.15)]
+              shadow-[0_10px_30px_rgba(0,0,0,0.12)]
               cursor-default
             "
           >
             {/* Image */}
-            <div className="w-full h-[240px] overflow-hidden rounded-t-[22px]">
+            <div className="w-full h-[180px] md:h-[240px] overflow-hidden rounded-t-[18px] md:rounded-t-[22px]">
               <img
                 src={image}
                 alt={title}
@@ -175,10 +250,12 @@ const ServicesSection = () => {
             {/* Content */}
             <div
               className="
-                p-[24px_20px_28px]
+                p-4
+                md:p-[24px_20px_28px]
                 flex
                 flex-col
-                gap-[10px]
+                gap-[8px]
+                md:gap-[10px]
                 flex-1
               "
             >
@@ -219,15 +296,18 @@ const ServicesSection = () => {
                   navigate("/services", { state: { selectCardId: targetCardId } });
                 }}
                 className="
-                  mt-[14px]
+                  mt-3
+                  md:mt-[14px]
                   w-full
-                  py-[12px]
+                  py-[10px]
+                  md:py-[12px]
                   bg-gradient-to-r
                   from-[#1877F2]
                   to-[#00B4D9]
                   text-white
                   rounded-[10px]
-                  text-[15px]
+                  text-[14px]
+                  md:text-[15px]
                   font-semibold
                   tracking-[0.01em]
                   transition-all

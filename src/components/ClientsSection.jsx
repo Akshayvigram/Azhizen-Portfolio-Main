@@ -239,6 +239,7 @@ const ClientsSection = () => {
                   width: "100%",
                   height: "260px",
                   objectFit: "cover",
+                  objectPosition: "center top",
                   display: "block",
                   borderRadius: "8px",
                   boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
@@ -478,6 +479,7 @@ const ClientsSection = () => {
             width: 100% !important;
             max-width: 280px !important;
             object-fit: cover !important;
+            object-position: center top !important;
           }
 
           .testimonial-text-wrapper {
