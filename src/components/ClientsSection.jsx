@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Distinct Logos ── */
 const LOGOS = [
-  { src: "/Frame 1098.png",                                                          alt: "Azhizen Media" },
+  { src: "/Frame 1098.png",                                                          alt: "Azhizen Media", customHeight: "50px" },
   { src: "/logo1.png",                                                                 alt: "Azhizen" },
-  { src: "/Group 22.png",                                                             alt: "Ease Milker" },
+  // { src: "/Group 22.png",                                                             alt: "Ease Milker" },
   { src: "/ChatGPT_Image_Feb_14__2026__11_46_43_AM-removebg-preview 2 (1).png",      alt: "Azhizen Academy", customHeight: "72px" },
+  { src: "/KRT logo.webp",                                                           alt: "KRT", customHeight: "50px" },
 ];
 
 /* Duplicate multiple times to ensure the marquee fills even ultra-wide monitors without gaps */
