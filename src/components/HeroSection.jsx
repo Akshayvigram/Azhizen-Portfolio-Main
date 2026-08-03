@@ -5,6 +5,39 @@ import { collection, addDoc } from 'firebase/firestore';
 import '../App.css';
 import ariz from '../assets/ariz.webp';
 
+const BlockReveal = ({ children, color = "#1877F2", delay = 0, duration = 0.5, block = false }) => {
+  return (
+    <div 
+      className={`relative overflow-hidden ${block ? "block w-full" : "inline-block"}`} 
+      style={{ verticalAlign: "bottom" }}
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: delay + duration * 0.4, duration: 0.1 }}
+        className={block ? "w-full" : ""}
+      >
+        {children}
+      </motion.div>
+      <motion.div
+        initial={{ left: 0, width: "0%" }}
+        animate={{
+          left: ["0%", "0%", "100%"],
+          width: ["0%", "100%", "0%"]
+        }}
+        transition={{
+          delay: delay,
+          duration: duration,
+          times: [0, 0.5, 1],
+          ease: "easeInOut"
+        }}
+        className="absolute top-0 bottom-0 z-20 pointer-events-none"
+        style={{ backgroundColor: color }}
+      />
+    </div>
+  );
+};
+
 const HeroSection = () => {
   const handleContactClick = () => {
     window.location.href = "/contact-us";
@@ -22,25 +55,31 @@ const HeroSection = () => {
       tagline: "bright your future with azhizen academy",
       taglineColor: "#8A9CC0",
       titleContent: (
-        <div className="mb-4">
-          <h2
-            className="text-sm sm:text-base lg:text-lg xl:text-[20px] font-semibold tracking-wide uppercase"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
-          >
-            SHAPE YOUR FUTURE
-          </h2>
-          <h1
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
-          >
-            LEARN TODAY
-          </h1>
-          <h1
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
-          >
-            LEAD TOMORROW
-          </h1>
+        <div className="mb-4 flex flex-col items-start gap-1">
+          <BlockReveal color="#1B2B5E" delay={0.15}>
+            <h2
+              className="text-sm sm:text-base lg:text-lg xl:text-[20px] font-semibold tracking-wide uppercase m-0"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600, color: "#1B2B5E", letterSpacing: "0.04em" }}
+            >
+              SHAPE YOUR FUTURE
+            </h2>
+          </BlockReveal>
+          <BlockReveal color="#1B2B5E" delay={0.25}>
+            <h1
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight m-0 mt-1"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1B2B5E" }}
+            >
+              LEARN TODAY
+            </h1>
+          </BlockReveal>
+          <BlockReveal color="#F5A500" delay={0.35}>
+            <h1
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight m-0 mt-1"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#F5A500" }}
+            >
+              LEAD TOMORROW
+            </h1>
+          </BlockReveal>
         </div>
       ),
       subtitle: (
@@ -62,25 +101,31 @@ const HeroSection = () => {
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
       taglineColor: "#8592A6",
       titleContent: (
-        <div className="mb-2">
-          <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-white leading-[1.1] tracking-tight"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#ffffff" }}
-          >
-            Building
-          </h1>
-          <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1877F2" }}
-          >
-            Intelligent Solutions
-          </h1>
-          <h2 
-            className="text-lg sm:text-xl lg:text-[24px] xl:text-[28px] font-bold text-white leading-[1.2] tracking-tight mt-2 whitespace-nowrap"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#ffffff" }}
-          >
-            for a Smarter Tomorrow
-          </h2>
+        <div className="mb-2 flex flex-col items-start gap-1">
+          <BlockReveal color="#ffffff" delay={0.15}>
+            <h1 
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-white leading-[1.1] tracking-tight m-0"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#ffffff" }}
+            >
+              Building
+            </h1>
+          </BlockReveal>
+          <BlockReveal color="#1877F2" delay={0.25}>
+            <h1 
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight m-0 mt-1"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#1877F2" }}
+            >
+              Intelligent Solutions
+            </h1>
+          </BlockReveal>
+          <BlockReveal color="#ffffff" delay={0.35}>
+            <h2 
+              className="text-lg sm:text-xl lg:text-[24px] xl:text-[28px] font-bold text-white leading-[1.2] tracking-tight m-0 mt-2 whitespace-nowrap"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, color: "#ffffff" }}
+            >
+              for a Smarter Tomorrow
+            </h2>
+          </BlockReveal>
           <div className="w-20 sm:w-22 lg:w-[90px] h-[5px] rounded-full mt-2 mb-5" style={{ backgroundColor: "#1877F2" }}></div>
         </div>
       ),
@@ -101,26 +146,32 @@ const HeroSection = () => {
       tagline: "SOFTWARE DEVELOPMENT. HARDWARE INNOVATION.",
       taglineColor: "#8592A6",
       titleContent: (
-        <div className="mb-4">
-          <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#030A24" }}
-          >
-            Technology that works
-          </h1>
-          <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
-          >
-            <span style={{ color: "#030A24" }}>with nature. </span>
-            <span style={{ color: "#719E37" }}>Automate.</span>
-          </h1>
-          <h1 
-            className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight mt-1"
-            style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#719E37" }}
-          >
-            Optimize. Grow.
-          </h1>
+        <div className="mb-4 flex flex-col items-start gap-1">
+          <BlockReveal color="#030A24" delay={0.15}>
+            <h1 
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold text-[#030A24] leading-[1.1] tracking-tight m-0"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#030A24" }}
+            >
+              Technology that works
+            </h1>
+          </BlockReveal>
+          <BlockReveal color="#719E37" delay={0.25}>
+            <h1 
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight m-0 mt-1"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800 }}
+            >
+              <span style={{ color: "#030A24" }}>with nature. </span>
+              <span style={{ color: "#719E37" }}>Automate.</span>
+            </h1>
+          </BlockReveal>
+          <BlockReveal color="#719E37" delay={0.35}>
+            <h1 
+              className="text-2xl sm:text-3xl lg:text-[44px] xl:text-[52px] font-extrabold leading-[1.1] tracking-tight m-0 mt-1"
+              style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, color: "#719E37" }}
+            >
+              Optimize. Grow.
+            </h1>
+          </BlockReveal>
         </div>
       ),
       subtitle: (
@@ -258,40 +309,75 @@ const HeroSection = () => {
               }
             }}
             whileTap={{ cursor: "grabbing" }}
-            className="w-full bg-no-repeat relative flex items-center select-none"
+            className={`w-full bg-no-repeat relative flex items-center select-none h-[480px] xs:h-[500px] sm:h-auto sm:aspect-[1900/680] sm:min-h-[180px] slide-bg-${slideIndex}`}
             style={{ 
               backgroundImage: `url('${banners[slideIndex].bg}')`,
               backgroundSize: "cover",
-              backgroundPosition: banners[slideIndex].bgPosition || "center",
-              aspectRatio: "1900 / 680",
-              minHeight: "180px",
               cursor: "grab",
             }}
           >
-            <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-4 sm:py-8">
+            {/* Soft gradient overlay on mobile for text readability */}
+            <div 
+              className={`absolute inset-0 sm:hidden z-0 pointer-events-none ${
+                banners[slideIndex].id === 3
+                  ? "hidden"
+                  : `bg-gradient-to-r ${
+                      banners[slideIndex].contentPosition === "right"
+                        ? "from-transparent via-black/20 to-black/50"
+                        : banners[slideIndex].textColor === "text-white"
+                          ? "from-black/50 via-black/20 to-transparent"
+                          : "from-white/85 via-white/50 to-transparent"
+                    }`
+              }`}
+            />
+            <div className="max-w-7xl mx-auto w-full flex flex-col justify-center px-6 lg:px-16 py-4 sm:py-8 relative z-10">
               {banners[slideIndex].titleContent && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  key={slideIndex}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+                  transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
                   className={`max-w-lg lg:max-w-2xl text-left font-poppins ${banners[slideIndex].contentPosition === "right" ? "sm:ml-auto" : ""}`}
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
-                  <p 
-                    className="font-medium text-xs sm:text-sm tracking-[0.15em] uppercase mb-4"
-                    style={{ fontFamily: "Poppins, sans-serif", color: banners[slideIndex].taglineColor }}
-                  >
-                    {banners[slideIndex].tagline}
-                  </p>
+                  {banners[slideIndex].tagline && (
+                    <div className="mb-4">
+                      <BlockReveal 
+                        color={banners[slideIndex].id === 4 ? "#F5A500" : banners[slideIndex].id === 1 ? "#1877F2" : "#719E37"} 
+                        delay={0.05}
+                      >
+                        <p 
+                          className="font-medium text-xs sm:text-sm tracking-[0.15em] uppercase m-0 responsive-tagline"
+                          style={{ 
+                            fontFamily: "Poppins, sans-serif", 
+                            "--tagline-color": banners[slideIndex].taglineColor,
+                            "--tagline-color-mobile": banners[slideIndex].textColor === "text-white" ? banners[slideIndex].taglineColor : "#334155"
+                          }}
+                        >
+                          {banners[slideIndex].tagline}
+                        </p>
+                      </BlockReveal>
+                    </div>
+                  )}
 
                   {banners[slideIndex].titleContent}
 
-                  <p 
-                    className={`${banners[slideIndex].textColor || "text-[#1E293B]"} text-xs sm:text-sm lg:text-[16px] max-w-md lg:max-w-xl mb-6 leading-[1.6] font-normal`}
-                    style={{ fontFamily: "Poppins, sans-serif" }}
-                  >
-                    {banners[slideIndex].subtitle}
-                  </p>
+                  {banners[slideIndex].subtitle && (
+                    <div className="mb-6">
+                      <BlockReveal 
+                        color={banners[slideIndex].id === 4 ? "#F5A500" : banners[slideIndex].id === 1 ? "#1877F2" : "#719E37"} 
+                        delay={0.45}
+                        block={true}
+                      >
+                        <p 
+                          className={`${banners[slideIndex].textColor || "text-[#1E293B]"} text-xs sm:text-sm lg:text-[16px] max-w-md lg:max-w-xl m-0 leading-[1.6] font-normal`}
+                          style={{ fontFamily: "Poppins, sans-serif" }}
+                        >
+                          {banners[slideIndex].subtitle}
+                        </p>
+                      </BlockReveal>
+                    </div>
+                  )}
 
                   {banners[slideIndex].buttonText && (
                     <motion.button
@@ -319,7 +405,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="absolute bottom-6 sm:bottom-8 lg:bottom-10 right-4 sm:right-8 lg:right-12 z-10 flex flex-col items-end"
+                className="hidden sm:flex absolute bottom-6 sm:bottom-8 lg:bottom-10 right-4 sm:right-8 lg:right-12 z-10 flex flex-col items-end"
               >
                 <span 
                   className="text-black font-bold text-xs sm:text-sm lg:text-base mb-1.5 tracking-tight"
@@ -328,7 +414,7 @@ const HeroSection = () => {
                   Azhizen Media
                 </span>
                 <motion.a
-                  href="tel:9874563210"
+                  href="tel:+918300233988"
                   whileHover={{ 
                     scale: 1.05, 
                     boxShadow: "0 10px 20px rgba(229, 57, 0, 0.4)",
@@ -338,7 +424,7 @@ const HeroSection = () => {
                   className="bg-[#E53900] text-white font-bold px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs lg:text-sm no-underline shadow-md inline-block cursor-pointer transition-all border-none"
                   style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#E53900" }}
                 >
-                  Call now: 9874563210
+                  Call now: +91 83002 33988
                 </motion.a>
               </motion.div>
             )}
@@ -362,22 +448,22 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Mobile View */}
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="block sm:hidden px-4 py-4 mt-2 text-center"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="block sm:hidden px-6 pt-12 pb-6 text-center"
       >
         <div className="max-w-md mx-auto">
           <h1
-            className="text-2xl font-bold text-black leading-tight mb-2"
+            className="text-[30px] font-bold text-black leading-tight mb-4"
             style={{ fontFamily: "Poppins, sans-serif" }}
           >
-            <span className="text-blue-500" style={{ color: "#1877F2" }}>Let's</span> Pioneer.Produce.Propel <br />
+            <span className="text-blue-500" style={{ color: "#1877F2" }}>Let's</span> Pioneer. Produce. Propel <br />
             Innovate with <span className="text-blue-500" style={{ color: "#1877F2" }}>Azhizen</span>
           </h1>
-          <p className="text-xs sm:text-sm text-gray-600 mb-3 px-2 font-normal">
+          <p className="text-sm text-gray-600 mb-6 px-2 font-normal leading-relaxed">
             Innovate with Azhizen
             We're a product-driven tech company redefining what's possible.
             From smart software to AI-powered hardware, we build bold solutions.
@@ -387,7 +473,7 @@ const HeroSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
-            className="rounded text-white px-4 py-2 text-xs cursor-pointer border-none"
+            className="rounded-[10px] text-white px-6 py-3 text-sm font-semibold cursor-pointer border-none transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.2)] font-[Poppins]"
             style={{ background: "linear-gradient(135deg, #1877F2 0%, #0F5FD4 100%)" }}
             onClick={handleCareerClick}
           >
@@ -401,9 +487,10 @@ const HeroSection = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-8 relative z-10">
           <div className="flex-1 max-w-2xl relative z-10 text-left">
             <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-black leading-tight mb-6"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
@@ -413,9 +500,10 @@ const HeroSection = () => {
             </motion.h1>
 
             <motion.p 
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
               className="text-gray-600 mb-8 max-w-sm sm:max-w-md lg:max-w-lg 2xl:max-w-xl text-sm lg:text-base 2xl:text-lg font-normal"
             >
               Innovate with Azhizen
@@ -430,8 +518,9 @@ const HeroSection = () => {
 
           {/* Right Image Container */}
           <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex-1 w-full lg:max-w-[500px] xl:max-w-[600px] flex justify-end relative z-10 lg:left-12 xl:left-20 2xl:left-28"
           >
@@ -477,6 +566,41 @@ const HeroSection = () => {
     .bg-white.w-full.overflow-x-hidden {
       min-height: 40vh;
       overflow: hidden;
+    }
+    .slide-bg-0 {
+      background-position: right 30% center;
+    }
+    .slide-bg-1 {
+      background-position: left 20% center;
+    }
+    .slide-bg-2 {
+      background-position: right 35% center;
+    }
+    .slide-bg-3 {
+      background-position: right 35% center;
+    }
+
+    .responsive-tagline {
+      color: var(--tagline-color) !important;
+    }
+
+    @media (max-width: 640px) {
+      .slide-bg-0 {
+        background-position: right 25% center;
+      }
+      .slide-bg-1 {
+        background-position: left 10% center;
+      }
+      .slide-bg-2 {
+        background-position: right 5% center;
+      }
+      .slide-bg-3 {
+        background-position: 48% center;
+        background-size: 240% 100% !important;
+      }
+      .responsive-tagline {
+        color: var(--tagline-color-mobile) !important;
+      }
     }
   `}
       </style>

@@ -220,7 +220,7 @@ const Careers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
       {/* <Navbar /> */}
 
       <main id="career-section-container">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Laptop, Palette, Smartphone, Check } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
@@ -43,6 +43,64 @@ const MarketingServices = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeCard, setActiveCard] = useState(1);
+
+  // Mobile Auto-scrolling carousel effect (cycles active card every 3s)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveCard((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [activeCard]);
+
+  // 3D Carousel positions for mobile view (returns matching translate, scale, zIndex, rotate, and opacity)
+  const getCardStyles = (cardIndex) => {
+    let position = 0; // 0: Center, -1: Left, 1: Right
+    if (activeCard === cardIndex) {
+      position = 0;
+    } else if (
+      (activeCard === 0 && cardIndex === 2) || 
+      (activeCard === 1 && cardIndex === 0) || 
+      (activeCard === 2 && cardIndex === 1)
+    ) {
+      position = -1;
+    } else {
+      position = 1;
+    }
+
+    return {
+      x: position === 0 ? 0 : position === -1 ? -95 : 95,
+      y: position === 0 ? -15 : 15,
+      scale: position === 0 ? 1 : 0.82,
+      zIndex: position === 0 ? 40 : 20,
+      rotate: position === 0 ? 0 : position === -1 ? -8 : 8,
+      opacity: position === 0 ? 1 : 0.85,
+    };
+  };
+
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const getGridCardVariants = (index) => ({
+    hidden: isMobile
+      ? { opacity: 0, x: index % 2 === 0 ? -100 : 100 }
+      : { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: isMobile
+        ? { duration: 0.6, ease: "easeOut" }
+        : { duration: 0.6, ease: "easeOut", delay: index * 0.1 }
+    }
+  });
 
   const handleApplyClick = (service) => {
     setSelectedService(service);
@@ -310,40 +368,29 @@ const MarketingServices = () => {
             Explore Azhizen Acedemy <ArrowUpRight />
           </motion.button>
 
-          {/* Interactive Hand of Cards Container */}
+          {/* Interactive 3D Carousel Cards Container */}
           <div className="relative w-full h-[320px] xs:h-[350px] sm:h-[400px] flex items-center justify-center overflow-visible select-none mt-2">
             {/* Card 0: Left Card (Image card) */}
             <motion.div
-              animate={{
-                rotate: activeCard === 0 ? 0 : -15,
-                y: activeCard === 0 ? 0 : 20,
-                x: activeCard === 0 ? 15 : -35,
-                scale: activeCard === 0 ? 1 : 0.8,
-                zIndex: activeCard === 0 ? 40 : 10,
-              }}
-              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              animate={getCardStyles(0)}
+              transition={{ type: "spring", stiffness: 100, damping: 16 }}
               onClick={() => setActiveCard(0)}
-              className="absolute left-[8%] sm:left-[18%] top-[10%] w-[190px] h-[190px] xs:w-[210px] xs:h-[210px] shrink-0 cursor-pointer"
+              className="absolute w-[220px] xs:w-[245px] h-[290px] xs:h-[320px] shrink-0 cursor-pointer rounded-3xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,.15)]"
             >
               <img
                 src="/63f3b2d49cbe4d045aafdb6f4177d911f7ed72ff.png"
                 alt="What We Do — Azhizen"
-                className="w-full h-full object-cover rounded-[20px] shadow-[6px_8px_20px_rgba(0,0,0,0.25)]"
+                className="w-full h-full object-cover"
               />
             </motion.div>
 
             {/* Card 1: Center Card (Marketing Service) */}
             <motion.div
-              animate={{
-                rotate: activeCard === 1 ? 0 : (activeCard === 0 ? 6 : -6),
-                y: activeCard === 1 ? -15 : 15,
-                scale: activeCard === 1 ? 1 : 0.84,
-                zIndex: activeCard === 1 ? 40 : 20,
-              }}
-              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              animate={getCardStyles(1)}
+              transition={{ type: "spring", stiffness: 100, damping: 16 }}
               onClick={() => setActiveCard(1)}
-              className="absolute w-[220px] xs:w-[245px] bg-gradient-to-b from-slate-100 to-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] p-4 flex flex-col cursor-pointer"
-              style={{ minHeight: '290px' }}
+              className="absolute w-[220px] xs:w-[245px] bg-gradient-to-b from-slate-100 to-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] p-4 flex flex-col cursor-pointer text-left"
+              style={{ minHeight: '290px', height: '290px' }}
             >
               <div
                 className="self-center flex items-center bg-white px-4 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.06)] mb-2"
@@ -375,18 +422,13 @@ const MarketingServices = () => {
 
             {/* Card 2: Right Card (Billing System) */}
             <motion.div
-              animate={{
-                rotate: activeCard === 2 ? 0 : 15,
-                y: activeCard === 2 ? 0 : 20,
-                x: activeCard === 2 ? -15 : 35,
-                scale: activeCard === 2 ? 1 : 0.8,
-                zIndex: activeCard === 2 ? 40 : 10,
-              }}
-              transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              animate={getCardStyles(2)}
+              transition={{ type: "spring", stiffness: 100, damping: 16 }}
               onClick={() => setActiveCard(2)}
-              className="absolute right-[8%] sm:right-[18%] top-[10%] w-[190px] h-[180px] xs:w-[210px] xs:h-[200px] bg-white rounded-[20px] shadow-[-6px_8px_20px_rgba(0,0,0,0.20)] p-4 flex flex-col items-center justify-between cursor-pointer"
+              className="absolute w-[220px] xs:w-[245px] bg-white rounded-3xl shadow-[0_15px_45px_rgba(0,0,0,.15)] p-4 flex flex-col items-center justify-between cursor-pointer"
+              style={{ minHeight: '290px', height: '290px' }}
             >
-              <h3 style={{ color: '#050505' }} className="font-poppins font-medium text-[12px] leading-snug text-center w-full mb-1">
+              <h3 style={{ color: '#050505' }} className="font-poppins font-semibold text-[15px] leading-snug text-center w-full mb-1">
                 Advanced Billing System<br />for Modern Businesses
               </h3>
 
@@ -394,11 +436,11 @@ const MarketingServices = () => {
                 <img
                   src="/64e37823845fcd721b630868cf1244cdfca89c9d.png"
                   alt="Billing Dashboard"
-                  className="w-[85px] h-[85px] object-contain"
+                  className="w-[135px] h-[135px] object-contain"
                 />
               </div>
 
-              <div style={{ color: '#050505' }} className="font-poppins font-medium text-[12px] text-center mt-auto">
+              <div style={{ color: '#050505' }} className="font-poppins font-medium text-[13px] text-center mt-auto">
                 Grow your Business
               </div>
             </motion.div>
@@ -458,10 +500,10 @@ const MarketingServices = () => {
 
           {/* Heading with explicit line breaks and wider container to enforce two lines */}
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="font-poppins font-bold text-[32px] sm:text-[40px] md:text-[48px] text-[#050505] leading-tight max-w-[1200px] text-center mb-4 mx-auto"
           >
             Delivering strategic, creative, and data-<br className="hidden md:block" />
@@ -470,10 +512,10 @@ const MarketingServices = () => {
 
           {/* Paragraph with explicit line breaks */}
           <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
             className="font-poppins font-normal text-[15px] text-gray-500 max-w-[700px] text-center mb-8 leading-relaxed mx-auto"
           >
             We offer a comprehensive suite of creative services designed to<br className="hidden md:block" />
@@ -481,28 +523,32 @@ const MarketingServices = () => {
           </motion.p>
 
           {/* Explore Button */}
-          <motion.button
+          <motion.a
+            href="https://media.azhizen.com/#services"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[12px] transition-all duration-200 shadow-[0_4px_14px_rgba(24,119,242,0.3)] flex items-center gap-2 cursor-pointer mb-16"
+            className="!bg-[#1877F2] hover:!bg-[#1565C0] text-white font-poppins font-semibold text-[16px] px-8 py-3.5 rounded-[12px] transition-all duration-200 shadow-[0_4px_14px_rgba(24,119,242,0.3)] flex items-center gap-2 cursor-pointer mb-16 no-underline"
           >
             Explore Azhizen Media <ArrowUpRight />
-          </motion.button>
+          </motion.a>
 
           {/* ── SERVICES GRID ── */}
-          <motion.div
-            variants={cardsContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-4"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mt-4">
             {marketingServices.map((service, index) => (
-              <motion.div key={index} variants={cardVariants} className="h-full">
+              <motion.div
+                key={index}
+                variants={getGridCardVariants(index)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                className="h-full"
+              >
                 <ServiceCard
                   title={service.title}
                   description={service.description}
@@ -511,7 +557,7 @@ const MarketingServices = () => {
                 />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
         </div>
       </section>

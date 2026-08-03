@@ -28,6 +28,16 @@ const ServicePage = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookingForm, setBookingForm] = useState({ name: "", company: "", email: "", phone: "", details: "" });
 
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const initialCards = [
     {
       id: 1,
@@ -171,6 +181,20 @@ const ServicePage = () => {
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } },
   };
 
+  const getCardVariants = (index) => ({
+    hidden: isMobile
+      ? { opacity: 0, x: index % 2 === 0 ? -100 : 100 }
+      : { opacity: 0, y: 40 },
+    show: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: isMobile
+        ? { duration: 0.6, ease: "easeOut" }
+        : { type: "spring", stiffness: 80, damping: 15, delay: index * 0.08 }
+    }
+  });
+
   return (
     <div className="font-poppins bg-[#F4F6FB] min-h-screen pt-16 overflow-x-hidden">
       
@@ -225,9 +249,9 @@ const ServicePage = () => {
         {/* Center Main Content */}
         <div className="relative z-20 text-center max-w-[850px] mx-auto pt-6 pb-20 md:pb-28 -translate-y-4 sm:-translate-y-8 md:-translate-y-12">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] font-semibold leading-tight tracking-tight"
           >
             <span className="text-[#0274D4]">Innovative Software Solutions</span>
@@ -236,9 +260,9 @@ const ServicePage = () => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
             className="text-[14px] sm:text-[16px] text-slate-600 font-normal leading-relaxed max-w-[680px] mx-auto mt-6 px-2"
           >
             We build secure, scalable, and high performance software solutions that empower
@@ -322,21 +346,16 @@ const ServicePage = () => {
         </div>
 
         {/* Cards Grid (Perfect Responsive Columns matching specifications) */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="services-grid"
-        >
+        <div className="services-grid">
           <AnimatePresence>
-            {displayedCards.map((card) => (
+            {displayedCards.map((card, index) => (
               <motion.div
                 key={card.id}
                 layout
-                variants={cardVariants}
+                variants={getCardVariants(index)}
                 initial="hidden"
-                animate="show"
+                whileInView="show"
+                viewport={{ once: true, margin: "-50px" }}
                 exit={{ opacity: 0, scale: 0.9, y: 15 }}
                 className="service-card cursor-pointer"
                 onClick={() => setSelectedCard(card)}
@@ -380,7 +399,7 @@ const ServicePage = () => {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* View More Button (Royal Blue button: Width 170px, Height 50px, bg #2563EB) */}
         <div className="flex justify-center mt-[30px]">

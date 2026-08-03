@@ -24,7 +24,7 @@ const FooterSection = () => {
             <a href="https://in.linkedin.com/company/azhizensolutions?trk=public_profile_topcard-current-company" target="_blank" rel="noopener noreferrer" className="hover:scale-110 hover:brightness-125 transition-all">
               <img src="/ri_linkedin-fill.png" alt="LinkedIn" className="w-[24px] h-[24px] object-contain"/>
             </a>
-            <a href="https://wa.me/919750603988" target="_blank" rel="noopener noreferrer" className="hover:scale-110 hover:brightness-125 transition-all">
+            <a href="https://wa.me/918300233988" target="_blank" rel="noopener noreferrer" className="hover:scale-110 hover:brightness-125 transition-all">
               <img src="/ri_whatsapp-line.png" alt="WhatsApp" className="w-[24px] h-[24px] object-contain"/>
             </a>
             <a href="https://www.youtube.com/@azhizensolutions" target="_blank" rel="noopener noreferrer" className="hover:scale-110 hover:brightness-125 transition-all">
@@ -97,15 +97,15 @@ const FooterSection = () => {
           <h4 className="text-[18px] font-bold text-white mb-6">Contact Info</h4>
           <ul className="space-y-5 text-[15px] font-medium">
             <li className="flex items-start gap-4">
-              <a href="tel:+919750603988" className="flex items-start gap-4 hover:text-[#1877F2] transition-colors">
+              <a href="tel:+918300233988" className="flex items-start gap-4 hover:text-[#1877F2] transition-colors">
                 <img src="/Vector (1).png" alt="Call" className="w-[18px] h-[18px] mt-0.5 object-contain filter brightness-200"/>
-                <span>+91 9750603988</span>
+                <span>+91 83002 33988</span>
               </a>
             </li>
             <li className="flex items-start gap-4">
-              <a href="mailto:azhizensolutions@gmail.com" className="flex items-start gap-4 hover:text-[#1877F2] transition-colors">
+              <a href="mailto:azhizensolutions@azhizen.com" className="flex items-start gap-4 hover:text-[#1877F2] transition-colors">
                 <img src="/material-symbols-light_mail-outline-rounded.png" alt="Mail" className="w-5 h-5 object-contain filter brightness-200"/>
-                <span>azhizensolutions@gmail.com</span>
+                <span>azhizensolutions@azhizen.com</span>
               </a>
             </li>
             <li className="flex items-start gap-4">

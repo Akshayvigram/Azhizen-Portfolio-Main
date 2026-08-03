@@ -56,7 +56,7 @@ const MAIN_COURSES = [
     title: "ROS2 With Python / C++ - Arduino + Sensors & Actuators",
     image: "/fee65732d062a4d091f6d379fb64ec6cbda7d0aa.png",
     categories: ["Trending Course", "Robotics", "Automation"],
-    price: "₹8,300.00",
+    price: "₹1,500.00",
     rating: 4.5,
     duration: "12 Weeks",
     level: "Beginner"
@@ -66,7 +66,7 @@ const MAIN_COURSES = [
     title: "VHDL/Verilog For Beginners - ASIC Flow Using Synopsys Tools",
     image: "/f640e38ff651cb30fe178c04f368275ec4244cd3.png",
     categories: ["Trending Course", "Automation"],
-    price: "₹8,300.00",
+    price: "₹1,800.00",
     rating: 4.5,
     duration: "12 Weeks",
     level: "Beginner"
@@ -76,7 +76,7 @@ const MAIN_COURSES = [
     title: "CEH (Certified Ethical Hacking) Prep - Bug Bounty & Web",
     image: "/21577a0198e0b3866b3688c799fd718d27783c98.png",
     categories: ["Trending Course", "Web Development"],
-    price: "₹8,300.00",
+    price: "₹1,650.00",
     rating: 4.5,
     duration: "12 Weeks",
     level: "Beginner"
@@ -86,7 +86,7 @@ const MAIN_COURSES = [
     title: "AI Artificial Intelligence Course",
     image: "/e248f34a7bfca4bdcb6f77caf7bf1438cdb51911.png",
     categories: ["Trending Course", "Artificial Intelligence AI"],
-    price: "₹8,300.00",
+    price: "₹2,000.00",
     rating: 4.5,
     duration: "12 Weeks",
     level: "Beginner"

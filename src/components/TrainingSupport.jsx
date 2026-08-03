@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── SVG Icons ────────────────────────────────────────────── */
@@ -52,6 +52,61 @@ const CheckIcon = () => (
     <path d="M6 11.5l3.5 3.5 6.5-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
+
+/* ─── Rolling Number Component for stats ─────────────────────── */
+const RollingNumber = ({ value }) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  const parsed = useMemo(() => {
+    const num = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
+    const suffix = value.replace(/[0-9]/g, "");
+    const hasLeadingZero = value.startsWith("0") && value.length > 1;
+    return { num, suffix, hasLeadingZero };
+  }, [value]);
+
+  const handleEnter = () => {
+    if (hasAnimated) return;
+    setHasAnimated(true);
+
+    let start = 0;
+    const end = parsed.num;
+    if (start === end) return;
+
+    const duration = 1500; // 1.5 seconds
+    const startTime = performance.now();
+
+    const updateNumber = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const easeProgress = progress * (2 - progress);
+      const current = Math.floor(easeProgress * (end - start) + start);
+
+      setCount(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(updateNumber);
+      }
+    };
+
+    requestAnimationFrame(updateNumber);
+  };
+
+  const displayVal = parsed.hasLeadingZero
+    ? String(count).padStart(2, "0")
+    : count;
+
+  return (
+    <motion.span
+      onViewportEnter={handleEnter}
+      viewport={{ once: true, margin: "-30px" }}
+    >
+      {displayVal}
+      {parsed.suffix}
+    </motion.span>
+  );
+};
 
 /* ─── Data ─────────────────────────────────────────────────── */
 const STATS = [
@@ -331,7 +386,7 @@ const TrainingSupport = () => {
               <div
                 className="text-[17px] sm:text-[26px] font-bold text-[#0d1b2a] leading-none tracking-tight"
               >
-                {s.value}
+                <RollingNumber value={s.value} />
               </div>
               <div
                 className="text-[10px] sm:text-[12px] text-gray-700 mt-1 sm:mt-1.5 font-medium leading-tight whitespace-nowrap md:whitespace-normal"

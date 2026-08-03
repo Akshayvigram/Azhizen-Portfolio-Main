@@ -29,7 +29,7 @@ const JobDetailDialog = ({ job, open, onOpenChange, onApply }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl gap-0 p-0 bg-white rounded-2xl overflow-hidden border-0 shadow-2xl">
+      <DialogContent className="max-w-2xl gap-0 p-0 bg-white rounded-2xl overflow-hidden border-0 shadow-2xl" style={{ fontFamily: "'Poppins', sans-serif" }}>
         <ScrollArea className="max-h-[88vh]">
 
           {/* ── Hero Header ─────────────────────────────────── */}
