@@ -262,7 +262,7 @@
         padding: 5px 11px;
         border-radius: 50px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
         font-family: inherit;
         outline: none;
       }
@@ -270,6 +270,13 @@
         border-color: #1877F2;
         color: #1877F2;
         background-color: #f0f7ff;
+      }
+      .azhizen-q-chip.azhizen-chip-highlight {
+        border-color: #1877F2;
+        color: #1877F2;
+        background-color: #e0f2fe;
+        box-shadow: 0 2px 8px rgba(24, 119, 242, 0.2);
+        transform: translateY(-1px);
       }
       .azhizen-q-chip:disabled {
         opacity: 0.55;
@@ -377,6 +384,11 @@
       @keyframes hint-fade-in {
         to { opacity: 1; transform: translateX(0); }
       }
+      @media (max-width: 767px) {
+        #azhizen-chat-hint {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -417,14 +429,18 @@
       </div>
 
       <!-- Quick Questions chips -->
-      <div class="azhizen-quick-qs">
-        <span class="azhizen-quick-qs-title">Suggested Questions</span>
-        <div class="azhizen-quick-chips">
-          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('services', 'What services do you offer?')">Our Services</button>
-          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('contact', 'How can I contact Azhizen?')">Contact Info</button>
-          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('courses', 'Do you offer courses or training?')">Academy & Training</button>
-          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('location', 'Where is Azhizen located?')">Office Location</button>
-          <button class="azhizen-q-chip" onclick="handleDynamicSuggestionClick('careers', 'Are you hiring right now?')">Open Careers</button>
+      <div class="azhizen-quick-qs" id="azhizen-quick-qs-container">
+        <span class="azhizen-quick-qs-title" id="azhizen-quick-qs-title">Suggested Questions</span>
+        <div class="azhizen-quick-chips" id="azhizen-quick-chips">
+          <button class="azhizen-q-chip" data-key="company" data-label="About Us" data-fulltext="Tell me about Azhizen Solutions" data-keywords="about company us azhizen who what profile mission vision story background" onclick="handleDynamicSuggestionClick('company', 'Tell me about Azhizen Solutions')">About Us</button>
+          <button class="azhizen-q-chip" data-key="services" data-label="Our Services" data-fulltext="What services do you offer?" data-keywords="services hardware software pcb iot firmware automation design marketing digital solutions" onclick="handleDynamicSuggestionClick('services', 'What services do you offer?')">Our Services</button>
+          <button class="azhizen-q-chip" data-key="projects" data-label="Our Projects" data-fulltext="Can I see your past projects or portfolio?" data-keywords="projects portfolio work products client showcase case studies apps" onclick="handleDynamicSuggestionClick('projects', 'Can I see your past projects or portfolio?')">Our Projects</button>
+          <button class="azhizen-q-chip" data-key="courses" data-label="Academy & Courses" data-fulltext="Do you offer courses or training?" data-keywords="courses academy training learn classes syllabus education workshop mentorship skills" onclick="handleDynamicSuggestionClick('courses', 'Do you offer courses or training?')">Academy & Courses</button>
+          <button class="azhizen-q-chip" data-key="internships" data-label="Internships" data-fulltext="Do you offer student internships or certifications?" data-keywords="internships intern certificate certification students college stipends program" onclick="handleDynamicSuggestionClick('internships', 'Do you offer student internships or certifications?')">Internships</button>
+          <button class="azhizen-q-chip" data-key="pricing" data-label="Pricing & Quote" data-fulltext="How much do your services or projects cost?" data-keywords="pricing price cost quote estimation commercial budget proposal rate packages consultation" onclick="handleDynamicSuggestionClick('pricing', 'How much do your services or projects cost?')">Pricing & Quote</button>
+          <button class="azhizen-q-chip" data-key="contact" data-label="Contact Info" data-fulltext="How can I contact Azhizen?" data-keywords="contact phone number email whatsapp call support reach talk inquiry" onclick="handleDynamicSuggestionClick('contact', 'How can I contact Azhizen?')">Contact Info</button>
+          <button class="azhizen-q-chip" data-key="location" data-label="Office Location" data-fulltext="Where is Azhizen located?" data-keywords="location address where office campus place namakkal tiruchengode map directions" onclick="handleDynamicSuggestionClick('location', 'Where is Azhizen located?')">Office Location</button>
+          <button class="azhizen-q-chip" data-key="careers" data-label="Open Careers" data-fulltext="Are you hiring right now?" data-keywords="careers jobs hiring apply developer designer intern openings vacancies recruitment join" onclick="handleDynamicSuggestionClick('careers', 'Are you hiring right now?')">Open Careers</button>
         </div>
       </div>
 
@@ -538,16 +554,66 @@
           reply: "Azhizen Solutions is a product-driven technology company engineering custom software, hardware, and IoT systems to solve real-world challenges with precision. We are dedicated to bridging the academic gap through Azhizen Academy and building next-generation digital solutions.",
           suggestions: [
             { key: "services", label: "Our Services" },
-            { key: "courses", label: "Academy & Training" },
-            { key: "careers", label: "Open Careers" }
+            { key: "projects", label: "Our Projects" },
+            { key: "courses", label: "Academy & Courses" },
+            { key: "contact", label: "Contact Info" }
           ]
         },
         services: {
           reply: "We design and build complete end-to-end technology stacks:\n\n• <b>Custom Hardware Design</b>: Embedded systems schematics, multilayer PCB layout, and industrial prototyping.\n• <b>AI/ML & Firmware Integration</b>: Microcontroller logic (STM32, ESP32, Arduino), DSP, and edge computer vision.\n• <b>IoT & Smart Automation</b>: Secure sensor telemetry, cloud database dashboards, and remote controls.\n• <b>Marketing Services</b>: Strategic branding, search engine optimization (SEO), and digital analytics.",
           suggestions: [
+            { key: "projects", label: "Our Projects" },
+            { key: "pricing", label: "Pricing & Quote" },
             { key: "contact", label: "Contact Info" },
-            { key: "location", label: "Office Location" },
-            { key: "careers", label: "Open Careers" }
+            { key: "location", label: "Office Location" }
+          ]
+        },
+        projects: {
+          reply: "We have built innovative products across hardware and software domains:\n\n• <b>Smart Diary Tech</b>: Smart IoT-enabled hardware ecosystem and web telemetry dashboard.\n• <b>Industrial IoT Controllers</b>: Sensor monitoring node with real-time cloud data logging.\n• <b>Custom Enterprise Web & Mobile Apps</b>: Responsive full-stack React and Node applications.\n• <b>PCB Design Projects</b>: Multi-layer custom PCBs for consumer & industrial automation.",
+          suggestions: [
+            { key: "services", label: "Our Services" },
+            { key: "pricing", label: "Pricing & Quote" },
+            { key: "contact", label: "Contact Info" }
+          ]
+        },
+        courses: {
+          reply: "Through <b>Azhizen Academy</b>, we offer hands-on engineering training and labs:\n\n• <b>Core Electronics</b>: PCB design, schematic reading, and hardware debugging.\n• <b>Embedded Systems</b>: Firmware programming, sensor protocols, and IoT nodes.\n• <b>Software Development</b>: Full stack programming, React, and mobile app design.\n\nAll courses include dedicated placement assistance and mentorship from working professionals.",
+          suggestions: [
+            { key: "internships", label: "Internships" },
+            { key: "careers", label: "Open Careers" },
+            { key: "contact", label: "Contact Info" }
+          ]
+        },
+        internships: {
+          reply: "Yes! We offer <b>Engineering Internships</b> & <b>Industrial Certification Programs</b> for college students:\n\n• Hands-on work on live hardware & software projects.\n• Verified internship completion certificate & letter of recommendation.\n• Flexible offline (campus lab) & hybrid modes.\n\nCandidates can apply on our Careers page or email resumes directly!",
+          suggestions: [
+            { key: "courses", label: "Academy & Courses" },
+            { key: "careers", label: "Open Careers" },
+            { key: "contact", label: "Contact Info" }
+          ]
+        },
+        pricing: {
+          reply: "Our project pricing is customized based on scope, hardware complexity, software features, and project timeline.\n\n• We offer free initial technical consultations and project estimates.\n• Special student and startup packages are available.\n\nReach out to us via <a href='tel:+919750603988'>+91 9750603988</a> or email <a href='mailto:azhizensolutions@gmail.com'>azhizensolutions@gmail.com</a> for a quick quote!",
+          suggestions: [
+            { key: "services", label: "Our Services" },
+            { key: "contact", label: "Contact Info" },
+            { key: "projects", label: "Our Projects" }
+          ]
+        },
+        iot: {
+          reply: "Our hardware engineering team specializes in custom IoT solutions:\n\n• <b>Schematic & PCB Layout</b>: High-speed, multi-layer circuit design.\n• <b>Embedded Firmware</b>: ESP32, STM32, PIC, and AVR logic development.\n• <b>Sensor Integrations</b>: Industrial sensors, wireless protocols (BLE, LoRa, Wi-Fi, Cellular).\n• <b>Cloud Dashboards</b>: Real-time telemetry monitoring via web apps.",
+          suggestions: [
+            { key: "services", label: "Our Services" },
+            { key: "projects", label: "Our Projects" },
+            { key: "pricing", label: "Pricing & Quote" }
+          ]
+        },
+        software: {
+          reply: "We build modern, scalable web applications and mobile apps:\n\n• <b>Frontend</b>: React.js, Vite, Tailwind CSS, high-performance UI/UX.\n• <b>Backend</b>: Node.js, Express, Python REST APIs, Firebase, and SQL/MongoDB databases.\n• <b>Mobile Apps</b>: Cross-platform iOS & Android solutions.\n• <b>Cloud & DevOps</b>: Vercel, Firebase hosting, and cloud deployment.",
+          suggestions: [
+            { key: "services", label: "Our Services" },
+            { key: "projects", label: "Our Projects" },
+            { key: "pricing", label: "Pricing & Quote" }
           ]
         },
         contact: {
@@ -555,15 +621,7 @@
           suggestions: [
             { key: "location", label: "Office Location" },
             { key: "services", label: "Our Services" },
-            { key: "courses", label: "Academy & Training" }
-          ]
-        },
-        courses: {
-          reply: "Through <b>Azhizen Academy</b>, we offer hands-on engineering training and labs:\n\n• <b>Core Electronics</b>: PCB design, schematic reading, and hardware debugging.\n• <b>Embedded Systems</b>: Firmware programming, sensor protocols, and IoT nodes.\n• <b>Software Development</b>: Full stack programming, React, and mobile app design.\n\nAll courses include dedicated placement assistance and mentorship from working professionals.",
-          suggestions: [
-            { key: "careers", label: "Open Careers" },
-            { key: "contact", label: "Contact Info" },
-            { key: "services", label: "Our Services" }
+            { key: "courses", label: "Academy & Courses" }
           ]
         },
         location: {
@@ -576,16 +634,18 @@
         careers: {
           reply: "Azhizen is always looking for innovators! Current openings at our Tiruchengode office:\n\n• <b>Full Stack Developer</b> (React, Node.js)\n• <b>IoT & Embedded Engineer</b> (PCB Design, Firmware)\n• <b>UI/UX Designer</b> (Figma, Prototyping)\n• <b>Data Scientist / ML Intern</b>\n\nCandidates can apply directly on our Careers page or email resumes to <a href='mailto:azhizensolutions@gmail.com'>azhizensolutions@gmail.com</a>.",
           suggestions: [
+            { key: "internships", label: "Internships" },
             { key: "contact", label: "Contact Info" },
-            { key: "services", label: "Our Services" },
-            { key: "courses", label: "Academy & Training" }
+            { key: "courses", label: "Academy & Courses" }
           ]
         },
         default: {
-          reply: "I want to make sure I give you the best information. I can assist you with:\n\n• Details about our <b>Company</b> and <b>Services</b>\n• Contact details and <b>Office Location</b>\n• Azhizen <b>Academy</b> courses and engineering training\n• Open <b>Careers</b> and job applications\n\nWhat would you like to explore next?",
+          reply: "I want to make sure I give you the best information. I can assist you with:\n\n• Details about our <b>Company</b>, <b>Services</b>, and <b>Projects</b>\n• Contact details, <b>Pricing</b>, and <b>Office Location</b>\n• Azhizen <b>Academy</b> courses, <b>Internships</b> & engineering training\n• Open <b>Careers</b> and job applications\n\nWhat would you like to explore next?",
           suggestions: [
-            { key: "company", label: "About the Company" },
+            { key: "company", label: "About Us" },
             { key: "services", label: "Our Services" },
+            { key: "projects", label: "Our Projects" },
+            { key: "courses", label: "Academy & Courses" },
             { key: "contact", label: "Contact Info" }
           ]
         }
@@ -647,7 +707,113 @@
         messagesBox.scrollTop = messagesBox.scrollHeight;
       }
 
+      const KEYWORD_MAP = {
+        company: ["company", "about", "us", "azhizen", "who", "what", "profile", "mission", "vision", "story", "background"],
+        services: ["services", "hardware", "software", "pcb", "iot", "firmware", "automation", "design", "marketing", "digital", "solutions"],
+        projects: ["projects", "portfolio", "work", "products", "client", "showcase", "case", "studies", "apps"],
+        courses: ["courses", "academy", "training", "learn", "classes", "syllabus", "education", "workshop", "mentorship", "skills"],
+        internships: ["internships", "intern", "certificate", "certification", "students", "college", "stipends", "program"],
+        pricing: ["pricing", "price", "cost", "quote", "estimation", "commercial", "budget", "proposal", "rate", "packages", "consultation"],
+        iot: ["iot", "hardware", "embedded", "pcb", "sensor", "automation", "esp32", "stm32", "arduino", "microcontrollers", "telemetry"],
+        software: ["software", "web", "website", "app", "react", "node", "mobile", "fullstack", "frontend", "backend", "database"],
+        contact: ["contact", "phone", "number", "email", "whatsapp", "call", "support", "reach", "talk", "inquiry"],
+        location: ["location", "address", "where", "office", "campus", "place", "namakkal", "tiruchengode", "map", "directions"],
+        careers: ["careers", "jobs", "hiring", "apply", "developer", "designer", "intern", "openings", "vacancies", "recruitment", "join"]
+      };
+
+      const DEFAULT_SUGGESTIONS = [
+        { key: "company", label: "About Us", fullText: "Tell me about Azhizen Solutions" },
+        { key: "services", label: "Our Services", fullText: "What services do you offer?" },
+        { key: "projects", label: "Our Projects", fullText: "Can I see your past projects or portfolio?" },
+        { key: "courses", label: "Academy & Courses", fullText: "Do you offer courses or training?" },
+        { key: "internships", label: "Internships", fullText: "Do you offer student internships or certifications?" },
+        { key: "pricing", label: "Pricing & Quote", fullText: "How much do your services or projects cost?" },
+        { key: "contact", label: "Contact Info", fullText: "How can I contact Azhizen?" },
+        { key: "location", label: "Office Location", fullText: "Where is Azhizen located?" },
+        { key: "careers", label: "Open Careers", fullText: "Are you hiring right now?" }
+      ];
+
+      function filterSuggestedQuestions() {
+        const input = document.getElementById("azhizen-chat-input-field");
+        const container = document.getElementById("azhizen-quick-qs-container");
+        const chipsBox = document.getElementById("azhizen-quick-chips");
+        if (!input || !container || !chipsBox) return;
+
+        const query = input.value.trim().toLowerCase();
+        const chips = chipsBox.querySelectorAll(".azhizen-q-chip");
+
+        if (query === "") {
+          container.style.display = "block";
+          chips.forEach(chip => {
+            chip.style.display = "inline-block";
+            chip.classList.remove("azhizen-chip-highlight");
+          });
+          return;
+        }
+
+        let matchCount = 0;
+        chips.forEach(chip => {
+          const label = (chip.getAttribute("data-label") || chip.textContent).toLowerCase();
+          const fullText = (chip.getAttribute("data-fulltext") || "").toLowerCase();
+          const keywords = (chip.getAttribute("data-keywords") || "").toLowerCase();
+          const key = (chip.getAttribute("data-key") || "").toLowerCase();
+
+          const isMatch = label.includes(query) || 
+                          fullText.includes(query) || 
+                          keywords.includes(query) || 
+                          key.includes(query);
+
+          if (isMatch) {
+            chip.style.display = "inline-block";
+            chip.classList.add("azhizen-chip-highlight");
+            matchCount++;
+          } else {
+            chip.style.display = "none";
+            chip.classList.remove("azhizen-chip-highlight");
+          }
+        });
+
+        if (matchCount > 0) {
+          container.style.display = "block";
+        } else {
+          container.style.display = "none";
+        }
+      }
+
+      function resetSuggestedQuestionsPool() {
+        const chipsBox = document.getElementById("azhizen-quick-chips");
+        const container = document.getElementById("azhizen-quick-qs-container");
+        if (!chipsBox) return;
+
+        let html = "";
+        DEFAULT_SUGGESTIONS.forEach(item => {
+          const keyWords = KEYWORD_MAP[item.key] ? KEYWORD_MAP[item.key].join(" ") : "";
+          const fullText = item.fullText || (
+            item.key === 'services' ? 'What services do you offer?' : 
+            item.key === 'contact' ? 'How can I contact Azhizen?' : 
+            item.key === 'courses' ? 'Do you offer courses or training?' : 
+            item.key === 'location' ? 'Where is Azhizen located?' : 
+            item.key === 'careers' ? 'Are you hiring right now?' : 
+            item.key === 'company' ? 'Tell me about Azhizen Solutions' : 
+            item.key === 'projects' ? 'Can I see your past projects or portfolio?' : 
+            item.key === 'internships' ? 'Do you offer student internships or certifications?' : 
+            item.key === 'pricing' ? 'How much do your services or projects cost?' : item.label
+          );
+          html += `<button class="azhizen-q-chip" data-key="${item.key}" data-label="${escapeHTML(item.label)}" data-fulltext="${escapeHTML(fullText)}" data-keywords="${keyWords}" onclick="handleDynamicSuggestionClick('${item.key}', '${escapeHTML(fullText)}')">${escapeHTML(item.label)}</button>`;
+        });
+
+        chipsBox.innerHTML = html;
+        if (container) container.style.display = "block";
+        filterSuggestedQuestions();
+      }
+
       function handleDynamicSuggestionClick(key, label) {
+        const inputField = document.getElementById("azhizen-chat-input-field");
+        if (inputField) {
+          inputField.value = "";
+        }
+        filterSuggestedQuestions();
+
         // Disable previous dynamic suggestion chips to prevent repeated clicks
         const rows = document.querySelectorAll(".azhizen-dynamic-suggestions-row");
         rows.forEach(row => {
@@ -671,6 +837,7 @@
           hideBotTypingIndicator();
           const qa = AZHIZEN_QAS[key] || AZHIZEN_QAS.default;
           renderBotResponseWithSuggestions(qa.reply, qa.suggestions);
+          resetSuggestedQuestionsPool();
         }, 600);
       }
 
@@ -709,7 +876,7 @@
           return {
             reply: "Hello! I am the Azhizen Assistant. How can I help you today? You can ask about our company, services, courses, or career opportunities!",
             suggestions: [
-              { key: "company", label: "About the Company" },
+              { key: "company", label: "About Us" },
               { key: "services", label: "Our Services" },
               { key: "contact", label: "Contact Info" }
             ]
@@ -734,28 +901,23 @@
           return {
             reply: "Goodbye! Thank you for chatting. Feel free to open this window again if you ever need help. Have a wonderful day!",
             suggestions: [
-              { key: "company", label: "About the Company" },
+              { key: "company", label: "About Us" },
               { key: "contact", label: "Contact Info" }
             ]
           };
         }
 
-        // 2. Fuzzy Keyword Matcher
-        const KEYWORD_MAP = {
-          company: ["company", "about", "azhizen", "who", "what", "profile", "mission", "vision"],
-          services: ["services", "hardware", "software", "pcb", "iot", "firmware", "automation", "design", "marketing"],
-          contact: ["contact", "phone", "number", "email", "whatsapp", "call", "support", "reach"],
-          courses: ["courses", "academy", "training", "learn", "classes", "placement", "skills"],
-          location: ["location", "address", "where", "office", "campus", "place", "namakkal", "tiruchengode"],
-          careers: ["careers", "jobs", "hiring", "apply", "developer", "designer", "intern", "openings"]
-        };
-
         // Score map keys based on word matches
         let scores = {
           company: 0,
           services: 0,
-          contact: 0,
+          projects: 0,
           courses: 0,
+          internships: 0,
+          pricing: 0,
+          iot: 0,
+          software: 0,
+          contact: 0,
           location: 0,
           careers: 0
         };
@@ -793,16 +955,29 @@
 
         // Fallback simple substring matches
         const query = cleanText;
-        if (query.includes("serv") || query.includes("pcb") || query.includes("iot")) return AZHIZEN_QAS.services;
-        if (query.includes("job") || query.includes("work")) return AZHIZEN_QAS.careers;
-        if (query.includes("course") || query.includes("class")) return AZHIZEN_QAS.courses;
-        if (query.includes("call") || query.includes("mail")) return AZHIZEN_QAS.contact;
+        if (query.includes("about") || query.includes("company") || query.includes("who")) return AZHIZEN_QAS.company;
+        if (query.includes("project") || query.includes("portfoli") || query.includes("work")) return AZHIZEN_QAS.projects;
+        if (query.includes("intern") || query.includes("certif")) return AZHIZEN_QAS.internships;
+        if (query.includes("price") || query.includes("cost") || query.includes("quote") || query.includes("budget")) return AZHIZEN_QAS.pricing;
+        if (query.includes("iot") || query.includes("hardware") || query.includes("pcb")) return AZHIZEN_QAS.iot;
+        if (query.includes("softwar") || query.includes("web") || query.includes("app")) return AZHIZEN_QAS.software;
+        if (query.includes("serv")) return AZHIZEN_QAS.services;
+        if (query.includes("job") || query.includes("career")) return AZHIZEN_QAS.careers;
+        if (query.includes("course") || query.includes("class") || query.includes("train")) return AZHIZEN_QAS.courses;
+        if (query.includes("call") || query.includes("mail") || query.includes("contact")) return AZHIZEN_QAS.contact;
+        if (query.includes("locat") || query.includes("address") || query.includes("where")) return AZHIZEN_QAS.location;
 
         return AZHIZEN_QAS.default;
       }
 
       function sendAzhizenUserMessage(text) {
         if (!text || text.trim() === "") return;
+
+        const inputField = document.getElementById("azhizen-chat-input-field");
+        if (inputField) {
+          inputField.value = "";
+        }
+        filterSuggestedQuestions();
         
         const messagesBox = document.getElementById("azhizen-messages-box");
         
@@ -830,6 +1005,7 @@
           hideBotTypingIndicator();
           const qa = getQADataByQuery(text);
           renderBotResponseWithSuggestions(qa.reply, qa.suggestions);
+          resetSuggestedQuestionsPool();
         }, 650);
       }
 
@@ -851,11 +1027,14 @@
         const input = document.getElementById("azhizen-chat-input-field");
         
         if (form && input) {
+          input.addEventListener("input", filterSuggestedQuestions);
+
           form.addEventListener("submit", (e) => {
             e.preventDefault();
             const text = input.value;
             sendAzhizenUserMessage(text);
             input.value = "";
+            filterSuggestedQuestions();
           });
         }
 

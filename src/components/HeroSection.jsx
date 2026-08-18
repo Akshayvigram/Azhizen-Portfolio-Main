@@ -213,7 +213,7 @@ const HeroSection = () => {
 
   const slideVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? '100%' : '-100%',
+      x: direction > 0 ? '100%' : direction < 0 ? '-100%' : 0,
       opacity: 0,
     }),
     center: {
@@ -285,7 +285,7 @@ const HeroSection = () => {
     <div className="bg-white w-full overflow-x-hidden">
       {/* Top Banner Carousel Section */}
       <div className="w-full relative overflow-hidden bg-white">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
+        <AnimatePresence initial={true} custom={direction} mode="wait">
           <motion.div
             key={page}
             custom={direction}
