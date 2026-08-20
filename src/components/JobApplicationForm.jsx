@@ -97,30 +97,36 @@ const JobApplicationForm = () => {
     }
 
     try {
-      // Firestore document creation
-      await addDoc(collection(db, 'jobApplications'), {
+      const firestoreData = {
         jobTitle: job.title,
         ...formFields,
         experience,
         education,
         resume: resumeBase64,
+        resumeFileName: resumeFile?.name || 'resume',
         appliedAt: Timestamp.now(),
-      });
+      };
 
-      // Firebase Realtime Database document creation
-      const dbRef = getDatabase();
-      const applicationRef = push(ref(dbRef, 'jobApplications')); // auto-generates a unique key
-      await set(applicationRef, {
+      const rtdbData = {
         jobTitle: job.title,
-        ...formFields,
-        experience,
-        education,
-        resume: resumeBase64,
-        appliedAt: Date.now(), // use Date.now() for RTDB
-      });
+        firstName: formFields.firstName,
+        lastName: formFields.lastName,
+        email: formFields.email,
+        phone: formFields.phone,
+        residence: formFields.residence,
+        resumeFileName: resumeFile?.name || 'resume',
+        appliedAt: Date.now(),
+      };
 
-      // await fetch("http://localhost:5000/api/notify-slack", {
-      await fetch("https://portfolioazhizen-backend.onrender.com/api/notify-slack", {
+      // 1 & 2. Run Firestore and Realtime DB writes concurrently for maximum speed
+      const dbRef = getDatabase();
+      const firestorePromise = addDoc(collection(db, 'jobApplications'), firestoreData);
+      const rtdbPromise = set(push(ref(dbRef, 'jobApplications')), rtdbData);
+
+      await Promise.all([firestorePromise, rtdbPromise]);
+
+      // 3. Fire-and-forget Slack notification in background (non-blocking)
+      fetch("https://portfolioazhizen-backend.onrender.com/api/notify-slack", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -131,7 +137,7 @@ const JobApplicationForm = () => {
           phone: formFields.phone,
           experienceCount: experience.length
         })
-      });
+      }).catch((err) => console.warn("Slack alert background error:", err));
 
 
       setSuccess('Your application has been successfully submitted!');

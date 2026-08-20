@@ -2,6 +2,8 @@ import { MapPin, Briefcase, Clock, Star, CheckCircle2, ChevronRight, X } from "l
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
+  DialogDescription,
 } from "../../components/ui/dialog";
 import { ScrollArea } from "../../components/ui/scroll-area";
 
@@ -50,9 +52,9 @@ const JobDetailDialog = ({ job, open, onOpenChange, onApply }) => {
             </span>
 
             {/* Title */}
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl leading-tight">
+            <DialogTitle className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl leading-tight">
               {job.title}
-            </h2>
+            </DialogTitle>
 
             {/* Meta row */}
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -92,9 +94,9 @@ const JobDetailDialog = ({ job, open, onOpenChange, onApply }) => {
           <div className="px-6 py-6 md:px-8 space-y-6">
 
             {/* Short description */}
-            <p className="text-[15px] text-gray-600 leading-relaxed">
+            <DialogDescription className="text-[15px] text-gray-600 leading-relaxed">
               {job.shortDescription}
-            </p>
+            </DialogDescription>
 
             {/* Responsibilities */}
             <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-5 space-y-3">
