@@ -7,7 +7,7 @@ import {
   GraduationCap, Briefcase, MessageSquare, FileText, ChevronRight
 } from "lucide-react";
 
-import { Dialog, DialogContent } from "../../components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../../components/ui/dialog";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import {
@@ -18,6 +18,18 @@ import {
 } from "../../components/ui/select";
 import { ScrollArea } from "../../components/ui/scroll-area";
 import { toast } from "../../hooks/use-toast";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { ref, push, set } from "firebase/database";
+import { db, realtimeDb } from "../firebase";
+
+const readFileAsBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+};
 
 /* ─── data ───────────────────────────────────────────────────── */
 const INDIAN_STATES = [
@@ -96,15 +108,89 @@ const ApplicationDialog = ({ job, open, onOpenChange }) => {
     setResume(file);
   };
 
-  const onSubmit = (values) => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const onSubmit = async (values) => {
     if (!resume) { setResumeError("Please upload your resume"); return; }
-    toast({
-      title: "Application sent!",
-      description: `Thanks ${values.firstName}! We've received your application for ${job?.title}.`,
-    });
-    form.reset();
-    setResume(null);
-    onOpenChange(false);
+
+    setSubmitting(true);
+    try {
+      let resumeBase64 = "";
+      try {
+        resumeBase64 = await readFileAsBase64(resume);
+      } catch (err) {
+        console.error("Resume read failed:", err);
+      }
+
+      const firestoreData = {
+        jobTitle: job?.title ?? "General Application",
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        address: values.address,
+        state: values.state,
+        city: values.city,
+        pincode: values.pincode,
+        education: values.education,
+        experience: values.experience,
+        message: values.message || "",
+        resume: resumeBase64,
+        resumeFileName: resume.name,
+        appliedAt: Timestamp.now(),
+      };
+
+      const rtdbData = {
+        jobTitle: job?.title ?? "General Application",
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        city: values.city,
+        resumeFileName: resume.name,
+        appliedAt: Date.now(),
+      };
+
+      // 1 & 2. Run Firestore and Realtime DB writes concurrently for maximum speed
+      const firestorePromise = addDoc(collection(db, 'jobApplications'), firestoreData);
+      const rtdbPromise = set(push(ref(realtimeDb, 'jobApplications')), rtdbData);
+
+      await Promise.all([firestorePromise, rtdbPromise]);
+
+      // 3. Fire-and-forget Slack notification in background (non-blocking)
+      fetch("https://portfolioazhizen-backend.onrender.com/api/notify-slack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jobTitle: job?.title ?? "General Application",
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+          city: values.city,
+        }),
+      }).catch((slackErr) => {
+        console.warn("Slack notification background fetch error:", slackErr);
+      });
+
+      toast({
+        title: "Application Sent!",
+        description: `Thanks ${values.firstName}! Your application for ${job?.title ?? "the role"} has been submitted successfully.`,
+      });
+
+      form.reset();
+      setResume(null);
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: error?.message || "Failed to submit application. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -131,12 +217,12 @@ const ApplicationDialog = ({ job, open, onOpenChange }) => {
             </span>
 
             {/* Title */}
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl leading-tight">
+            <DialogTitle className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl leading-tight">
               Apply — <span className="text-[#0078B4]">{job?.title ?? "Open Position"}</span>
-            </h2>
-            <p className="mt-1.5 text-sm text-gray-500">
+            </DialogTitle>
+            <DialogDescription className="mt-1.5 text-sm text-gray-500">
               Fields marked with <span className="text-red-500 font-medium">*</span> are required
-            </p>
+            </DialogDescription>
           </div>
 
           {/* ── Form Body ────────────────────────────────────── */}
@@ -344,10 +430,11 @@ const ApplicationDialog = ({ job, open, onOpenChange }) => {
                   </button>
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-gradient-to-r from-[#0078B4] to-[#00B4D9] text-white text-sm font-semibold shadow-md hover:shadow-lg hover:opacity-90 active:scale-95 transition-all duration-200"
+                    disabled={submitting}
+                    className={`inline-flex items-center gap-2 h-10 px-6 rounded-xl bg-gradient-to-r from-[#0078B4] to-[#00B4D9] text-white text-sm font-semibold shadow-md hover:shadow-lg hover:opacity-90 active:scale-95 transition-all duration-200 ${submitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
-                    Submit Application
-                    <ChevronRight className="h-4 w-4" />
+                    {submitting ? "Submitting..." : "Submit Application"}
+                    {!submitting && <ChevronRight className="h-4 w-4" />}
                   </button>
                 </div>
 

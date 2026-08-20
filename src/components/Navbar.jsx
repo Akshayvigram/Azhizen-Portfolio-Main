@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import TechTransition from "./TechTransition";
 
 const NAV_LINKS = [
   { name: "Home", path: "/" },
@@ -18,9 +19,50 @@ const Navbar = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastAnchor, setToastAnchor] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [transitionMode, setTransitionMode] = useState("toDiary");
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const handleSwitchToTech = () => {
+    setTransitionMode("toDiary");
+    setIsAnimating(true);
+  };
+
+  const onAnimationComplete = () => {
+    if (transitionMode === "toDiary") {
+      sessionStorage.setItem("azhizen_returned_from_diary", "true");
+      setIsAnimating(false);
+      window.location.href = "https://www.azhizen.com/";
+    } else {
+      setIsAnimating(false);
+    }
+  };
+
+  // Handle browser back button or returning from external site
+  useEffect(() => {
+    const handlePageShow = (event) => {
+      const returnedFromDiary = sessionStorage.getItem("azhizen_returned_from_diary");
+
+      if (returnedFromDiary === "true" || event.persisted) {
+        sessionStorage.removeItem("azhizen_returned_from_diary");
+        setTransitionMode("toTech");
+        setIsAnimating(true);
+      } else {
+        setIsAnimating(false);
+      }
+    };
+
+    if (sessionStorage.getItem("azhizen_returned_from_diary") === "true") {
+      sessionStorage.removeItem("azhizen_returned_from_diary");
+      setTransitionMode("toTech");
+      setIsAnimating(true);
+    }
+
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
 
   const triggerToast = (serviceName, anchor) => {
     setToastMessage(`${serviceName} is Coming Soon!`);
@@ -393,7 +435,7 @@ const Navbar = () => {
           {/* ── Switch to Diary Tech Button (Desktop) ── */}
           <div style={{ position: "relative", display: "inline-block" }}>
             <button
-              onClick={() => triggerToast("Diary Tech Portal", "switch")}
+              onClick={handleSwitchToTech}
               className="switch-btn"
               style={{
                 display: "flex",
@@ -803,7 +845,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               setIsOpen(false);
-              triggerToast("Diary Tech Portal", "switch-mobile");
+              handleSwitchToTech();
             }}
             style={{
               display: "flex",
@@ -943,6 +985,7 @@ const Navbar = () => {
           .mobile-menu-btn { display: flex !important; }
         }
       `}</style>
+      {isAnimating && <TechTransition mode={transitionMode} onComplete={onAnimationComplete} />}
     </>
   );
 };
