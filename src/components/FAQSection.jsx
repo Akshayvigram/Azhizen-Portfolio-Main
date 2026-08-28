@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 const FAQ_ITEMS = [
   {
@@ -184,7 +185,8 @@ const FAQSection = () => {
                   >
                     <span>{item.question}</span>
                     
-                    {/* Plus / Minus Button Circle */}
+                    {/* Plus / Minus Button Circle (Commented out) */}
+                    {/*
                     <div 
                       className={`w-[28px] h-[28px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
                         isOpen ? "bg-[#e2e8f0] text-[#475569]" : "bg-[#1877F2] text-white"
@@ -201,6 +203,14 @@ const FAQSection = () => {
                         </svg>
                       )}
                     </div>
+                    */}
+
+                    {/* Dropdown Chevron Symbol */}
+                    <ChevronDown 
+                      className={`w-5 h-5 transition-transform duration-300 shrink-0 ${
+                        isOpen ? "rotate-180 text-[#1877F2]" : "text-slate-400"
+                      }`} 
+                    />
                   </button>
 
                   {/* Accordion Expandable Content */}

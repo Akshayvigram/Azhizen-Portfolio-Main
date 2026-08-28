@@ -127,12 +127,6 @@ const Careers = () => {
   const [detailOpen, setDetailOpen] = useState(false);
   const [applyOpen, setApplyOpen] = useState(false);
   
-  const listRef = useRef(null);
-  const scrollContainerRef = useRef(null);
-  const [listScrollRange, setListScrollRange] = useState(0);
-
-  const SCROLL_SPEED_FACTOR = 0.5; // Lower values make options scroll slower. E.g., 0.5 is 50% scroll speed.
-
   const containerVariants = {
     hidden: {},
     visible: {
@@ -157,57 +151,6 @@ const Careers = () => {
         j.type.toLowerCase().includes(q)
     );
   }, [query]);
-
-  // Calculate the scroll range of the list items once items are loaded
-  useEffect(() => {
-    const updateScrollRange = () => {
-      const listEl = listRef.current;
-      if (!listEl) return;
-      const range = listEl.scrollHeight - listEl.clientHeight;
-      setListScrollRange(range > 0 ? range : 0);
-    };
-
-    updateScrollRange();
-    
-    // Resize and rendering changes can affect scrollHeight
-    window.addEventListener("resize", updateScrollRange);
-    const timer = setTimeout(updateScrollRange, 300);
-
-    return () => {
-      window.removeEventListener("resize", updateScrollRange);
-      clearTimeout(timer);
-    };
-  }, [filtered]);
-
-  // Synchronize window scroll offset to list scroll position during sticky phase
-  useEffect(() => {
-    const listEl = listRef.current;
-    const containerEl = scrollContainerRef.current;
-    if (!listEl || !containerEl || listScrollRange <= 0) {
-      if (listEl) listEl.scrollTop = 0;
-      return;
-    }
-
-    const handleScroll = () => {
-      const rect = containerEl.getBoundingClientRect();
-      const navbarHeight = 64;
-
-      if (rect.top <= navbarHeight) {
-        const scrolledPixels = navbarHeight - rect.top;
-        const targetScrollTop = scrolledPixels * SCROLL_SPEED_FACTOR;
-        listEl.scrollTop = Math.max(0, Math.min(listScrollRange, targetScrollTop));
-      } else {
-        listEl.scrollTop = 0;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [listScrollRange]);
 
   const openJob = (job) => {
     setSelected(job);
@@ -282,85 +225,76 @@ const Careers = () => {
           </div>
         </section>
 
-        <div
-          ref={scrollContainerRef}
-          style={{ height: listScrollRange > 0 ? `calc(100vh + ${listScrollRange / SCROLL_SPEED_FACTOR}px)` : "auto" }}
-          className="relative bg-muted/30"
+        <section
+          id="career"
+          aria-labelledby="join-our-team"
+          className="relative bg-muted/30 pt-10 pb-16 md:pt-14 md:pb-20 overflow-hidden"
         >
-          <section
-            id="career"
-            aria-labelledby="join-our-team"
-            className="sticky top-[64px] h-[calc(100vh-64px)] overflow-hidden flex flex-col justify-start pt-6 md:pt-10 lg:justify-start lg:pt-12 lg:pb-0"
-          >
-            <div className="w-full relative z-10 mx-auto px-6 py-8" style={{ maxWidth: "1280px" }}>
-              <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-                {/* Left */}
-                <motion.div 
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="relative flex flex-col"
-                >
-                  <div className="flex items-start gap-3">
-                    <Pointer className="mt-1.5 h-7 w-7 text-brand" aria-hidden />
-                    <div>
-                      <h2
-                        id="join-our-team"
-                        className="text-3xl font-bold tracking-tight md:text-4xl"
-                      >
-                        <span className="text-brand">Join</span>{" "}
-                        <span className="text-foreground">Our Team</span>
-                      </h2>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        Display{" "}
-                        <span className="font-semibold text-foreground">
-                          {allJobs.length} Roles
-                        </span>{" "}
-                        that Open in Azhizen
-                      </p>
-                    </div>
+          <div className="w-full relative z-10 mx-auto px-6" style={{ maxWidth: "1280px" }}>
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+              {/* Left */}
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative flex flex-col"
+              >
+                <div className="flex items-start gap-3">
+                  <Pointer className="mt-1.5 h-7 w-7 text-brand" aria-hidden />
+                  <div>
+                    <h2
+                      id="join-our-team"
+                      className="text-3xl font-bold tracking-tight md:text-4xl"
+                    >
+                      <span className="text-brand">Join</span>{" "}
+                      <span className="text-foreground">Our Team</span>
+                    </h2>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Display{" "}
+                      <span className="font-semibold text-foreground">
+                        {allJobs.length} Roles
+                      </span>{" "}
+                      that Open in Azhizen
+                    </p>
                   </div>
-                </motion.div>
-
-                {/* Right */}
-                <div
-                  ref={listRef}
-                  className="h-[445px] overflow-y-hidden pt-3 pr-2 no-scrollbar"
-                >
-                  <motion.div 
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="flex flex-col gap-4 pb-4"
-                  >
-                    {filtered.map((job) => (
-                      <motion.div key={job.id} variants={itemVariants}>
-                        <JobCard job={job} onClick={() => openJob(job)} />
-                      </motion.div>
-                    ))}
-                    {filtered.length === 0 && (
-                      <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
-                        No roles match your search.
-                      </div>
-                    )}
-                  </motion.div>
                 </div>
+              </motion.div>
+
+              {/* Right */}
+              <div className="pt-3 pr-2">
+                <motion.div 
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="flex flex-col gap-4 pb-4"
+                >
+                  {filtered.map((job) => (
+                    <motion.div key={job.id} variants={itemVariants}>
+                      <JobCard job={job} onClick={() => openJob(job)} />
+                    </motion.div>
+                  ))}
+                  {filtered.length === 0 && (
+                    <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
+                      No roles match your search.
+                    </div>
+                  )}
+                </motion.div>
               </div>
             </div>
+          </div>
 
-            {/* Full-width Skyline background */}
-            <div className="absolute bottom-2 lg:bottom-0 left-0 right-0 w-full pointer-events-none opacity-40 z-0">
-              <img
-                src={skylineImg}
-                alt=""
-                aria-hidden
-                className="w-full h-auto object-contain object-bottom max-h-[600px] md:max-h-[750px]"
-              />
-            </div>
-          </section>
-        </div>
+          {/* Full-width Skyline background */}
+          <div className="absolute bottom-0 left-0 right-0 w-full pointer-events-none opacity-40 z-0">
+            <img
+              src={skylineImg}
+              alt=""
+              aria-hidden
+              className="w-full h-auto object-contain object-bottom max-h-[600px] md:max-h-[750px]"
+            />
+          </div>
+        </section>
       </main>
 
       {/* <Footer /> */}

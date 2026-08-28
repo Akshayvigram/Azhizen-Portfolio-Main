@@ -20,6 +20,13 @@ export const TechTransition = ({ onComplete, mode = 'toDiary' }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Reuse offscreen canvases to optimize performance and prevent garbage collection stutter
+    const liquidCanvas = document.createElement('canvas');
+    const lctx = liquidCanvas.getContext('2d');
+
+    const maskedCanvas = document.createElement('canvas');
+    const mctx = maskedCanvas.getContext('2d');
+
     const imgBlue = new Image();
     const imgGreen = new Image();
 
@@ -56,13 +63,6 @@ export const TechTransition = ({ onComplete, mode = 'toDiary' }) => {
       loadedCount = 2;
       startAnimation();
     }
-
-    // Reuse offscreen canvases to optimize performance and prevent garbage collection stutter
-    const liquidCanvas = document.createElement('canvas');
-    const lctx = liquidCanvas.getContext('2d');
-
-    const maskedCanvas = document.createElement('canvas');
-    const mctx = maskedCanvas.getContext('2d');
 
     function buildLiquid(W, H, fillY, waveOffset, colors) {
       liquidCanvas.width = W;
