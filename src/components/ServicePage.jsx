@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, X, ArrowRight, Check } from "lucide-react";
+import { ChevronDown, X, ArrowRight, Check, Loader2 } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { ref, push, set } from "firebase/database";
+import { db, realtimeDb } from "./firebase";
 
 // Standard components for organic floating animation
 const FloatingIcon = ({ src, className, delay = 0, duration = 4, yRange = [-8, 8] }) => (
@@ -26,6 +29,7 @@ const ServicePage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [bookingService, setBookingService] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({ name: "", company: "", email: "", phone: "", details: "" });
 
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
@@ -534,12 +538,39 @@ const ServicePage = () => {
 
               {!bookingSuccess ? (
                 <form 
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
                     if (!bookingForm.name || !bookingForm.email || !bookingForm.phone) {
                       alert("Please fill in all required fields (Name, Email, Phone).");
                       return;
                     }
+
+                    setIsSubmitting(true);
+
+                    try {
+                      const serviceData = {
+                        serviceCategory: "Technology Solutions",
+                        selectedService: bookingService?.title || "",
+                        fullName: bookingForm.name,
+                        email: bookingForm.email,
+                        phone: bookingForm.phone,
+                        details: bookingForm.details || "",
+                        timestamp: Timestamp.now(),
+                      };
+
+                      const firestorePromise = addDoc(collection(db, "Service"), serviceData);
+                      const rtdbPromise = set(push(ref(realtimeDb, "Service")), {
+                        ...serviceData,
+                        timestamp: Date.now(),
+                      });
+
+                      await Promise.all([firestorePromise, rtdbPromise]);
+                    } catch (err) {
+                      console.error("Firebase Service submission error:", err);
+                    } finally {
+                      setIsSubmitting(false);
+                    }
+
                     setBookingSuccess(true);
                   }}
                   className="space-y-4"
@@ -634,9 +665,17 @@ const ServicePage = () => {
                   <div className="pt-3">
                     <button
                       type="submit"
-                      className="w-full py-3 !bg-[#0274D4] hover:!bg-[#01559C] text-white font-bold rounded-xl text-[14px] transition-all shadow-[0_4px_12px_rgba(2,116,212,0.2)] hover:shadow-[0_6px_16px_rgba(2,116,212,0.3)] flex items-center justify-center gap-2 cursor-pointer border-none"
+                      disabled={isSubmitting}
+                      className="w-full py-3 !bg-[#0274D4] hover:!bg-[#01559C] text-white font-bold rounded-xl text-[14px] transition-all shadow-[0_4px_12px_rgba(2,116,212,0.2)] hover:shadow-[0_6px_16px_rgba(2,116,212,0.3)] flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-75 disabled:cursor-not-allowed"
                     >
-                      <span>Submit Application</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Submitting...</span>
+                        </>
+                      ) : (
+                        <span>Submit Application</span>
+                      )}
                     </button>
                   </div>
                 </form>

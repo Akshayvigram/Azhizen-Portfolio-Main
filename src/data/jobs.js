@@ -64,45 +64,7 @@ export const jobs = [
       "Working knowledge of Figma.",
     ],
   },
-  {
-    id: "data-scientist",
-    title: "data Scientist",
-    team: "Data",
-    type: "Onsite",
-    level: "Fresher",
-    location: "Tiruchengode, Tamil Nadu",
-    shortDescription:
-      "Turn raw farm and device data into models and insights that improve product decisions.",
-    responsibilities: [
-      "Explore and clean datasets from devices and apps.",
-      "Build prototype models for prediction and anomaly detection.",
-      "Translate findings into clear dashboards and reports.",
-    ],
-    requirements: [
-      "Solid Python and pandas/numpy fundamentals.",
-      "Basic ML knowledge (scikit-learn, regression, classification).",
-      "Comfortable with SQL.",
-    ],
-  },
-  {
-    id: "mobile-app-developer",
-    title: "Mobile App developer",
-    team: "Development",
-    type: "Onsite",
-    level: "Fresher",
-    location: "Tiruchengode, Tamil Nadu",
-    shortDescription:
-      "Build delightful cross-platform mobile experiences that connect users with their EaseMilker devices.",
-    responsibilities: [
-      "Develop and maintain React Native (or Flutter) apps.",
-      "Integrate with REST APIs and BLE devices.",
-      "Ship to Play Store and App Store with confidence.",
-    ],
-    requirements: [
-      "Working knowledge of React Native or Flutter.",
-      "Understanding of mobile UX patterns and platform constraints.",
-    ],
-  },
+
   {
     id: "embedded-engineer",
     title: "Embedded Engineer",

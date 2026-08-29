@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import TechTransition from "./TechTransition";
 
@@ -21,19 +21,24 @@ const Navbar = () => {
   const [toastAnchor, setToastAnchor] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
   const [transitionMode, setTransitionMode] = useState("toDiary");
+  const transitionModeRef = useRef("toDiary");
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const changeTransitionMode = (mode) => {
+    setTransitionMode(mode);
+    transitionModeRef.current = mode;
+  };
+
   const handleSwitchToTech = () => {
-    setTransitionMode("toDiary");
+    changeTransitionMode("toDiary");
     setIsAnimating(true);
   };
 
   const onAnimationComplete = () => {
-    if (transitionMode === "toDiary") {
+    if (transitionModeRef.current === "toDiary") {
       sessionStorage.setItem("azhizen_returned_from_diary", "true");
-      setIsAnimating(false);
       window.location.href = "https://www.azhizen.com/";
     } else {
       setIsAnimating(false);
@@ -45,23 +50,31 @@ const Navbar = () => {
     const handlePageShow = (event) => {
       const returnedFromDiary = sessionStorage.getItem("azhizen_returned_from_diary");
 
-      if (returnedFromDiary === "true" || event.persisted) {
+      if (returnedFromDiary === "true") {
         sessionStorage.removeItem("azhizen_returned_from_diary");
-        setTransitionMode("toTech");
+        changeTransitionMode("toTech");
         setIsAnimating(true);
       } else {
         setIsAnimating(false);
       }
     };
 
+    const handlePageHide = () => {
+      setIsAnimating(false);
+    };
+
     if (sessionStorage.getItem("azhizen_returned_from_diary") === "true") {
       sessionStorage.removeItem("azhizen_returned_from_diary");
-      setTransitionMode("toTech");
+      changeTransitionMode("toTech");
       setIsAnimating(true);
     }
 
     window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
+    window.addEventListener("pagehide", handlePageHide);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      window.removeEventListener("pagehide", handlePageHide);
+    };
   }, []);
 
   const triggerToast = (serviceName, anchor) => {

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Laptop, Palette, Smartphone, Check } from 'lucide-react';
+import { Laptop, Palette, Smartphone, Check, Loader2 } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import { marketingServices } from '../data/marketingServicesNew';
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { ref, push, set } from "firebase/database";
+import { db, realtimeDb } from "../components/firebase";
 // Trigger rebuild with cache-bypassed data source
 
 // Standard up-right arrow icon
@@ -42,6 +45,7 @@ const MarketingServices = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeCard, setActiveCard] = useState(1);
 
   // Mobile Auto-scrolling carousel effect (cycles active card every 3s)
@@ -113,13 +117,45 @@ const MarketingServices = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.phone) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const serviceData = {
+        serviceCategory: "Digital Marketing",
+        selectedService: selectedService?.title || "",
+        fullName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        details: formData.message || "",
+        timestamp: Timestamp.now(),
+      };
+
+      const firestorePromise = addDoc(collection(db, "Service"), serviceData);
+      const rtdbPromise = set(push(ref(realtimeDb, "Service")), {
+        ...serviceData,
+        timestamp: Date.now(),
+      });
+
+      await Promise.all([firestorePromise, rtdbPromise]);
+    } catch (err) {
+      console.error("Firebase Marketing Service submission error:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+
     setIsSubmitted(true);
     setTimeout(() => {
       setSelectedService(null);
       setIsSubmitted(false);
-    }, 2000);
+    }, 2500);
   };
 
   const handleAcademyClick = () => {
@@ -701,9 +737,17 @@ const MarketingServices = () => {
 
                     <button
                       type="submit"
-                      className="w-full mt-2 bg-gradient-to-r from-[#1877F2] to-[#0084FF] hover:opacity-95 text-white font-bold text-[15px] py-3.5 rounded-xl shadow-[0_4px_16px_rgba(24,119,242,0.25)] hover:shadow-[0_8px_24px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center"
+                      disabled={isSubmitting}
+                      className="w-full mt-2 bg-gradient-to-r from-[#1877F2] to-[#0084FF] hover:opacity-95 text-white font-bold text-[15px] py-3.5 rounded-xl shadow-[0_4px_16px_rgba(24,119,242,0.25)] hover:shadow-[0_8px_24px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
                     >
-                      Submit Application
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          <span>Submitting...</span>
+                        </>
+                      ) : (
+                        <span>Submit Application</span>
+                      )}
                     </button>
                   </form>
                 )}
